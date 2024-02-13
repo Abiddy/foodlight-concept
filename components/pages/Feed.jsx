@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Card from '../ui/Card';
 
 import {
@@ -13,10 +12,13 @@ import {
   IonMenuButton,
 } from '@ionic/react';
 import Notifications from './Notifications';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { notificationsOutline } from 'ionicons/icons';
 import { getHomeItems } from '../../store/selectors';
 import Store from '../../store';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import ComboCardWrapper from './ComboCardWrapper';
+
 
 const FeedCard = ({ title, type, text, author, authorAvatar, image }) => (
   <Card className="my-4 mx-auto">
@@ -37,15 +39,66 @@ const FeedCard = ({ title, type, text, author, authorAvatar, image }) => (
   </Card>
 );
 
+const supabase = createClientComponentClient();
+
 const Feed = () => {
   const homeItems = Store.useState(getHomeItems);
   const [showNotifications, setShowNotifications] = useState(false);
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const { data, error } = await supabase
+  //         .from('combo_cards')
+  //         .select('*');
+  //       if (error) {
+  //         throw error;
+  //       }
+  //       setData(data);
+  //     } catch (error) {
+  //       console.error('Error fetching data:', error.message);
+  //     }
+  //   }
+  //   fetchData();
+  // }, []);
+
+  const fetchComboData = useCallback(async () => {
+    try {
+
+      const { data, error } = await supabase
+        .from('combo_cards')
+        .select('*')
+        .eq('uid', '1f358f02-322f-4edd-af31-4bec37bd0ac9');
+
+      if (error) {
+        throw error;
+      }
+
+      return data || [];
+    } catch (error) {
+      alert('Error fetching combination data!');
+      return [];
+    } 
+  }, []);
+
+  const [comboData, setComboData] = useState([]);
+
+  console.log({comboData})
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchComboData();
+      setComboData(data);
+    };
+
+    fetchData();
+  }, [fetchComboData]);
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Feed</IonTitle>
+          <IonTitle>ComboBest</IonTitle>
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
@@ -66,6 +119,7 @@ const Feed = () => {
         {homeItems.map((i, index) => (
           <FeedCard {...i} key={index} />
         ))}
+      <ComboCardWrapper userId={'1f358f02-322f-4edd-af31-4bec37bd0ac9'} combination={comboData} />
       </IonContent>
     </IonPage>
   );
