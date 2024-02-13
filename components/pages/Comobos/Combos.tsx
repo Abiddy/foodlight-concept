@@ -4,6 +4,7 @@ import { League_Spartan } from 'next/font/google';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '../../../types/supabase';
 import ItemCard from './Item-Cards';
+import { IonRange } from '@ionic/react';
 
 const league_spartan = League_Spartan({ weight: ['600'], subsets: ['latin'] });
 
@@ -12,6 +13,7 @@ const supabase = createClientComponentClient<Database>();
 
 const ComboCard = ({ userId, combination }) => {
   const [menuItems, setMenuItems] = useState([]);
+  const [maxPrice, setMaxPrice] = useState(10);
 
   const fetchMenuItems = async (): Promise<MenuItems[]> => {
     try {
@@ -64,7 +66,7 @@ const ComboCard = ({ userId, combination }) => {
 
   const calculateTotalPrice = (itemIds, menuItems) => {
     let totalPrice = 0;
-  
+
     Object.values(itemIds).forEach((items) => {
       items.forEach((itemId) => {
         const selectedItem = menuItems.find((item) => item.id === itemId);
@@ -73,15 +75,27 @@ const ComboCard = ({ userId, combination }) => {
         }
       });
     });
-  
+
     return totalPrice;
   };
+
+  const filteredCombinations = combination.filter((combo) => {
+    const totalPrice = calculateTotalPrice(combo.item_ids, menuItems);
+    return totalPrice <= maxPrice;
+  });
+
+  console.log({filteredCombinations})
  
 
   return (
     <div style={{ maxWidth: '500px' }}>
-     
-      {combination.map((combo, index) => (
+
+     <IonRange 
+     aria-label="Range with ionChange" 
+     pin={true}       
+     onIonChange={({ detail }) =>  setMaxPrice(detail.value)}>
+     </IonRange>
+      {filteredCombinations.map((combo, index) => (
         <div key={index} style={{ marginBottom: '50px' }} className=" rounded-lg p-6 text-center mt-15 mb-15  dark:bg-gray-900">
           <div className="flex justify-between p-5">
             <h3 className={`${league_spartan.className} text-3xl`}>#{combo.index[0]}</h3>

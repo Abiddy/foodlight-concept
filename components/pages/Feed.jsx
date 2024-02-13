@@ -14,8 +14,6 @@ import {
 import Notifications from './Notifications';
 import { useCallback, useEffect, useState } from 'react';
 import { notificationsOutline } from 'ionicons/icons';
-import { getHomeItems } from '../../store/selectors';
-import Store from '../../store';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import ComboCardWrapper from './ComboCardWrapper';
 
@@ -42,25 +40,7 @@ const FeedCard = ({ title, type, text, author, authorAvatar, image }) => (
 const supabase = createClientComponentClient();
 
 const Feed = () => {
-  const homeItems = Store.useState(getHomeItems);
   const [showNotifications, setShowNotifications] = useState(false);
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const { data, error } = await supabase
-  //         .from('combo_cards')
-  //         .select('*');
-  //       if (error) {
-  //         throw error;
-  //       }
-  //       setData(data);
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error.message);
-  //     }
-  //   }
-  //   fetchData();
-  // }, []);
 
   const fetchComboData = useCallback(async () => {
     try {
@@ -116,9 +96,10 @@ const Feed = () => {
           </IonToolbar>
         </IonHeader>
         <Notifications open={showNotifications} onDidDismiss={() => setShowNotifications(false)} />
-        {homeItems.map((i, index) => (
+        <IonTitle>Chefs Pick</IonTitle>
+        {/* {homeItems.map((i, index) => (
           <FeedCard {...i} key={index} />
-        ))}
+        ))} */}
       <ComboCardWrapper userId={'1f358f02-322f-4edd-af31-4bec37bd0ac9'} combination={comboData} />
       </IonContent>
     </IonPage>
