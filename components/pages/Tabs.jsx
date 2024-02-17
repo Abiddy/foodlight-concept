@@ -5,7 +5,7 @@ import { cog, flash, list } from 'ionicons/icons';
 import Home from './Feed';
 import Lists from './Lists';
 import ListDetail from './ListDetail';
-import Settings from './Settings';
+import Menu from './Menu';
 
 const Tabs = () => {
   return (
@@ -14,21 +14,21 @@ const Tabs = () => {
         <Route path="/tabs/feed" render={() => <Home />} exact={true} />
         <Route path="/tabs/lists" render={() => <Lists />} exact={true} />
         <Route path="/tabs/lists/:listId" render={() => <ListDetail />} exact={true} />
-        <Route path="/tabs/settings" render={() => <Settings />} exact={true} />
+        <Route path="/tabs/menu" render={() => <Menu />} exact={true} />
         <Route path="/tabs" render={() => <Redirect to="/tabs/feed" />} exact={true} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="tab1" href="/tabs/feed">
           <IonIcon icon={flash} />
-          <IonLabel>Feed</IonLabel>
+          <IonLabel>Chefs Combos</IonLabel>
         </IonTabButton>
         <IonTabButton tab="tab2" href="/tabs/lists">
           <IonIcon icon={list} />
-          <IonLabel>Lists</IonLabel>
+          <IonLabel>Build Combos</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="tab3" href="/tabs/settings">
+        <IonTabButton tab="tab3" href="/tabs/menu">
           <IonIcon icon={cog} />
-          <IonLabel>Settings</IonLabel>
+          <IonLabel>Full Menu</IonLabel>
         </IonTabButton>
       </IonTabBar>
     </IonTabs>
