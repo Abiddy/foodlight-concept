@@ -15,8 +15,10 @@ import {
   IonLabel,
   IonCardSubtitle,
   IonButton,
+  IonChip,
 } from '@ionic/react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { MenuCard } from '../MenuCard';
 
 const supabase = createClientComponentClient(); // Initialize Supabase client
 
@@ -40,11 +42,11 @@ const MenuItemCard = ({ item, cart, addToCart, removeFromCart }) => {
         <IonLabel>{item.item_name}</IonLabel>
         <IonCardSubtitle>{item.item_description}</IonCardSubtitle>
         <IonCardSubtitle>${item.item_price}</IonCardSubtitle>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <IonChip style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <IonButton size="small" fill="outline"  shape="round" onClick={() => removeFromCart(item)}>-</IonButton>
           <IonLabel>{quantity}</IonLabel>
           <IonButton size="small" fill="outline" shape="round" onClick={() => addToCart(item)}>+</IonButton>
-        </div>
+        </IonChip>
       </IonCardContent>
     </IonItem>
   );
@@ -160,7 +162,7 @@ const Menu = () => {
             <IonCardContent>
               <IonList>
                 {items.map((item) => (
-                  <MenuItemCard
+                  <MenuCard
                     key={item.id}
                     item={item}
                     cart={cart}

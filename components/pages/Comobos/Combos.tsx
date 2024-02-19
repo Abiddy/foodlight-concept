@@ -96,10 +96,11 @@ const ComboCard = ({ userId, combination }) => {
      onIonChange={({ detail }) =>  setMaxPrice(detail.value)}>
      </IonRange>
       {filteredCombinations.map((combo, index) => (
-        <div key={index} style={{ marginBottom: '50px' }} className=" rounded-lg p-6 text-center mt-15 mb-15  dark:bg-gray-900">
+        <div key={index} style={{ marginBottom: '50px' }} className=" p-6 text-center mt-15 mb-15 dark:bg-gray-900 border border-gray-300 shadow-md rounded-xl"
+        >
           <div className="flex justify-between p-5">
-            <h3 className={`${league_spartan.className} text-3xl`}>#{combo.index[0]}</h3>
-            <p className={`${league_spartan.className} text-3xl`}>${calculateTotalPrice(combo.item_ids, menuItems).toFixed(2)}</p>
+            <h3 className={league_spartan.className}>#{combo.index[0]}</h3>
+            <h3 className={league_spartan.className}>${calculateTotalPrice(combo.item_ids, menuItems).toFixed(2)}</h3>
           </div>
           <div className='pl-5 pr-5'>
             {Object.entries(combo.item_ids).map(([header, items]) => (
