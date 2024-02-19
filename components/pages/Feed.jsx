@@ -16,6 +16,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { notificationsOutline } from 'ionicons/icons';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import ComboCardWrapper from './ComboCardWrapper';
+import { League_Spartan } from 'next/font/google';
+
+
+const league_spartan = League_Spartan({ weight: ['700'], subsets: ['latin'] });
 
 
 const FeedCard = ({ title, type, text, author, authorAvatar, image }) => (
@@ -78,7 +82,7 @@ const Feed = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>ComboBest</IonTitle>
+          <IonTitle>WhatsOnMyMenu</IonTitle>
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
@@ -96,10 +100,7 @@ const Feed = () => {
           </IonToolbar>
         </IonHeader>
         <Notifications open={showNotifications} onDidDismiss={() => setShowNotifications(false)} />
-        <IonTitle>Chefs Pick</IonTitle>
-        {/* {homeItems.map((i, index) => (
-          <FeedCard {...i} key={index} />
-        ))} */}
+        <h1 className={league_spartan.className}>Chefs Combos</h1>
       <ComboCardWrapper userId={'1f358f02-322f-4edd-af31-4bec37bd0ac9'} combination={comboData} />
       </IonContent>
     </IonPage>

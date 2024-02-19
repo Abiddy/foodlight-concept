@@ -6,7 +6,7 @@ import { Database } from '../../../types/supabase';
 import ItemCard from './Item-Cards';
 import { IonRange } from '@ionic/react';
 
-const league_spartan = League_Spartan({ weight: ['600'], subsets: ['latin'] });
+const league_spartan = League_Spartan({ weight: ['700'], subsets: ['latin'] });
 
 type MenuItems = Database['public']['Tables']['menu_items']['Row'] & { item_image_url?: string | null };
 const supabase = createClientComponentClient<Database>();
@@ -99,8 +99,8 @@ const ComboCard = ({ userId, combination }) => {
         <div key={index} style={{ marginBottom: '50px' }} className=" p-6 text-center mt-15 mb-15 dark:bg-gray-900 border border-gray-300 shadow-md rounded-xl"
         >
           <div className="flex justify-between p-5">
-            <h3 className={league_spartan.className}>#{combo.index[0]}</h3>
-            <h3 className={league_spartan.className}>${calculateTotalPrice(combo.item_ids, menuItems).toFixed(2)}</h3>
+            <h1 className={league_spartan.className}>#{combo.index[0]}</h1>
+            <h1 className={league_spartan.className}>${calculateTotalPrice(combo.item_ids, menuItems).toFixed(2)}</h1>
           </div>
           <div className='pl-5 pr-5'>
             {Object.entries(combo.item_ids).map(([header, items]) => (
