@@ -35,7 +35,7 @@ const Menu = () => {
       const { data, error } = await supabase
         .from('menu_items')
         .select('id, item_name, item_description, item_price, item_image, uid')
-        .eq('uid', userId); 
+        .eq('uid', '1f358f02-322f-4edd-af31-4bec37bd0ac9'); 
   
       if (error) {
         console.error('Error fetching menu items:', error);
@@ -71,7 +71,6 @@ const Menu = () => {
         setMenuItems(itemsData);
       } catch (error) {
         console.error('Error fetching menu items:', error);
-        // Handle the error as needed
       }
     };
   
