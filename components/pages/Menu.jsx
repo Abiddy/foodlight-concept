@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   IonPage,
   IonHeader,
@@ -30,7 +30,7 @@ const Menu = () => {
   const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
 
-  const fetchMenuItems = async () => {
+  const fetchMenuItems = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from('menu_items')
@@ -65,7 +65,7 @@ const Menu = () => {
       console.error('Error fetching menu items with image URLs:', error);
       return [];
     }
-  };
+  }, []);
 
   useEffect(() => {
     const fetchAndSetMenuItems = async () => {

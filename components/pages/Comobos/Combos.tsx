@@ -20,14 +20,13 @@ const ComboCard = ({ userId, combination }) => {
       const { data, error } = await supabase
         .from('menu_items')
         .select('id, item_name, item_description, item_price, item_image, uid')
-        .eq('uid', userId); // Add a filter to only fetch items belonging to the logged-in user
+        .eq('uid', userId); 
   
       if (error) {
         console.error('Error fetching menu items:', error);
         return [];
       }
-  
-      // Fetch public URLs for each image
+      
       const itemsWithUrls = await Promise.all(
         data.map(async (item) => {
           const { data: publicUrl, error: urlError } = await supabase.storage.from('menu-images').getPublicUrl(item.item_image || '');
