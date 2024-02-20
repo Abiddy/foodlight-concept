@@ -70,7 +70,9 @@ const Menu = () => {
   const fetchAndSetMenuItems = async () => {
     try {
       const itemsData = await fetchMenuItems();
-      setMenuItems(itemsData);
+      if(!menuItems){
+        setMenuItems(itemsData);
+      }
     } catch (error) {
       console.error('Error fetching menu items:', error);
       // Handle the error as needed
