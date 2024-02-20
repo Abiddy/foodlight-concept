@@ -30,24 +30,21 @@ const Menu = () => {
   const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
   
-  const fetchMenuItems = useCallback(async () => {
+  const fetchMenuItems = async () => {
     try {
       const { data, error } = await supabase
         .from('menu_items')
         .select('id, item_name, item_description, item_price, item_image, uid, item_type')
-        .eq('uid', '1f358f02-322f-4edd-af31-4bec37bd0ac9');
+        .eq('uid', '1f358f02-322f-4edd-af31-4bec37bd0ac9'); 
   
       if (error) {
         console.error('Error fetching menu items:', error);
         return [];
       }
-  
+
       const itemsWithUrls = await Promise.all(
         data.map(async (item) => {
-          const { data: publicUrl, error: urlError } = await supabase.storage
-            .from('menu-images')
-            .getPublicUrl(item.item_image || '');
-  
+          const { data: publicUrl, error: urlError } = await supabase.storage.from('menu-images').getPublicUrl(item.item_image || '');
           if (urlError) {
             console.error('Error fetching public URL:', urlError);
             throw urlError;
@@ -65,23 +62,21 @@ const Menu = () => {
       console.error('Error fetching menu items with image URLs:', error);
       return [];
     }
-  }, []);
+  };
 
-  const fetchAndSetMenuItems = useCallback(async () => {
-    try {
-      const itemsData = await fetchMenuItems();
-      setMenuItems(itemsData);
-    } catch (error) {
-      console.error('Error fetching menu items:', error);
-      // Handle the error as needed
-    }
-  }, [fetchMenuItems]);
-  
   useEffect(() => {
-    if (menuItems.length === 0) {
-      fetchAndSetMenuItems();
-    }
-  }, [fetchAndSetMenuItems, menuItems]);
+    const fetchAndSetMenuItems = async () => {
+      try {
+        const itemsData = await fetchMenuItems();
+        setMenuItems(itemsData);
+      } catch (error) {
+        console.error('Error fetching menu items:', error);
+        // Handle the error as needed
+      }
+    };
+  
+    fetchAndSetMenuItems();
+  }, []);
   
 
   // Group menu items by item_type
