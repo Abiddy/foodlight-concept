@@ -29,22 +29,6 @@ const Menu = () => {
   const [menuItems, setMenuItems] = useState([]);
   const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
-
-  const fetchAndSetMenuItems = async () => {
-    try {
-      const itemsData = await fetchMenuItems();
-      setMenuItems(itemsData);
-    } catch (error) {
-      console.error('Error fetching menu items:', error);
-      // Handle the error as needed
-    }
-  };
-  
-  useEffect(() => {
-    if (menuItems.length === 0) {
-      fetchAndSetMenuItems();
-    }
-  }, [fetchAndSetMenuItems, menuItems]);
   
   const fetchMenuItems = useCallback(async () => {
     try {
@@ -82,6 +66,22 @@ const Menu = () => {
       return [];
     }
   }, []);
+
+  const fetchAndSetMenuItems = useCallback(async () => {
+    try {
+      const itemsData = await fetchMenuItems();
+      setMenuItems(itemsData);
+    } catch (error) {
+      console.error('Error fetching menu items:', error);
+      // Handle the error as needed
+    }
+  }, [fetchMenuItems]);
+  
+  useEffect(() => {
+    if (menuItems.length === 0) {
+      fetchAndSetMenuItems();
+    }
+  }, [fetchAndSetMenuItems, menuItems]);
   
 
   // Group menu items by item_type
