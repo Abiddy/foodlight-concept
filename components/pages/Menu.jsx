@@ -138,28 +138,33 @@ const Menu = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        {Object.entries(groupedMenuItems).map(([itemType, items]) => (
-          <IonCard key={itemType} style={{ boxShadow: 'none', border: 'none' }}>
-            <IonCardHeader>
-            <IonCardTitle className={league_spartan.className}>{itemType.charAt(0).toUpperCase() + itemType.slice(1)}</IonCardTitle>
-            </IonCardHeader>
-            <Cart open={showCart} onDidDismiss={() => setShowCart(false)} cart={cart}/>
-            <IonCardContent>
-              <IonList>
-                {items.map((item) => (
-                  <MenuCard
-                    key={item.id}
-                    item={item}
-                    cart={cart}
-                    addToCart={addToCart}
-                    removeFromCart={removeFromCart}
-                  />
-                ))}
-              </IonList>
-            </IonCardContent>
-          </IonCard>
-        ))}
-      </IonContent>
+  {menuItems.length > 0 ? (
+    Object.entries(groupedMenuItems).map(([itemType, items]) => (
+      <IonCard key={itemType} style={{ boxShadow: 'none', border: 'none' }}>
+        <IonCardHeader>
+          <IonCardTitle className={league_spartan.className}>{itemType.charAt(0).toUpperCase() + itemType.slice(1)}</IonCardTitle>
+        </IonCardHeader>
+        <Cart open={showCart} onDidDismiss={() => setShowCart(false)} cart={cart}/>
+        <IonCardContent>
+          <IonList>
+            {items.map((item) => (
+              <MenuCard
+                key={item.id}
+                item={item}
+                cart={cart}
+                addToCart={addToCart}
+                removeFromCart={removeFromCart}
+              />
+            ))}
+          </IonList>
+        </IonCardContent>
+      </IonCard>
+    ))
+  ) : (
+    <div>Loading...</div>
+  )}
+</IonContent>
+
     </IonPage>
   );
 };
