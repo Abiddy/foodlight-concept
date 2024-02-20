@@ -11,6 +11,40 @@ const league_spartan = League_Spartan({ weight: ['700'], subsets: ['latin'] });
 type MenuItems = Database['public']['Tables']['menu_items']['Row'] & { item_image_url?: string | null };
 const supabase = createClientComponentClient<Database>();
 
+export const fetchMenuItemsFromCombo = async (userId: string): Promise<MenuItems[]> => {
+  try {
+    const { data, error } = await supabase
+      .from('menu_items')
+      .select('id, item_name, item_description, item_price, item_image, uid, item_type')
+      .eq('uid', userId); 
+
+    if (error) {
+      console.error('Error fetching menu items:', error);
+      return [];
+    }
+
+    const itemsWithUrls = await Promise.all(
+      data.map(async (item) => {
+        const { data: publicUrl, error: urlError } = await supabase.storage.from('menu-images').getPublicUrl(item.item_image || '');
+        if (urlError) {
+          console.error('Error fetching public URL:', urlError);
+          throw urlError;
+        }
+
+        return {
+          ...item,
+          item_image_url: publicUrl?.publicUrl || null,
+        };
+      })
+    );
+
+    return itemsWithUrls;
+  } catch (error) {
+    console.error('Error fetching menu items with image URLs:', error);
+    return [];
+  }
+};
+
 const ComboCard = ({ userId, combination }) => {
   const [menuItems, setMenuItems] = useState([]);
   const [maxPrice, setMaxPrice] = useState(10);

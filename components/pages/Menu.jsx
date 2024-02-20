@@ -19,55 +19,73 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { MenuCard } from '../MenuCard';
 import { League_Spartan } from 'next/font/google';
 import Cart from './Cart';
+import { fetchMenuItemsFromCombo } from './Comobos/Combos';
 
 
 const league_spartan = League_Spartan({ weight: ['600'], subsets: ['latin'] });
 
-const supabase = createClientComponentClient(); // Initialize Supabase client
+// const supabase = createClientComponentClient(); // Initialize Supabase client
 
 const Menu = () => {
   const [menuItems, setMenuItems] = useState([]);
   const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
   
-  const fetchMenuItems = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('menu_items')
-        .select('id, item_name, item_description, item_price, item_image, uid, item_type')
-        .eq('uid', '1f358f02-322f-4edd-af31-4bec37bd0ac9'); 
+  // const fetchMenuItems = async () => {
+  //   try {
+  //     const { data, error } = await supabase
+  //       .from('menu_items')
+  //       .select('id, item_name, item_description, item_price, item_image, uid, item_type')
+  //       .eq('uid', '1f358f02-322f-4edd-af31-4bec37bd0ac9'); 
   
-      if (error) {
-        console.error('Error fetching menu items:', error);
-        return [];
-      }
+  //     if (error) {
+  //       console.error('Error fetching menu items:', error);
+  //       return [];
+  //     }
 
-      const itemsWithUrls = await Promise.all(
-        data.map(async (item) => {
-          const { data: publicUrl, error: urlError } = await supabase.storage.from('menu-images').getPublicUrl(item.item_image || '');
-          if (urlError) {
-            console.error('Error fetching public URL:', urlError);
-            throw urlError;
-          }
+  //     const itemsWithUrls = await Promise.all(
+  //       data.map(async (item) => {
+  //         const { data: publicUrl, error: urlError } = await supabase.storage.from('menu-images').getPublicUrl(item.item_image || '');
+  //         if (urlError) {
+  //           console.error('Error fetching public URL:', urlError);
+  //           throw urlError;
+  //         }
   
-          return {
-            ...item,
-            item_image_url: publicUrl?.publicUrl || null,
-          };
-        })
-      );
+  //         return {
+  //           ...item,
+  //           item_image_url: publicUrl?.publicUrl || null,
+  //         };
+  //       })
+  //     );
   
-      return itemsWithUrls;
-    } catch (error) {
-      console.error('Error fetching menu items with image URLs:', error);
-      return [];
-    }
-  };
+  //     return itemsWithUrls;
+  //   } catch (error) {
+  //     console.error('Error fetching menu items with image URLs:', error);
+  //     return [];
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const fetchAndSetMenuItems = async () => {
+  //     try {
+  //       const itemsData = await fetchMenuItems();
+  //       setMenuItems(itemsData);
+  //     } catch (error) {
+  //       console.error('Error fetching menu items:', error);
+  //       // Handle the error as needed
+  //     }
+  //   };
+  
+  //   fetchAndSetMenuItems();
+  // }, []);
+  
+
+  // Group menu items by item_type
 
   useEffect(() => {
-    const fetchAndSetMenuItems = async () => {
+    const fetchMenuItems = async () => {
       try {
-        const itemsData = await fetchMenuItems();
+        const itemsData = await fetchMenuItemsFromCombo('1f358f02-322f-4edd-af31-4bec37bd0ac9'); // Pass the appropriate userId here
         setMenuItems(itemsData);
       } catch (error) {
         console.error('Error fetching menu items:', error);
@@ -75,11 +93,10 @@ const Menu = () => {
       }
     };
   
-    fetchAndSetMenuItems();
+    fetchMenuItems();
   }, []);
-  
 
-  // Group menu items by item_type
+
   const groupedMenuItems = menuItems.reduce((acc, item) => {
     const { item_type } = item;
     if (!acc[item_type]) {
