@@ -78,10 +78,9 @@ const Menu = () => {
   };
 
   useEffect(() => {
-    if(menuItems == null){
+    if(!menuItems.length){
       fetchAndSetMenuItems();
     }
-
   }, []);
 
   // Group menu items by item_type
