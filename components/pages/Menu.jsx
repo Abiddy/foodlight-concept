@@ -70,9 +70,7 @@ const Menu = () => {
   const fetchAndSetMenuItems = async () => {
     try {
       const itemsData = await fetchMenuItems();
-      if(!menuItems){
-        setMenuItems(itemsData);
-      }
+      setMenuItems(itemsData);
     } catch (error) {
       console.error('Error fetching menu items:', error);
       // Handle the error as needed
@@ -80,9 +78,10 @@ const Menu = () => {
   };
 
   useEffect(() => {
+    if(menuItems == null){
+      fetchAndSetMenuItems();
+    }
 
-
-    fetchAndSetMenuItems();
   }, []);
 
   // Group menu items by item_type
