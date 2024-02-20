@@ -26,7 +26,7 @@ const ComboCard = ({ userId, combination }) => {
         console.error('Error fetching menu items:', error);
         return [];
       }
-      
+
       const itemsWithUrls = await Promise.all(
         data.map(async (item) => {
           const { data: publicUrl, error: urlError } = await supabase.storage.from('menu-images').getPublicUrl(item.item_image || '');
@@ -99,7 +99,7 @@ const ComboCard = ({ userId, combination }) => {
         <div key={index} style={{ marginBottom: '50px' }} className=" p-6 text-center mt-15 mb-15 dark:bg-gray-900 border border-gray-300 shadow-md rounded-xl"
         >
           <div className="flex justify-between p-5">
-            <h1 className={league_spartan.className}>#{combo.index[0]}</h1>
+            <h1 className={league_spartan.className}>Combo #{combo.index[0]}</h1>
             <h1 className={league_spartan.className}>${calculateTotalPrice(combo.item_ids, menuItems).toFixed(2)}</h1>
           </div>
           <div className='pl-5 pr-5'>

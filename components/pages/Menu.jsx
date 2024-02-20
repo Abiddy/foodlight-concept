@@ -30,53 +30,58 @@ const Menu = () => {
   const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
 
-  const fetchMenuItems = async () => {
+  const fetchMenuItems = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from('menu_items')
-        .select('id, item_name, item_description, item_price, item_image, uid')
-        .eq('uid', '1f358f02-322f-4edd-af31-4bec37bd0ac9'); 
-  
+        .select('id, item_name, item_description, item_price, item_image, uid, item_type')
+        .eq('uid', '1f358f02-322f-4edd-af31-4bec37bd0ac9'); // Add a filter to only fetch items belonging to the logged-in user
+
       if (error) {
         console.error('Error fetching menu items:', error);
         return [];
       }
-      
+
+      // Fetch public URLs for each image
       const itemsWithUrls = await Promise.all(
         data.map(async (item) => {
-          const { data: publicUrl, error: urlError } = await supabase.storage.from('menu-images').getPublicUrl(item.item_image || '');
+          const { data: publicUrl, error: urlError } = await supabase.storage.from('menu-images').getPublicUrl(
+            item.item_image || ''
+          );
           if (urlError) {
             console.error('Error fetching public URL:', urlError);
             throw urlError;
           }
-  
+
           return {
             ...item,
             item_image_url: publicUrl?.publicUrl || null,
           };
         })
       );
-  
+
       return itemsWithUrls;
     } catch (error) {
       console.error('Error fetching menu items with image URLs:', error);
       return [];
     }
-  };
-
-  useEffect(() => {
-    const fetchAndSetMenuItems = async () => {
-      try {
-        const itemsData = await fetchMenuItems();
-        setMenuItems(itemsData);
-      } catch (error) {
-        console.error('Error fetching menu items:', error);
-      }
-    };
-  
-    fetchAndSetMenuItems();
   }, []);
 
+  // useEffect(() => {
+  //   const fetchAndSetMenuItems = async () => {
+  //     try {
+  //       const itemsData = await fetchMenuItems();
+  //       setMenuItems(itemsData);
+  //     } catch (error) {
+  //       console.error('Error fetching menu items:', error);
+  //       // Handle the error as needed
+  //     }
+  //   };
+
+  //   fetchAndSetMenuItems();
+  // }, []);
+
+  // Group menu items by item_type
   const groupedMenuItems = menuItems.reduce((acc, item) => {
     const { item_type } = item;
     if (!acc[item_type]) {
@@ -89,9 +94,11 @@ const Menu = () => {
   const addToCart = (item) => {
     const existingItem = cart.find((cartItem) => cartItem.id === item.id);
     if (existingItem) {
+      // If the item already exists in the cart, update its quantity
       existingItem.quantity += 1;
-      setCart([...cart]); 
+      setCart([...cart]); // Trigger state update to re-render
     } else {
+      // If the item doesn't exist in the cart, add it with quantity 1
       setCart([...cart, { ...item, quantity: 1 }]);
     }
   };
@@ -104,6 +111,7 @@ const Menu = () => {
       if (existingItem.quantity > 1) {
         existingItem.quantity -= 1;
       } else {
+        // If quantity is 1, remove the item from the cart
         updatedCart.splice(existingItemIndex, 1);
       }
       setCart(updatedCart);
