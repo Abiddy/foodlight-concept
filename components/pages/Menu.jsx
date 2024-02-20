@@ -81,7 +81,7 @@ const Menu = () => {
     if(!menuItems.length){
       fetchAndSetMenuItems();
     }
-  }, []);
+  }, [fetchAndSetMenuItems]);
 
   // Group menu items by item_type
   const groupedMenuItems = menuItems.reduce((acc, item) => {
