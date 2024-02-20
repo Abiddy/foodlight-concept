@@ -83,21 +83,21 @@ const Menu = () => {
   // Group menu items by item_type
 
 
-  useEffect(() => {
-    const fetchMenuItems = async () => {
-      try {
-        const itemsData = await fetchMenuItemsFromCombo('1f358f02-322f-4edd-af31-4bec37bd0ac9'); // Pass the appropriate userId here
-        setMenuItems(itemsData);
-      } catch (error) {
-        console.error('Error fetching menu items:', error);
-        // Handle the error as needed
-      }
-    };
+  // useEffect(() => {
+  //   const fetchMenuItems = async () => {
+  //     try {
+  //       const itemsData = await fetchMenuItemsFromCombo('1f358f02-322f-4edd-af31-4bec37bd0ac9'); // Pass the appropriate userId here
+  //       setMenuItems(itemsData);
+  //     } catch (error) {
+  //       console.error('Error fetching menu items:', error);
+  //       // Handle the error as needed
+  //     }
+  //   };
 
-    if (menuItems.length === 0) {
-      fetchMenuItems();
-    }
-  }, [menuItems]);
+  //   if (menuItems.length === 0) {
+  //     fetchMenuItems();
+  //   }
+  // }, [menuItems]);
 
 
   const groupedMenuItems = menuItems.reduce((acc, item) => {
