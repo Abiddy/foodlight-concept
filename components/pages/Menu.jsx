@@ -30,43 +30,6 @@ const Menu = () => {
   const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
 
-  const fetchMenuItems = useCallback(async () => {
-    try {
-      const { data, error } = await supabase
-        .from('menu_items')
-        .select('id, item_name, item_description, item_price, item_image, uid, item_type')
-        .eq('uid', '1f358f02-322f-4edd-af31-4bec37bd0ac9'); // Add a filter to only fetch items belonging to the logged-in user
-
-      if (error) {
-        console.error('Error fetching menu items:', error);
-        return [];
-      }
-
-      // Fetch public URLs for each image
-      const itemsWithUrls = await Promise.all(
-        data.map(async (item) => {
-          const { data: publicUrl, error: urlError } = await supabase.storage.from('menu-images').getPublicUrl(
-            item.item_image || ''
-          );
-          if (urlError) {
-            console.error('Error fetching public URL:', urlError);
-            throw urlError;
-          }
-
-          return {
-            ...item,
-            item_image_url: publicUrl?.publicUrl || null,
-          };
-        })
-      );
-
-      return itemsWithUrls;
-    } catch (error) {
-      console.error('Error fetching menu items with image URLs:', error);
-      return [];
-    }
-  }, []);
-
   const fetchAndSetMenuItems = async () => {
     try {
       const itemsData = await fetchMenuItems();
@@ -76,12 +39,50 @@ const Menu = () => {
       // Handle the error as needed
     }
   };
-
+  
   useEffect(() => {
-    if(!menuItems.length){
+    if (menuItems.length === 0) {
       fetchAndSetMenuItems();
     }
-  }, [fetchAndSetMenuItems]);
+  }, [fetchAndSetMenuItems, menuItems]);
+  
+  const fetchMenuItems = useCallback(async () => {
+    try {
+      const { data, error } = await supabase
+        .from('menu_items')
+        .select('id, item_name, item_description, item_price, item_image, uid, item_type')
+        .eq('uid', '1f358f02-322f-4edd-af31-4bec37bd0ac9');
+  
+      if (error) {
+        console.error('Error fetching menu items:', error);
+        return [];
+      }
+  
+      const itemsWithUrls = await Promise.all(
+        data.map(async (item) => {
+          const { data: publicUrl, error: urlError } = await supabase.storage
+            .from('menu-images')
+            .getPublicUrl(item.item_image || '');
+  
+          if (urlError) {
+            console.error('Error fetching public URL:', urlError);
+            throw urlError;
+          }
+  
+          return {
+            ...item,
+            item_image_url: publicUrl?.publicUrl || null,
+          };
+        })
+      );
+  
+      return itemsWithUrls;
+    } catch (error) {
+      console.error('Error fetching menu items with image URLs:', error);
+      return [];
+    }
+  }, []);
+  
 
   // Group menu items by item_type
   const groupedMenuItems = menuItems.reduce((acc, item) => {
