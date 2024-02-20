@@ -82,6 +82,7 @@ const Menu = () => {
 
   // Group menu items by item_type
 
+
   useEffect(() => {
     const fetchMenuItems = async () => {
       try {
@@ -92,9 +93,11 @@ const Menu = () => {
         // Handle the error as needed
       }
     };
-  
-    fetchMenuItems();
-  }, []);
+
+    if (menuItems.length === 0) {
+      fetchMenuItems();
+    }
+  }, [menuItems]);
 
 
   const groupedMenuItems = menuItems.reduce((acc, item) => {
