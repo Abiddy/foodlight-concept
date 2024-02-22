@@ -14,6 +14,7 @@ const Store = new PullStateStore({
   settings: {
     enableNotifications: true,
   },
+  menuItems: [],
 });
 
 export default Store;

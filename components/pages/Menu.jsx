@@ -15,11 +15,11 @@ import {
   IonButton,
   IonMenuButton,
 } from '@ionic/react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { MenuCard } from '../MenuCard';
 import { League_Spartan } from 'next/font/google';
 import Cart from './Cart';
 import { fetchMenuItemsFromCombo } from './Comobos/Combos';
+import Store from '../../store';
 
 
 const league_spartan = League_Spartan({ weight: ['600'], subsets: ['latin'] });
@@ -27,9 +27,10 @@ const league_spartan = League_Spartan({ weight: ['600'], subsets: ['latin'] });
 // const supabase = createClientComponentClient(); // Initialize Supabase client
 
 const Menu = () => {
-  const [menuItems, setMenuItems] = useState([]);
+  // const [menuItems, setMenuItems] = useState([]);
   const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
+  const menuItems = Store.useState(s => s.menuItems);
   
   // const fetchMenuItems = async () => {
   //   try {
@@ -86,18 +87,17 @@ const Menu = () => {
   // useEffect(() => {
   //   const fetchMenuItems = async () => {
   //     try {
-  //       const itemsData = await fetchMenuItemsFromCombo('1f358f02-322f-4edd-af31-4bec37bd0ac9'); // Pass the appropriate userId here
+  //       const itemsData = await fetchMenuItemsFromCombo('1f358f02-322f-4edd-af31-4bec37bd0ac9'); 
   //       setMenuItems(itemsData);
   //     } catch (error) {
   //       console.error('Error fetching menu items:', error);
-  //       // Handle the error as needed
   //     }
   //   };
 
   //   if (menuItems.length === 0) {
   //     fetchMenuItems();
   //   }
-  // }, [menuItems]);
+  // }, []);
 
 
   const groupedMenuItems = menuItems.reduce((acc, item) => {

@@ -1,93 +1,60 @@
-// ComboCard.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { League_Spartan } from 'next/font/google';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '../../../types/supabase';
 import ItemCard from './Item-Cards';
 import { IonRange } from '@ionic/react';
+import Store from '../../../store';
+import { setMenuItems } from '../../../store/actions';
+
 
 const league_spartan = League_Spartan({ weight: ['700'], subsets: ['latin'] });
 
 type MenuItems = Database['public']['Tables']['menu_items']['Row'] & { item_image_url?: string | null };
 const supabase = createClientComponentClient<Database>();
 
-export const fetchMenuItemsFromCombo = async (userId: string): Promise<MenuItems[]> => {
-  try {
-    const { data, error } = await supabase
-      .from('menu_items')
-      .select('id, item_name, item_description, item_price, item_image, uid, item_type')
-      .eq('uid', userId); 
-
-    if (error) {
-      console.error('Error fetching menu items:', error);
-      return [];
-    }
-
-    const itemsWithUrls = await Promise.all(
-      data.map(async (item) => {
-        const { data: publicUrl, error: urlError } = await supabase.storage.from('menu-images').getPublicUrl(item.item_image || '');
-        if (urlError) {
-          console.error('Error fetching public URL:', urlError);
-          throw urlError;
-        }
-
-        return {
-          ...item,
-          item_image_url: publicUrl?.publicUrl || null,
-        };
-      })
-    );
-
-    return itemsWithUrls;
-  } catch (error) {
-    console.error('Error fetching menu items with image URLs:', error);
-    return [];
-  }
-};
-
 const ComboCard = ({ userId, combination }) => {
-  const [menuItems, setMenuItems] = useState([]);
-  const [maxPrice, setMaxPrice] = useState(10);
-
-  const fetchMenuItems = async (): Promise<MenuItems[]> => {
-    try {
-      const { data, error } = await supabase
-        .from('menu_items')
-        .select('id, item_name, item_description, item_price, item_image, uid')
-        .eq('uid', userId); 
-  
-      if (error) {
-        console.error('Error fetching menu items:', error);
-        return [];
-      }
-
-      const itemsWithUrls = await Promise.all(
-        data.map(async (item) => {
-          const { data: publicUrl, error: urlError } = await supabase.storage.from('menu-images').getPublicUrl(item.item_image || '');
-          if (urlError) {
-            console.error('Error fetching public URL:', urlError);
-            throw urlError;
-          }
-  
-          return {
-            ...item,
-            item_image_url: publicUrl?.publicUrl || null,
-          };
-        })
-      );
-  
-      return itemsWithUrls;
-    } catch (error) {
-      console.error('Error fetching menu items with image URLs:', error);
-      return [];
-    }
-  };
+  const [maxPrice, setMaxPrice] = useState(10); 
 
   useEffect(() => {
+    const fetchMenuItems = async (): Promise<MenuItems[]> => {
+      try {
+        const { data, error } = await supabase
+          .from('menu_items')
+          .select('id, item_name, item_description, item_price, item_image, uid, item_type')
+          .eq('uid', userId); 
+  
+        if (error) {
+          console.error('Error fetching menu items:', error);
+          return [];
+        }
+  
+        const itemsWithUrls = await Promise.all(
+          data.map(async (item) => {
+            const { data: publicUrl, error: urlError } = await supabase.storage.from('menu-images').getPublicUrl(item.item_image || '');
+            if (urlError) {
+              console.error('Error fetching public URL:', urlError);
+              throw urlError;
+            }
+    
+            return {
+              ...item,
+              item_image_url: publicUrl?.publicUrl || null,
+            };
+          })
+        );
+    
+        return itemsWithUrls;
+      } catch (error) {
+        console.error('Error fetching menu items with image URLs:', error);
+        return [];
+      }
+    };
+  
     const fetchAndSetMenuItems = async () => {
       try {
         const itemsData = await fetchMenuItems();
-        setMenuItems(itemsData);
+        setMenuItems(itemsData); // Update the store with fetched menu items
       } catch (error) {
         console.error('Error fetching menu items:', error);
         // Handle the error as needed
@@ -95,9 +62,11 @@ const ComboCard = ({ userId, combination }) => {
     };
   
     fetchAndSetMenuItems();
-  }, []);
+  }, [userId]);
 
-  const calculateTotalPrice = (itemIds, menuItems) => {
+  const menuItems = Store.useState(s => s.menuItems); // Retrieve menuItems from the store
+
+  const calculateTotalPrice = (itemIds) => {
     let totalPrice = 0;
 
     Object.values(itemIds).forEach((items) => {
@@ -112,29 +81,28 @@ const ComboCard = ({ userId, combination }) => {
     return totalPrice;
   };
 
+
   const filteredCombinations = combination.filter((combo) => {
-    const totalPrice = calculateTotalPrice(combo.item_ids, menuItems);
+    const totalPrice = calculateTotalPrice(combo.item_ids); // Use menuItems retrieved from the store
     return totalPrice <= maxPrice;
   });
 
-  console.log({filteredCombinations})
+  console.log({filteredCombinations});
  
-
   return (
     <div style={{ maxWidth: '500px' }}>
-
-     <IonRange 
-     ticks={true} snaps={true}
-     aria-label="Range with ionChange" 
-     pin={true}       
-     onIonChange={({ detail }) =>  setMaxPrice(detail.value)}>
-     </IonRange>
+      <IonRange 
+        ticks={true} 
+        snaps={true}
+        aria-label="Range with ionChange" 
+        pin={true}       
+        onIonChange={({ detail }) =>  setMaxPrice(detail.value)}>
+      </IonRange>
       {filteredCombinations.map((combo, index) => (
-        <div key={index} style={{ marginBottom: '50px' }} className=" p-6 text-center mt-15 mb-15 dark:bg-gray-900 border border-gray-300 shadow-md rounded-xl"
-        >
+        <div key={index} style={{ marginBottom: '50px' }} className="p-6 text-center mt-15 mb-15 dark:bg-gray-900 border border-gray-300 shadow-md rounded-xl">
           <div className="flex justify-between p-5">
             <h1 className={league_spartan.className}>Combo #{combo.index[0]}</h1>
-            <h1 className={league_spartan.className}>${calculateTotalPrice(combo.item_ids, menuItems).toFixed(2)}</h1>
+            <h1 className={league_spartan.className}>${calculateTotalPrice(combo.item_ids)}</h1>
           </div>
           <div className='pl-5 pr-5'>
             {Object.entries(combo.item_ids).map(([header, items]) => (
@@ -143,7 +111,7 @@ const ComboCard = ({ userId, combination }) => {
                   <h3 className={`${league_spartan.className} text-2xl mt-1 mr-4`}>{header}</h3>
                 </div>
                 {items.map((itemId) => {
-                  const selectedItem = menuItems.find((item) => item.id === itemId);
+                  const selectedItem = menuItems.find((item) => item.id === itemId); // Access menuItems from the store
                   if (selectedItem) {
                     return <ItemCard key={itemId} item={selectedItem} />;
                   } else {

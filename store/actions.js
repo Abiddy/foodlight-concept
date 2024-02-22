@@ -30,3 +30,9 @@ export const setDone = (list, item, done) => {
     }
   });
 };
+
+export const setMenuItems = items => {
+  Store.update(s => {
+    s.menuItems = items;
+  });
+};
