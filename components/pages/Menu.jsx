@@ -19,6 +19,7 @@ import { MenuCard } from '../MenuCard';
 import { League_Spartan } from 'next/font/google';
 import Cart from './Cart';
 import Store from '../../store';
+import { Button, Card, CardBody, CardHeader, Typography } from '@material-tailwind/react';
 
 
 const league_spartan = League_Spartan({ weight: ['600'], subsets: ['latin'] });
@@ -89,17 +90,40 @@ const Menu = () => {
           <IonCardTitle className={league_spartan.className}>{itemType.charAt(0).toUpperCase() + itemType.slice(1)}</IonCardTitle>
         </IonCardHeader>
         <Cart open={showCart} onDidDismiss={() => setShowCart(false)} cart={cart}/>
-        <IonCardContent>
-     
-            {items.map((item) => (
-              <MenuCard
-                key={item.id}
-                item={item}
-                addToCart={addToCart}
-              />
-            ))}
-        
-        </IonCardContent>
+        <IonCardContent> 
+  {items.map((item) => (
+    <Card className="w-full max-w-[48rem] flex-row mb-4">
+      <CardHeader shadow={false} floated={false} className="m-0 w-2/5 shrink-0 rounded-r-none">
+        <img
+          src={item.item_image_url || 'default-image-url'}
+          alt="card-image"
+          className="h-full w-full object-cover"
+        />
+      </CardHeader>
+      <CardBody>
+        <Typography variant="h2" className="mb-2">
+          {item.item_name}
+        </Typography>
+        <Typography color="blue-gray" className="font-medium">
+          ${item.item_price}
+        </Typography>
+        <Typography color="gray" className="mb-4 font-normal">   
+          {item.item_description}
+        </Typography>
+        <a href="#" className="inline-block">
+          <Button
+            onClick={() => addToCart(item)}
+            variant="text"
+            className="flex items-center gap-2"
+          >
+            Add
+          </Button>
+        </a>
+      </CardBody>
+    </Card>
+  ))}
+</IonCardContent>
+
       </IonCard>
     ))
   ) : (
