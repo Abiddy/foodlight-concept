@@ -92,7 +92,7 @@ const Menu = () => {
         <Cart open={showCart} onDidDismiss={() => setShowCart(false)} cart={cart}/>
         <IonCardContent> 
   {items.map((item) => (
-    <Card className="w-full max-w-[48rem] flex-row mb-4">
+    <Card key={item.id} className="w-full max-w-[48rem] flex-row mb-4">
       <CardHeader shadow={false} floated={false} className="m-0 w-2/5 shrink-0 rounded-r-none">
         <img
           src={item.item_image_url || 'default-image-url'}
