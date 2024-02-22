@@ -6,6 +6,7 @@ import Home from './Feed';
 import Lists from './Lists';
 import ListDetail from './ListDetail';
 import Menu from './Menu';
+import ErrorBoundary from './ErrorBoundary';
 
 const Tabs = () => {
   return (
@@ -14,7 +15,10 @@ const Tabs = () => {
         <Route path="/tabs/feed" render={() => <Home />} exact={true} />
         <Route path="/tabs/lists" render={() => <Lists />} exact={true} />
         <Route path="/tabs/lists/:listId" render={() => <ListDetail />} exact={true} />
-        <Route path="/tabs/menu" render={() => <Menu />} exact={true} />
+        <Route path="/tabs/menu" render={() => <ErrorBoundary fallback={<p>Something went wrong</p>}>
+  <Menu  />
+</ErrorBoundary>
+} exact={true} />
         <Route path="/tabs" render={() => <Redirect to="/tabs/feed" />} exact={true} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">

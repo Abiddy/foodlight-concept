@@ -37,6 +37,7 @@ const Menu = () => {
     acc[item_type].push(item);
     return acc;
   }, {});
+  console.log({groupedMenuItems})
 
   const addToCart = (item) => {
     // const existingItem = cart.find((cartItem) => cartItem.id === item.id);
