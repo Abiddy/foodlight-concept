@@ -7,6 +7,7 @@ import {
 } from "@material-tailwind/react";
 
 export function MenuCard({ item, addToCart }) {
+  console.log("Rendering MenuCard with item:", item);
 
   return (
     <Card className="w-full max-w-[48rem] flex-row mb-4">

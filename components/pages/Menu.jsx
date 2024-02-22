@@ -90,7 +90,7 @@ const Menu = () => {
         </IonCardHeader>
         <Cart open={showCart} onDidDismiss={() => setShowCart(false)} cart={cart}/>
         <IonCardContent>
-          {/* <IonList>
+     
             {items.map((item) => (
               <MenuCard
                 key={item.id}
@@ -98,7 +98,7 @@ const Menu = () => {
                 addToCart={addToCart}
               />
             ))}
-          </IonList> */}
+        
         </IonCardContent>
       </IonCard>
     ))
