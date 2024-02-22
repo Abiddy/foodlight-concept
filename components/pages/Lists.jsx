@@ -31,6 +31,8 @@ const AllLists = ({ onSelect }) => {
 };
 
 const Lists = () => {
+
+  const menuItems = Store.useState(s => s.menuItems);
   return (
     <IonPage>
       <IonHeader translucent={true}>
@@ -47,6 +49,7 @@ const Lists = () => {
         <IonList>
           <AllLists />
         </IonList>
+        <h1>{menuItems[0].item_name}</h1>
       </IonContent>
     </IonPage>
   );
