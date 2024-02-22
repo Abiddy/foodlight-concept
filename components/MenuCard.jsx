@@ -6,9 +6,7 @@ import {
   Button,
 } from "@material-tailwind/react";
 
-export function MenuCard({ item, cart, addToCart }) {
-
-  // const cartItem = cart.find((cartItem) => cartItem.id === item.id);
+export function MenuCard({ item, addToCart }) {
 
   return (
     <Card className="w-full max-w-[48rem] flex-row mb-4">
