@@ -64,7 +64,7 @@ const ComboCard = ({ userId, combination }) => {
     fetchAndSetMenuItems();
   }, [userId]);
 
-  const menuItems = Store.useState(s => s.menuItems); // Retrieve menuItems from the store
+  const menuItems = Store.useState(s => s.menuItems); 
 
   const calculateTotalPrice = (itemIds) => {
     let totalPrice = 0;

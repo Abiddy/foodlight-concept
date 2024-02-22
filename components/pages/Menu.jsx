@@ -63,7 +63,7 @@ const Menu = () => {
     }
   };
 
-  console.log({cart})
+  console.log({menuItems})
 
   return (
     <IonPage>
