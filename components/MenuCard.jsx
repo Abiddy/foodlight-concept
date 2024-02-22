@@ -5,16 +5,10 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
-import { useState } from "react";
 
 export function MenuCard({ item, cart, addToCart }) {
-  const [isExpanded, setIsExpanded] = useState(false);
 
-  const cartItem = cart.find((cartItem) => cartItem.id === item.id);
-
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
+  // const cartItem = cart.find((cartItem) => cartItem.id === item.id);
 
   return (
     <Card className="w-full max-w-[48rem] flex-row mb-4">
@@ -32,26 +26,9 @@ export function MenuCard({ item, cart, addToCart }) {
         <Typography color="blue-gray" className="font-medium">
           ${item.item_price}
         </Typography>
-        {item.item_description && (
-          <Typography color="gray" className="mb-4 font-normal">
-            {isExpanded && item.item_description.length > 100 ? (
-              <>
-                {item.item_description.slice(0, 100) + "..."}
-                {item.item_description.length > 100 && (
-                  <Button
-                    onClick={toggleExpand}
-                    variant="text"
-                    className="flex items-center gap-2"
-                  >
-                    {isExpanded ? "Read Less" : "Read More"}
-                  </Button>
-                )}
-              </>
-            ) : (
-              item.item_description
-            )}
+        <Typography color="gray" className="mb-4 font-normal">   
+              {item.item_description}
           </Typography>
-        )}
         <a href="#" className="inline-block">
           <Button
             onClick={() => addToCart(item)}

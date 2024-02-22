@@ -40,28 +40,28 @@ const Menu = () => {
   console.log({groupedMenuItems})
 
   const addToCart = (item) => {
-    // const existingItem = cart.find((cartItem) => cartItem.id === item.id);
-    // if (existingItem) {
-    //   existingItem.quantity += 1;
-    //   setCart([...cart]); 
-    // } else {
-    //   setCart([...cart, { ...item, quantity: 1 }]);
-    // }
+    const existingItem = cart.find((cartItem) => cartItem.id === item.id);
+    if (existingItem) {
+      existingItem.quantity += 1;
+      setCart([...cart]); 
+    } else {
+      setCart([...cart, { ...item, quantity: 1 }]);
+    }
   };
   
   const removeFromCart = (item) => {
-    // const existingItemIndex = cart.findIndex((cartItem) => cartItem.id === item.id);
-    // if (existingItemIndex !== -1) {
-    //   const updatedCart = [...cart];
-    //   const existingItem = updatedCart[existingItemIndex];
-    //   if (existingItem.quantity > 1) {
-    //     existingItem.quantity -= 1;
-    //   } else {
-    //     // If quantity is 1, remove the item from the cart
-    //     updatedCart.splice(existingItemIndex, 1);
-    //   }
-    //   setCart(updatedCart);
-    // }
+    const existingItemIndex = cart.findIndex((cartItem) => cartItem.id === item.id);
+    if (existingItemIndex !== -1) {
+      const updatedCart = [...cart];
+      const existingItem = updatedCart[existingItemIndex];
+      if (existingItem.quantity > 1) {
+        existingItem.quantity -= 1;
+      } else {
+        // If quantity is 1, remove the item from the cart
+        updatedCart.splice(existingItemIndex, 1);
+      }
+      setCart(updatedCart);
+    }
   };
 
   console.log({menuItems})
