@@ -76,12 +76,10 @@ const Feed = () => {
       </IonHeader>
       <IonContent className="ion-padding" fullscreen>
         <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Feed</IonTitle>
-          </IonToolbar>
         </IonHeader>
         <Notifications open={showNotifications} onDidDismiss={() => setShowNotifications(false)} />
         <h1 className={league_spartan.className}>Chefs Combos</h1>
+        <p1 >Set a max price and find the best chef reccommended combinations!</p1>
       <ComboCardWrapper userId={'1f358f02-322f-4edd-af31-4bec37bd0ac9'} combination={comboData} />
       </IonContent>
     </IonPage>

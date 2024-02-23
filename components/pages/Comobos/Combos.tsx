@@ -90,14 +90,19 @@ const ComboCard = ({ userId, combination }) => {
   console.log({filteredCombinations});
  
   return (
-    <div style={{ maxWidth: '500px' }}>
-      <IonRange 
-        ticks={true} 
-        snaps={true}
-        aria-label="Range with ionChange" 
-        pin={true}       
-        onIonChange={({ detail }) =>  setMaxPrice(detail.value)}>
-      </IonRange>
+    <div style={{ maxWidth: '500px', marginTop: '30px' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <p className={league_spartan.className} style={{ marginRight: '1rem' }}>Budget:</p>
+          <IonRange 
+            style={{ padding: '0' }}
+            ticks={true} 
+            snaps={true}
+            aria-label="Range with ionChange" 
+            pin={true}       
+            onIonChange={({ detail }) =>  setMaxPrice(detail.value)}
+          />
+        </div>
+
       {filteredCombinations.map((combo, index) => (
         <div key={index} style={{ marginBottom: '50px' }} className="p-6 text-center mt-15 mb-15 dark:bg-gray-900 border border-gray-300 shadow-md rounded-xl">
           <div className="flex justify-between p-5">
