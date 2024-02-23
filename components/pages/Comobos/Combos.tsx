@@ -103,31 +103,37 @@ const ComboCard = ({ userId, combination }) => {
           />
         </div>
 
-      {filteredCombinations.map((combo, index) => (
-        <div key={index} style={{ marginBottom: '50px' }} className="p-6 text-center mt-15 mb-15 dark:bg-gray-900 border border-gray-300 shadow-md rounded-xl">
-          <div className="flex justify-between p-5">
-            <h1 className={league_spartan.className}>Combo #{combo.index[0]}</h1>
-            <h1 className={league_spartan.className}>${calculateTotalPrice(combo.item_ids)}</h1>
+        {filteredCombinations.map((combo, index) => {
+  // Filter out the headers/keys with empty arrays
+  const nonEmptyHeaders = Object.entries(combo.item_ids).filter(([header, items]) => items.length > 0);
+
+  return (
+    <div key={index} style={{ marginBottom: '50px' }} className="p-2 text-center mt-15 mb-15 dark:bg-gray-900 border border-gray-300 shadow-md rounded-xl">
+      <div className="flex justify-between p-3">
+        <h1 className={league_spartan.className}>Combo #{combo.index[0]}</h1>
+        <h1 className={league_spartan.className}>${calculateTotalPrice(combo.item_ids)}</h1>
+      </div>
+      <div className='pl-5 pr-5'>
+        {nonEmptyHeaders.map(([header, items]) => (
+          <div key={header} className="mb-4">
+            <div className="flex items-center gap-0 mt-7 mb-5">
+              <h3 className={`${league_spartan.className} text-2xl mt-1 mr-4`}>{header}</h3>
+            </div>
+            {items.map((itemId) => {
+              const selectedItem = menuItems.find((item) => item.id === itemId); // Access menuItems from the store
+              if (selectedItem) {
+                return <ItemCard key={itemId} item={selectedItem} />;
+              } else {
+                return null; 
+              }
+            })}                                  
           </div>
-          <div className='pl-5 pr-5'>
-            {Object.entries(combo.item_ids).map(([header, items]) => (
-              <div key={header} className="mb-4">
-                <div className="flex items-center gap-0 mt-7 mb-5">
-                  <h3 className={`${league_spartan.className} text-2xl mt-1 mr-4`}>{header}</h3>
-                </div>
-                {items.map((itemId) => {
-                  const selectedItem = menuItems.find((item) => item.id === itemId); // Access menuItems from the store
-                  if (selectedItem) {
-                    return <ItemCard key={itemId} item={selectedItem} />;
-                  } else {
-                    return null; 
-                  }
-                })}                                  
-              </div>
-            ))}
-          </div>
-        </div> 
-      ))}
+        ))}
+      </div>
+    </div>
+  );
+})}
+
     </div>
   );
 };
