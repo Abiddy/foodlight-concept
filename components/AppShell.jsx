@@ -7,10 +7,10 @@ import Tabs from './pages/Tabs';
 
 setupIonicReact({});
 
-window.matchMedia("(prefers-color-scheme: dark)").addListener(async (status) => {
+window.matchMedia("(prefers-color-scheme: light)").addListener(async (status) => {
   try {
     await StatusBar.setStyle({
-      style: status.matches ? Style.Dark : Style.Light,
+      style: Style.Light,
     });
   } catch {}
 });
