@@ -60,9 +60,9 @@ const Feed = () => {
         <IonToolbar>
           <div className='p-2'>
         <Image
-      src="/logooo.png"
-      width={50}
-      height={50}
+      src="/logo2.png"
+      width={70}
+      height={70}
       alt="Picture of the author"
     />
     </div>

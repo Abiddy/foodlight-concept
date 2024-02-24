@@ -23,7 +23,7 @@ const Tabs = () => {
         } exact={true} />
         <Route path="/tabs" render={() => <Redirect to="/tabs/feed" />} exact={true} />
       </IonRouterOutlet>
-      <IonTabBar slot="bottom">
+      <IonTabBar slot="bottom" style={{ color: 'white' }}>
         <IonTabButton tab="tab1" href="/tabs/feed">
           <IonIcon icon={flash} />
           <IonLabel>Chefs Combos</IonLabel>
