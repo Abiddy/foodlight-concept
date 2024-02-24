@@ -98,7 +98,7 @@ const Menu = () => {
                   className="h-full w-full object-cover"
                 />
               </CardHeader>
-              <CardBody>
+              <CardBody className='p-5'>
                 <Typography variant="h2" className="mb-2">
                   {item.item_name}
                 </Typography>

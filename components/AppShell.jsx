@@ -7,13 +7,13 @@ import Tabs from './pages/Tabs';
 
 setupIonicReact({});
 
-window.matchMedia("(prefers-color-scheme: light)").addListener(async (status) => {
-  try {
-    await StatusBar.setStyle({
-      style: Style.Light,
-    });
-  } catch {}
-});
+// window.matchMedia("(prefers-color-scheme: light)").addListener(async (status) => {
+//   try {
+//     await StatusBar.setStyle({
+//       style: Style.Light,
+//     });
+//   } catch {}
+// });
 
 const AppShell = () => {
   return (
