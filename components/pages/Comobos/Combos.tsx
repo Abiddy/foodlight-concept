@@ -91,14 +91,27 @@ const ComboCard = ({ userId, combination }) => {
  
   return (
     <div style={{ maxWidth: '500px', marginTop: '30px' }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <p className={league_spartan.className} style={{ marginRight: '1rem' }}>Budget:</p>
+        <div  style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              backgroundColor: 'white', 
+              borderRadius: '30px', 
+              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+              padding: '25px',
+              maxWidth: '250px',
+              marginBottom: '20px',
+              margin: '20px auto',
+              boxSizing: 'border-box',
+              maxHeight: '50px',
+            }}>
+          <p className={league_spartan.className} style={{ marginRight: '1rem', color: 'black' }}>Budget</p>
           <IonRange 
             style={{ padding: '0' }}
             ticks={true} 
             snaps={true}
             aria-label="Range with ionChange" 
-            pin={true}       
+            pin={true}    
+            max={500}   
             onIonChange={({ detail }) =>  setMaxPrice(detail.value)}
           />
         </div>

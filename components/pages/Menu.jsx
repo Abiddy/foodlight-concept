@@ -18,6 +18,7 @@ import { League_Spartan } from 'next/font/google';
 import Cart from './Cart';
 import Store from '../../store';
 import { Button, Card, CardBody, CardHeader, Typography } from '@material-tailwind/react';
+import { cart as cartIcon } from 'ionicons/icons';
 
 
 const league_spartan = League_Spartan({ weight: ['600'], subsets: ['latin'] });
@@ -75,7 +76,7 @@ const Menu = () => {
           </IonButtons>
           <IonButtons slot="end">
             <IonButton onClick={() => setShowCart(true)}>
-              <IonIcon icon={cart} />
+              <IonIcon icon={cartIcon} />
             </IonButton>
           </IonButtons>
         </IonToolbar>

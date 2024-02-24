@@ -11,6 +11,7 @@ import {
   IonButton,
   IonIcon,
 } from '@ionic/react';
+import { close } from 'ionicons/icons';
 
 const Cart = ({ open, onDidDismiss, cart }) => {
 

@@ -75,8 +75,6 @@ const Feed = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding" fullscreen>
-        <IonHeader collapse="condense">
-        </IonHeader>
         <Notifications open={showNotifications} onDidDismiss={() => setShowNotifications(false)} />
         <h1 className={league_spartan.className}>Chefs Combos</h1>
         <p1 >Find the best chef reccommended combinations based on your budget!</p1>
