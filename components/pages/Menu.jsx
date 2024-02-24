@@ -86,7 +86,7 @@ const Menu = () => {
     Object.entries(groupedMenuItems).map(([itemType, items]) => (
       <IonCard key={itemType} style={{ boxShadow: 'none', border: 'none' }}>
         <IonCardHeader>
-          <IonCardTitle className={league_spartan.className}>{itemType.charAt(0).toUpperCase() + itemType.slice(1)}</IonCardTitle>
+          <h3 className={league_spartan.className}>{itemType.charAt(0).toUpperCase() + itemType.slice(1)}</h3>
         </IonCardHeader>
         <Cart open={showCart} onDidDismiss={() => setShowCart(false)} cart={cart}/>
         <IonCardContent> 

@@ -7,7 +7,6 @@ import {
   IonButton,
   IonIcon,
   IonContent,
-  IonMenuButton,
 } from '@ionic/react';
 import Notifications from './Notifications';
 import { useCallback, useEffect, useState } from 'react';
@@ -15,6 +14,7 @@ import { cart, notificationsOutline } from 'ionicons/icons';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import ComboCardWrapper from './ComboCardWrapper';
 import { League_Spartan } from 'next/font/google';
+import Image from 'next/image'
 
 
 const league_spartan = League_Spartan({ weight: ['700'], subsets: ['latin'] });
@@ -58,10 +58,14 @@ const Feed = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>WhatsOnMyMenu</IonTitle>
-          <IonButtons slot="start">
-            <IonMenuButton />
-          </IonButtons>
+          <div className='p-2'>
+        <Image
+      src="/logooo.png"
+      width={50}
+      height={50}
+      alt="Picture of the author"
+    />
+    </div>
           <IonButtons slot="end">
             <IonButton onClick={() => setShowNotifications(true)}>
               <IonIcon icon={notificationsOutline} />

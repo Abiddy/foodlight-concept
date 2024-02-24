@@ -121,7 +121,7 @@ const ComboCard = ({ userId, combination }) => {
   const nonEmptyHeaders = Object.entries(combo.item_ids).filter(([header, items]) => items.length > 0);
 
   return (
-    <div key={index} style={{ marginBottom: '50px' }} className="p-2 text-center mt-15 mb-15 dark:bg-gray-900 border border-gray-300 shadow-md rounded-xl">
+    <div key={index} style={{ marginBottom: '50px' }} className="p-2 text-center mt-15 mb-15  border border-gray-300 shadow-md rounded-xl">
       <div className="flex justify-between p-3">
         <h1 className={league_spartan.className}>Combo #{combo.index[0]}</h1>
         <h1 className={league_spartan.className}>${calculateTotalPrice(combo.item_ids)}</h1>
