@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Store from '../../store';
 import * as selectors from '../../store/selectors';
 
@@ -10,8 +11,12 @@ import {
   IonItem,
   IonLabel,
   IonList,
+  IonButtons,
+  IonButton,
+  IonIcon,
 } from '@ionic/react';
 import { League_Spartan } from 'next/font/google';
+import { cart } from 'ionicons/icons';
 
 
 const league_spartan = League_Spartan({ weight: ['600'], subsets: ['latin'] });
@@ -39,15 +44,27 @@ const Lists = () => {
   const menuItems = Store.useState(s => s.menuItems);
   return (
     <IonPage>
-      <IonHeader translucent={true}>
+      <IonHeader>
         <IonToolbar>
-          <IonTitle>Find The Best Combo by Preference!</IonTitle>
+          <div className='p-2'>
+        <Image
+      src="/logo2.png"
+      width={70}
+      height={70}
+      alt="Picture of the author"
+    />
+    </div>
+          <IonButtons slot="end">
+            <IonButton onClick={() => set(true)}>
+              <IonIcon icon={cart} />
+            </IonButton>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen={true}>
         <IonHeader collapse="condense">
         </IonHeader>
-        <h1 className={league_spartan.className}> Coming Soon!</h1>
+        <h1 className={league_spartan.className}> Find orders based on your preference!</h1>
       </IonContent>
     </IonPage>
   );

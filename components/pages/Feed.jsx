@@ -30,7 +30,7 @@ const Feed = () => {
       const { data, error } = await supabase
         .from('combo_cards')
         .select('*')
-        .eq('uid', '1f358f02-322f-4edd-af31-4bec37bd0ac9');
+        .eq('uid', '89338523-a2e1-4cf2-83a7-52e828eabc01');
 
       if (error) {
         throw error;
@@ -82,7 +82,7 @@ const Feed = () => {
         <Notifications open={showNotifications} onDidDismiss={() => setShowNotifications(false)} />
         <h1 className={league_spartan.className}>Chefs Combos</h1>
         <p1 >Find the best chef reccommended combinations based on your budget!</p1>
-      <ComboCardWrapper userId={'1f358f02-322f-4edd-af31-4bec37bd0ac9'} combination={comboData} />
+      <ComboCardWrapper userId={'89338523-a2e1-4cf2-83a7-52e828eabc01'} combination={comboData} />
       </IonContent>
     </IonPage>
   );
