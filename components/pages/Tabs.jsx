@@ -3,10 +3,9 @@ import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel } 
 import { cog, flash, list } from 'ionicons/icons';
 
 import Home from './Feed';
-import BuildOrder from './BuildOrder';
-import ListDetail from './ListDetail';
 import Menu from './Menu';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
+import BuildOrder from './BuildOrder';
 // import ErrorBoundary from './ErrorBoundary';
 
 const Tabs = () => {
@@ -26,7 +25,7 @@ const Tabs = () => {
       <IonTabBar slot="bottom" style={{ color: 'white' }}>
         <IonTabButton tab="tab1" href="/tabs/feed">
           <IonIcon icon={flash} />
-          <IonLabel>Chef's Combos</IonLabel>
+          <IonLabel>Chefs Combos</IonLabel>
         </IonTabButton>
         <IonTabButton tab="tab2" href="/tabs/build-order">
           <IonIcon icon={list} />
