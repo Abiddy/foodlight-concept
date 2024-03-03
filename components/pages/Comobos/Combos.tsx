@@ -111,7 +111,7 @@ const ComboCard = ({ userId, combination }) => {
             snaps={true}
             aria-label="Range with ionChange" 
             pin={true}    
-            max={500}   
+            max={300}   
             onIonChange={({ detail }) =>  setMaxPrice(detail.value)}
           />
         </div>

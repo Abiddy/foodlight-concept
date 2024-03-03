@@ -3,7 +3,7 @@ import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel } 
 import { cog, flash, list } from 'ionicons/icons';
 
 import Home from './Feed';
-import Lists from './Lists';
+import BuildOrder from './BuildOrder';
 import ListDetail from './ListDetail';
 import Menu from './Menu';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
@@ -14,8 +14,8 @@ const Tabs = () => {
     <IonTabs>
       <IonRouterOutlet>
         <Route path="/tabs/feed" render={() => <Home />} exact={true} />
-        <Route path="/tabs/lists" render={() => <Lists />} exact={true} />
-        <Route path="/tabs/lists/:listId" render={() => <ListDetail />} exact={true} />
+        <Route path="/tabs/build-order" render={() => <BuildOrder />} exact={true} />
+        {/* <Route path="/tabs/lists/:listId" render={() => <ListDetail />} exact={true} /> */}
         <Route path="/tabs/menu" render={() => 
           <ErrorBoundary fallback={<p>Something went wrong</p>}>
             <Menu  />
@@ -26,9 +26,9 @@ const Tabs = () => {
       <IonTabBar slot="bottom" style={{ color: 'white' }}>
         <IonTabButton tab="tab1" href="/tabs/feed">
           <IonIcon icon={flash} />
-          <IonLabel>Chefs Combos</IonLabel>
+          <IonLabel>Chef's Combos</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="tab2" href="/tabs/lists">
+        <IonTabButton tab="tab2" href="/tabs/build-order">
           <IonIcon icon={list} />
           <IonLabel>Build Combos</IonLabel>
         </IonTabButton>

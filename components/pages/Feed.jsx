@@ -80,7 +80,7 @@ const Feed = () => {
       </IonHeader>
       <IonContent className="ion-padding" fullscreen>
         <Notifications open={showNotifications} onDidDismiss={() => setShowNotifications(false)} />
-        <h1 className={league_spartan.className}>Chefs Combos</h1>
+        <h1 className={league_spartan.className}>Chef Combos</h1>
         <p1 >Find the best chef reccommended combinations based on your budget!</p1>
       <ComboCardWrapper userId={'89338523-a2e1-4cf2-83a7-52e828eabc01'} combination={comboData} />
       </IonContent>
