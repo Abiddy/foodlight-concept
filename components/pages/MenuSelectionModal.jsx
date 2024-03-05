@@ -1,4 +1,4 @@
-import {  IonChip, IonIcon, IonLabel } from '@ionic/react';
+import {  IonButton, IonChip, IonIcon, IonLabel } from '@ionic/react';
 import React, { useState } from 'react';
 import { League_Spartan } from 'next/font/google';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -37,19 +37,23 @@ const MenuSelectionModal = ({ category, keywords, orders, categoryIcons, onAdd, 
       <div className="modal-content" style={{ padding: '20px'}}>
         <p  style={{ paddingTop: '20px', textAlign: 'center'}} className={league_spartan.className}>Choose your preference</p>
         <br/>
-        {keywords.map((keyword) => (
-           <IonChip 
-           color={selectedKeywords.includes(keyword) ? 'tertiary' : 'secondary'}
-            key={keyword}
-            onClick={() => handleKeywordToggle(keyword)}
-            className={selectedKeywords.includes(keyword) ? 'selected' : ''}
-          >
-            {keyword}
-          </IonChip>
-        ))}
+        <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '8px' }}>
+          {keywords.map((keyword) => (
+            <IonChip 
+              color={selectedKeywords.includes(keyword) ? 'tertiary' : 'secondary'}
+              key={keyword}
+              onClick={() => handleKeywordToggle(keyword)}
+              className={selectedKeywords.includes(keyword) ? 'selected' : ''}
+              style={{ marginBottom: '8px' }}
+            >
+              {keyword}
+            </IonChip>
+          ))}
+        </div>
+
         <br/>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <IonChip color="primary" onClick={handleAdd}>Add</IonChip>
+        <div style={{ display: 'flex', justifyContent: 'center'}}>
+        <IonButton shape="round" color="light" size="medium"  onClick={handleAdd}>Add</IonButton>
         </div>
 
           {orders.map((order, index) => {

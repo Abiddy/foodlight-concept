@@ -21,7 +21,7 @@ const BuildOrder = () => {
 
   const keywords = {
     drinks: ["orange", "cold", "hot", "coffee", "fruity"],
-    starter: ["chicken", "pesto", "tuna"],
+    starter: ["chicken", "pesto", "tuna", "soup", "salad", "bruschetta", "shrimp cocktail", "caprese salad", "garlic bread", "crab cakes"],
     maincourse: ["pizza", "burger", "pasta"],
     dessert: ["cake", "ice cream", "chocolate"],
   };
