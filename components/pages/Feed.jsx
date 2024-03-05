@@ -55,7 +55,7 @@ const Feed = () => {
   }, [fetchComboData]);
 
   return (
-    <IonPage>
+    <IonPage style={{ backgroundColor: 'rgb(228, 84, 30)' }}>
       <IonHeader>
         <IonToolbar>
           <div className='p-2'>
@@ -78,7 +78,7 @@ const Feed = () => {
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-padding" fullscreen>
+      <IonContent className="ion-padding" fullscreen style={{ backgroundColor: 'rgb(228, 84, 30)' }}>
         <Notifications open={showNotifications} onDidDismiss={() => setShowNotifications(false)} />
         <h1 className={league_spartan.className}>Chef Combos</h1>
         <p1 >Find the best chef reccommended combinations based on your budget!</p1>
