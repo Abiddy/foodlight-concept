@@ -1,7 +1,12 @@
-import {  IonButton, IonChip, IonContent, IonHeader, IonItem, IonList, IonModal, IonToolbar } from '@ionic/react';
-import React, { useRef, useState } from 'react';
+import {  IonChip, IonIcon, IonLabel } from '@ionic/react';
+import React, { useState } from 'react';
+import { League_Spartan } from 'next/font/google';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { closeCircle } from 'ionicons/icons';
 
-const MenuSelectionModal = ({ category, keywords, orders, onAdd }) => {
+const league_spartan = League_Spartan({ weight: ['400'], subsets: ['latin'] });
+
+const MenuSelectionModal = ({ category, keywords, orders, categoryIcons, onAdd, setOrders  }) => {
   const [selectedKeywords, setSelectedKeywords] = useState([]);
 
   const handleKeywordToggle = (keyword) => {
@@ -18,10 +23,19 @@ const MenuSelectionModal = ({ category, keywords, orders, onAdd }) => {
     setSelectedKeywords([]);
   };
 
+  console.log({orders})
+
+  const handleRemoveOrder = (indexToRemove) => {
+    const updatedOrders = orders.filter((order, index) => index !== indexToRemove);
+    // Update the state with the filtered orders
+    setOrders(updatedOrders);
+  };
+  
+
   return (  
     <>
-      <div className="modal-content">
-        <p>Choose your preference</p>
+      <div className="modal-content" style={{ padding: '20px'}}>
+        <p  style={{ paddingTop: '20px', textAlign: 'center'}} className={league_spartan.className}>Choose your preference</p>
         <br/>
         {keywords.map((keyword) => (
            <IonChip 
@@ -34,21 +48,26 @@ const MenuSelectionModal = ({ category, keywords, orders, onAdd }) => {
           </IonChip>
         ))}
         <br/>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
           <IonChip color="primary" onClick={handleAdd}>Add</IonChip>
+        </div>
 
           {orders.map((order, index) => {
             if (order[category]) {
               return (
                 <div key={index}>
                   {Object.entries(order).map(([cat, keys]) => (
-                    <div key={cat}>
-                      <h3>{cat}</h3>
-                      <ul>
+                  <IonChip key={cat} color="success">
+                    <FontAwesomeIcon icon={categoryIcons[category]} size="1x" style={{ color: 'grey', padding: '10px' }} />
+                    <IonLabel style={{ color: 'black', display: 'flex', alignItems: 'center' }}>
+                      <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex' }}>
                         {keys.map((key) => (
-                          <li key={key}>{key}</li>
+                          <li key={key} style={{ marginRight: '10px' }}>{key}</li>
                         ))}
                       </ul>
-                    </div>
+                    </IonLabel>
+                    <IonIcon style={{ color: 'black'}} icon={closeCircle} onClick={() => handleRemoveOrder(index)}/>
+                  </IonChip>
                   ))}
                 </div>
               );
