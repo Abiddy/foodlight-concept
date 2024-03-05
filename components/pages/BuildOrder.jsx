@@ -63,7 +63,7 @@ const BuildOrder = () => {
         </div>
       ))}
        </div>
-       <IonModal ref={modal} trigger="open-modal" initialBreakpoint={0.5} breakpoints={[0, 0.25, 0.5, 0.75, 1]} isOpen={showModal} onDidDismiss={() => setShowModal(false)}> 
+       <IonModal ref={modal} trigger="open-modal" initialBreakpoint={0.75} breakpoints={[0, 0.25, 0.5, 0.75, 1]} isOpen={showModal} onDidDismiss={() => setShowModal(false)} handle="true"> 
        <div className="modal-content">  
               <MenuSelectionModal
               category={selectedCategory}

@@ -229,3 +229,7 @@ http://ionicframework.com/docs/theming/ */
     --ion-card-background: #ffffff;
   }
 }
+
+ion-modal {
+  --ion-background-color: rgb(228, 84, 30);
+}
