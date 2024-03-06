@@ -55,7 +55,7 @@ const Feed = () => {
   }, [fetchComboData]);
 
   return (
-    <IonPage style={{ backgroundColor: 'rgb(228, 84, 30)' }}>
+    <IonPage style={{ backgroundColor: 'rgb(228, 84, 30)',  "!important": true }}>
       <IonHeader>
         <IonToolbar>
           <div className='p-2'>

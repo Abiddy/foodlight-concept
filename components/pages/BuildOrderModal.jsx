@@ -6,7 +6,7 @@ import { closeCircle } from 'ionicons/icons';
 
 const league_spartan = League_Spartan({ weight: ['400'], subsets: ['latin'] });
 
-const MenuSelectionModal = ({ category, keywords, orders, categoryIcons, onAdd, setOrders  }) => {
+const BuildOrderModal = ({ category, keywords, orders, categoryIcons, onAdd, setOrders  }) => {
   const [selectedKeywords, setSelectedKeywords] = useState([]);
 
   const handleKeywordToggle = (keyword) => {
@@ -89,4 +89,4 @@ const MenuSelectionModal = ({ category, keywords, orders, categoryIcons, onAdd, 
   );
 };
 
-export default MenuSelectionModal;
+export default BuildOrderModal;

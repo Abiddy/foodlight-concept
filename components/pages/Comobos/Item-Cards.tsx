@@ -1,5 +1,7 @@
 // ItemCard.jsx
+import { IonChip } from '@ionic/react';
 import React from 'react';
+import { league_spartan } from './Combos';
 
 const ItemCard = ({ item }) => {
 
@@ -26,7 +28,7 @@ const ItemCard = ({ item }) => {
             </p>
           </div>
         </div>
-        <span className="bg-green-100 text-green-800 text-m font-medium me-2 px-2.5 py-0.5 rounded-full ml-3 line-height-0">${item.item_price}</span>
+        <IonChip color="success" className={`${league_spartan.className} text-l mt-1 mr-4`}>${item.item_price}</IonChip>
       </div>
     </div>
   );

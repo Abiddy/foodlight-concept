@@ -3,18 +3,18 @@ import { League_Spartan } from 'next/font/google';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '../../../types/supabase';
 import ItemCard from './Item-Cards';
-import { IonRange } from '@ionic/react';
+import { IonChip, IonRange } from '@ionic/react';
 import Store from '../../../store';
 import { setMenuItems } from '../../../store/actions';
 
 
-const league_spartan = League_Spartan({ weight: ['700'], subsets: ['latin'] });
+export const league_spartan = League_Spartan({ weight: ['700'], subsets: ['latin'] });
 
 type MenuItems = Database['public']['Tables']['menu_items']['Row'] & { item_image_url?: string | null };
 const supabase = createClientComponentClient<Database>();
 
 const ComboCard = ({ userId, combination }) => {
-  const [maxPrice, setMaxPrice] = useState(10); 
+  const [maxPrice, setMaxPrice] = useState(50); 
 
   useEffect(() => {
     const fetchMenuItems = async (): Promise<MenuItems[]> => {
@@ -117,35 +117,33 @@ const ComboCard = ({ userId, combination }) => {
         </div>
 
         {filteredCombinations.map((combo, index) => {
-  // Filter out the headers/keys with empty arrays
-  const nonEmptyHeaders = Object.entries(combo.item_ids).filter(([header, items]) => items.length > 0);
-
-  return (
-    <div key={index} style={{ marginBottom: '50px' }} className="p-2 text-center mt-15 mb-15  border border-gray-300 shadow-md rounded-xl">
-      <div className="flex justify-between p-3">
-        <h1 className={league_spartan.className}>Combo #{combo.index[0]}</h1>
-        <h1 className={league_spartan.className}>${calculateTotalPrice(combo.item_ids)}</h1>
-      </div>
-      <div className='pl-5 pr-5'>
-        {nonEmptyHeaders.map(([header, items]) => (
-          <div key={header} className="mb-4">
-            <div className="flex items-center gap-0 mt-7 mb-5">
-              <h3 className={`${league_spartan.className} text-2xl mt-1 mr-4`}>{header}</h3>
+         const nonEmptyHeaders = Object.entries(combo.item_ids).filter(([header, items]) => items.length > 0);
+          return (
+            <div key={index} style={{ marginBottom: '50px' }} className="p-2 text-center mt-15 mb-15  border border-gray-300 shadow-md rounded-xl">
+              <div className="flex justify-between p-3">
+                <h1 className={league_spartan.className}>Combo #{combo.index[0]}</h1>
+                <h1 className={league_spartan.className}>${calculateTotalPrice(combo.item_ids)}</h1>
+              </div>
+              <div className='pl-5 pr-5'>
+                {nonEmptyHeaders.map(([header, items]) => (
+                  <div key={header} className="mb-1">
+                    <div className="flex items-center gap-0 ">
+                      <IonChip className={`${league_spartan.className} text-l mt-1 mr-4`} color="success">{header}</IonChip>
+                    </div>
+                    {items.map((itemId) => {
+                      const selectedItem = menuItems.find((item) => item.id === itemId); // Access menuItems from the store
+                      if (selectedItem) {
+                        return <ItemCard key={itemId} item={selectedItem} />;
+                      } else {
+                        return null; 
+                      }
+                    })}                                  
+                  </div>
+                ))}
+              </div>
             </div>
-            {items.map((itemId) => {
-              const selectedItem = menuItems.find((item) => item.id === itemId); // Access menuItems from the store
-              if (selectedItem) {
-                return <ItemCard key={itemId} item={selectedItem} />;
-              } else {
-                return null; 
-              }
-            })}                                  
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-})}
+          );
+        })}
 
     </div>
   );
