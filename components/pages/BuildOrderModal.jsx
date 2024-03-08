@@ -35,7 +35,7 @@ const BuildOrderModal = ({ category, keywords, orders, categoryIcons, onAdd, set
   return (  
     <>
       <div className="modal-content" style={{ padding: '20px', backgroundColor: 'rgb(228, 84, 30)'}}>
-        <h3  style={{ paddingTop: '20px', textAlign: 'center', color: 'white'}} className={league_spartan.className}>Choose your preference</h3>
+        <h3  style={{ paddingTop: '20px', textAlign: 'center', color: 'white'}} className={league_spartan.className}>Select preference</h3>
         <br/>
         <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '8px' }}>
           {keywords.map((keyword) => (

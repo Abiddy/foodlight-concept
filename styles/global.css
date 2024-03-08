@@ -8,6 +8,7 @@ body {
   overflow: hidden;
   height: 100vh;
   width: 100vw;
+  background-color: rgb(228, 84, 30) !important;
 }
 
 /**

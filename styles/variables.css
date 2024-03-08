@@ -233,7 +233,3 @@ http://ionicframework.com/docs/theming/ */
 ion-modal {
   --ion-background-color: rgb(228, 84, 30);
 }
-
-body {
-  background-color: rgb(228, 84, 30);
-}

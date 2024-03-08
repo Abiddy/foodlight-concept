@@ -3,9 +3,11 @@ import { League_Spartan } from 'next/font/google';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '../../../types/supabase';
 import ItemCard from './Item-Cards';
-import { IonChip, IonRange } from '@ionic/react';
+import { IonButton, IonChip, IonInput, IonRange } from '@ionic/react';
 import Store from '../../../store';
 import { setMenuItems } from '../../../store/actions';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 
 
 export const league_spartan = League_Spartan({ weight: ['700'], subsets: ['latin'] });
@@ -21,7 +23,7 @@ const ComboCard = ({ userId, combination }) => {
       try {
         const { data, error } = await supabase
           .from('menu_items')
-          .select('id, item_name, item_description, item_price, item_image, uid, item_type')
+          .select('id, item_name, item_description, item_price, item_image, uid, item_type, item_category' )
           .eq('uid', userId); 
   
         if (error) {
@@ -91,29 +93,16 @@ const ComboCard = ({ userId, combination }) => {
  
   return (
     <div style={{ maxWidth: '500px', marginTop: '30px' }}>
-        <div  style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              backgroundColor: 'white', 
-              borderRadius: '30px', 
-              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
-              padding: '25px',
-              maxWidth: '250px',
-              marginBottom: '20px',
-              margin: '20px auto',
-              boxSizing: 'border-box',
-              maxHeight: '50px',
-            }}>
-          <p className={league_spartan.className} style={{ marginRight: '1rem', color: 'black' }}>Budget</p>
-          <IonRange 
-            style={{ padding: '0' }}
-            ticks={true} 
-            snaps={true}
-            aria-label="Range with ionChange" 
-            pin={true}    
-            max={300}   
-            onIonChange={({ detail }) =>  setMaxPrice(detail.value)}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'right', paddingBottom: '10px'}}  className={league_spartan.className}>
+        <IonButton style={{ '--box-shadow': 'none'}} shape='round' color="light">
+          {/* <p style={{ marginRight: '10px'}}>Under </p> */}
+          <FontAwesomeIcon icon={faDollarSign}/>
+          <IonInput 
+              style={{ maxWidth: '30px' }}
+              value={maxPrice} 
+              onIonChange={(e) => setMaxPrice(e.detail.value ? parseFloat(e.detail.value) : null)}
           />
+        </IonButton>
         </div>
 
         {filteredCombinations.map((combo, index) => {
