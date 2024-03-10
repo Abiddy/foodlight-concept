@@ -1,24 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Store from '../../store';
-import { IonPage, IonHeader, IonToolbar, IonContent, IonButton, IonIcon, IonModal, IonToast, IonPopover, IonChip, IonRange, IonInput } from '@ionic/react';
-import { cart } from 'ionicons/icons';
-import BuildOrderModal from './BuildOrderModal';
+import { IonPage, IonHeader, IonToolbar, IonContent, IonButton, IonIcon, IonToast, IonPopover, IonChip, IonRange, IonInput, IonSegment, IonSegmentButton, IonLabel } from '@ionic/react';
+import { cart} from 'ionicons/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee, faUtensils, faGlassCheers, faIceCream, faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import { League_Spartan } from 'next/font/google';
 import buildCombos from './buildCombosUtils';
 import SelectedItemsCard from './SelectedItemsCard';
+import PreferenceCards from './PrerefenceCards';
 
 const league_spartan = League_Spartan({ weight: ['400'], subsets: ['latin'] });
 
 
 const BuildOrder = () => {
-  const modal = useRef(null);
-
   const menuItems = Store.useState((s) => s.menuItems);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [showModal, setShowModal] = useState(false);
   const [order, setOrder] = useState([]); 
   const [orderCounts, setOrderCounts] = useState({
     drinks: 0,
@@ -29,7 +25,7 @@ const BuildOrder = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [matchingItems, setMatchingItems] = useState([])
 
-  console.log({matchingItems})
+  console.log({order})
 
     // Function to calculate the number of orders for each category
     const calculateOrderCounts = () => {
@@ -61,19 +57,21 @@ const BuildOrder = () => {
   };
 
   const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-    setShowModal(true);
+     const newOrder = { [category]: [] }
+     setOrder([...order, newOrder]);
   };
 
-  const handleAddOrder = (newOrder) => {
-    setOrder([...order, newOrder]); // Update order state
-  };
 
   const categoryIcons = {
     drinks: faGlassCheers,
     starter: faCoffee,
     maincourse: faUtensils,
     dessert: faIceCream
+  };
+
+  const handleRemoveOrder = (indexToRemove) => {
+    const updatedOrders = order.filter((order, index) => index !== indexToRemove);
+    setOrder(updatedOrders);
   };
 
   return (
@@ -90,12 +88,10 @@ const BuildOrder = () => {
       </IonHeader>
       <IonContent className="ion-padding" fullscreen={true}> 
 
-
       {/* ADDING PREFERENCES FROM CATEGORIES */}
 
-
       <h4 style={{  textAlign: 'center', padding: '8px' }} className={league_spartan.className}>Select your preferences from the categories</h4>
-      <div  style={{ textAlign: 'center'}}> 
+      <div  style={{ textAlign: 'center', marginBottom: '20px'}}> 
         {Object.keys(keywords).map((category) => (
           <div key={category} className="py-4 relative border-2 border-transparent text-gray-800 rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out" style={{ display: 'inline-block', textAlign: 'center', marginRight: '10px', padding: '10px' }} onClick={() => handleCategoryClick(category)}>
             <FontAwesomeIcon icon={categoryIcons[category]} size="2x" style={{ color: 'rgb(61, 61, 61)' }}/>
@@ -111,45 +107,42 @@ const BuildOrder = () => {
         ))}
        </div>
 
+       <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+       {order.map((item, index) => (
+          <PreferenceCards
+            key={index} // Add key prop here
+            itemKey={index}
+            selectedCategory={Object.keys(item)} 
+            keywordsSelected={Object.values(item)} 
+            handleRemoveOrder={() => handleRemoveOrder(index)} 
+            setOrder={setOrder}
+            order={order}
+          />
+        ))}
+        </div>
+
 
       {/* BUTTON TO DISPLAY THE RESULT COMBOS */}
-
-
         <div style={{ display: 'flex', justifyContent: 'center',  marginBottom: '20px'}}>
-        <IonButton    style={{ '--box-shadow': 'none', 'paddingRight': '10px' }} shape='round' color="dark" size="medium"  onClick={() => { 
-              if (order.length === 0) {
-                  setIsOpen(true);
-              } else {
-                  buildCombos(order, menuItems, setMatchingItems);
-              }
-          }}>Make My Order</IonButton>
+            <IonButton    style={{ '--box-shadow': 'none', 'paddingRight': '10px' }} shape='round' color="dark" size="medium"  onClick={() => { 
+                  if (order.length === 0) {
+                      setIsOpen(true);
+                  } else {
+                      buildCombos(order, menuItems, setMatchingItems);
+                  }
+              }}>Make My Order</IonButton>
 
-        <IonButton style={{ '--box-shadow': 'none' }} shape='round' color="light" size="medium">
-          <FontAwesomeIcon icon={faDollarSign} style={{ 'paddingLeft': '10px'}}/>
-          <IonInput style={{ 'maxWidth': '30px' }}></IonInput>
-        </IonButton>
+            <IonButton style={{ '--box-shadow': 'none' }} shape='round' color="light" size="medium">
+              <FontAwesomeIcon icon={faDollarSign} style={{ 'paddingLeft': '10px'}}/>
+              <IonInput style={{ 'maxWidth': '30px' }}></IonInput>
+            </IonButton>
         </div>
           <IonToast isOpen={isOpen} message="Add item preferences to make your order!" duration={5000}></IonToast>
 
-                {/* CARD COMPONENT THAT TAKES IN matchingItems TO DISPLAY THE COMBOS */}
+      {/* CARD COMPONENT THAT TAKES IN matchingItems TO DISPLAY THE COMBOS */}
+      {matchingItems? 
+      <SelectedItemsCard matchingItems={matchingItems}/>: ''}
 
-                {matchingItems? 
-                <SelectedItemsCard matchingItems={matchingItems}/>: ''}
-
-      {/* PREFERENCES MODAL */}
-
-         <IonModal ref={modal} trigger="open-modal" initialBreakpoint={0.75} breakpoints={[0, 0.25, 0.5, 0.75, 1]} isOpen={showModal} onDidDismiss={() => setShowModal(false)} handle="true"> 
-            <div className="modal-content">  
-              <BuildOrderModal
-              category={selectedCategory}
-              keywords={keywords[selectedCategory]}
-              orders={order}
-              categoryIcons={categoryIcons}      
-              onAdd={handleAddOrder} // Pass down the function to add order
-              setOrders={setOrder}  
-            />
-            </div>
-        </IonModal>
       </IonContent>
     </IonPage>
   );

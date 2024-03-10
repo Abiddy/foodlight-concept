@@ -4,9 +4,13 @@ import { league_spartan } from './Comobos/Combos';
 
 const SelectedItemsCard = ({ matchingItems }) => {
   // Calculate total price
-  const totalPrice = matchingItems.reduce((acc, combo) => {
-    return acc + combo.items[0].item_price;
-  }, 0);
+    const totalPrice = matchingItems.reduce((acc, combo) => {
+        if (combo.items.length > 0) {
+        return acc + combo.items[0].item_price;
+        } else {
+        return acc;
+        }
+    }, 0);
 
   return (
     <div style={{ marginBottom: '50px' }} className="p-2 text-center mt-15 mb-15 border border-gray-300 shadow-md rounded-xl relative">

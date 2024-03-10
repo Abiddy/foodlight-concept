@@ -1,4 +1,5 @@
 const buildCombos = (orders, menuItems, setMatchingItems) => {
+    console.log({orders})
     const combos = [];
 
     orders.forEach((order) => {
