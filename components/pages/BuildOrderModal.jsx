@@ -23,7 +23,6 @@ const BuildOrderModal = ({ category, keywords, orders, categoryIcons, onAdd, set
     setSelectedKeywords([]);
   };
 
-  console.log({orders})
 
   const handleRemoveOrder = (indexToRemove) => {
     const updatedOrders = orders.filter((order, index) => index !== indexToRemove);

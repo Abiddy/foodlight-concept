@@ -88,8 +88,6 @@ const ComboCard = ({ userId, combination }) => {
     const totalPrice = calculateTotalPrice(combo.item_ids); // Use menuItems retrieved from the store
     return totalPrice <= maxPrice;
   });
-
-  console.log({filteredCombinations});
  
   return (
     <div style={{ maxWidth: '500px', marginTop: '30px' }}>

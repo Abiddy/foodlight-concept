@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { IonContent, IonHeader, IonToolbar, IonButtons, IonButton, IonTitle, IonModal, IonList, IonItem, IonLabel, IonCheckbox, IonIcon } from '@ionic/react';
-import { closeCircle } from 'ionicons/icons';
+import { IonContent, IonHeader, IonToolbar, IonButtons, IonButton, IonTitle, IonModal, IonList, IonItem, IonLabel, IonCheckbox, IonIcon, IonBadge } from '@ionic/react';
+import { removeCircleSharp } from 'ionicons/icons';
 
 const keywords = {
   drinks: ["red tea", "espresso", "pistachio", "latté", "green tea", "macchiato"],
@@ -13,17 +13,12 @@ function PreferenceCards({ itemKey, selectedCategory, keywordsSelected, handleRe
   const [selectedKeywords, setSelectedKeywords] = useState([]);
   const modalRef = useRef(null);
 
-  console.log(order[itemKey])
-
-  console.log({selectedKeywords})
-
   const handleKeywordSelection = (keyword) => {
     setSelectedKeywords(prevSelected => prevSelected.includes(keyword) ? prevSelected.filter(k => k !== keyword) : [...prevSelected, keyword]);
   };
 
   const handleConfirm = () => {
     const updatedOrder = [...order];
-    console.log({updatedOrder})
     updatedOrder[itemKey][selectedCategory] = selectedKeywords;
     
   
@@ -35,16 +30,14 @@ function PreferenceCards({ itemKey, selectedCategory, keywordsSelected, handleRe
 
   return (
     <>
-      <div style={{ display: 'flex', alignItems: 'center'}}>
-        <div >
-        <div onClick={() => modalRef.current.present()} style={{ cursor: 'pointer' }}>
+      <div style={{ display: 'inline-block', border: '0.5px solid black', borderRadius: '20px', padding: '5px', margin: '5px' }}>  
+        <div onClick={() => modalRef.current.present()} style={{ cursor: 'pointer', display: 'inline-block', marginRight: '30px' }} >
             <div>{selectedCategory}</div>
-            <div slot="end" id={`select-${selectedCategory}`}>
+            <IonBadge slot="end" id={`select-${selectedCategory}`}>
               {keywordsSelected}
-            </div>
+            </IonBadge>
           </div>
-        </div>
-        <IonIcon style={{ color: 'black'}} icon={closeCircle} onClick={() => handleRemoveOrder(itemKey)}/>
+        <IonIcon style={{ color: 'black'}} icon={removeCircleSharp} onClick={() => handleRemoveOrder(itemKey)}/>
       </div>
 
       <IonModal ref={modalRef} id={`modal-${selectedCategory}`}>
@@ -53,7 +46,7 @@ function PreferenceCards({ itemKey, selectedCategory, keywordsSelected, handleRe
             <IonButtons slot="start">
               <IonButton onClick={() => modalRef.current.dismiss()}>Cancel</IonButton>
             </IonButtons>
-            <IonTitle>Select Keywords</IonTitle>
+            <IonTitle>{selectedCategory}</IonTitle>
             <IonButtons slot="end">
               <IonButton strong={true} onClick={handleConfirm}>Confirm</IonButton>
             </IonButtons>

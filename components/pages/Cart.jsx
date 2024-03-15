@@ -15,7 +15,6 @@ import { close } from 'ionicons/icons';
 
 const Cart = ({ open, onDidDismiss, cart }) => {
 
-    console.log({cart})
   return (
     <IonModal isOpen={open} onDidDismiss={onDidDismiss}>
       <IonHeader>

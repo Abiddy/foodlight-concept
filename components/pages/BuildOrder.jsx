@@ -1,16 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Store from '../../store';
-import { IonPage, IonHeader, IonToolbar, IonContent, IonButton, IonIcon, IonToast, IonPopover, IonChip, IonRange, IonInput, IonSegment, IonSegmentButton, IonLabel } from '@ionic/react';
-import { cart} from 'ionicons/icons';
+import { IonPage, IonHeader, IonToolbar, IonContent, IonButton, IonIcon, IonToast, IonPopover, IonChip, IonRange, IonInput, IonSegment, IonSegmentButton, IonLabel, IonBadge, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonAccordion, IonAccordionGroup } from '@ionic/react';
+import { arrowDownCircle, arrowDownCircleOutline, arrowDownOutline, caretDownCircle, cart, cashOutline, chevronDown, happyOutline} from 'ionicons/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee, faUtensils, faGlassCheers, faIceCream, faDollarSign } from '@fortawesome/free-solid-svg-icons';
+import { faCoffee, faUtensils, faGlassCheers, faIceCream, faDollarSign, faFaceSmile } from '@fortawesome/free-solid-svg-icons';
 import { League_Spartan } from 'next/font/google';
 import buildCombos from './buildCombosUtils';
 import SelectedItemsCard from './SelectedItemsCard';
 import PreferenceCards from './PrerefenceCards';
 
-const league_spartan = League_Spartan({ weight: ['400'], subsets: ['latin'] });
+const league_spartan = League_Spartan({ weight: ['500'], subsets: ['latin'] });
+const league_spartan_bold = League_Spartan({ weight: ['700'], subsets: ['latin'] });
 
 
 const BuildOrder = () => {
@@ -25,7 +26,21 @@ const BuildOrder = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [matchingItems, setMatchingItems] = useState([])
 
-  console.log({order})
+  console.log(order)
+  console.log({matchingItems})
+  const [budget, setBudget] = useState('');
+
+  // Event handler to update the budget when the input changes
+  const handleBudgetChange = (event) => {
+    setBudget(event.target.value);
+  };
+
+  // Event handler to call buildCombos with the budget
+  const handleMakeOrder = () => {
+      // Call buildCombos with order, menuItems, setMatchingItems, and budget
+      buildCombos(order, menuItems, setMatchingItems, budget, setOrder);
+  };
+
 
     // Function to calculate the number of orders for each category
     const calculateOrderCounts = () => {
@@ -88,9 +103,29 @@ const BuildOrder = () => {
       </IonHeader>
       <IonContent className="ion-padding" fullscreen={true}> 
 
-      {/* ADDING PREFERENCES FROM CATEGORIES */}
+      {/* Budget Section */}
+ 
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
+          <h5 className={league_spartan.className} style={{ marginRight: '10px'}}>Find the best combos under budget</h5>
+          <IonIcon style={{fontSize: '25px' }} icon={happyOutline} />
+        </div>
+        <div style={{ textAlign: 'center', padding: '8px' }}>
+          <div style={{ border: '0.5px solid #007bff', color: '#007bff', borderRadius: '20px', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', padding: '20px', margin: '0 auto' }}>
+            <IonIcon icon={cashOutline} style={{ fontSize: '30px', marginRight: '10px' }}/>
+            <input type="number" value={budget} onChange={handleBudgetChange} className={league_spartan_bold.className} style={{ fontSize: '30px', backgroundColor: 'transparent', border: 'none', color: '#007bff', textAlign: 'center', width: '50px' }} />
+          </div>
+        </div>
+        <div style={{ textAlign: 'center', padding: '8px' }}>
+            {/* WHEN I CLICK ON THIS ICON BELOW, I WANT TO CALL THE BUILDCOMBOS FUNCTION WITH THE BUDGET ENTERED IN THE INPUT ABOVE */}
+            <IonIcon icon={chevronDown} style={{ fontSize: '40px', marginTop: '20px' }} onClick={handleMakeOrder} />
+        </div>
 
-      <h4 style={{  textAlign: 'center', padding: '8px' }} className={league_spartan.className}>Select your preferences from the categories</h4>
+
+      {/* THIS IS THE PREFERENCE TAB SECTION, PUT THIS SECTION INSIDE AN IONACCORDIAN */}
+      {/* <IonAccordionGroup>
+      <IonAccordion value="first" toggleIcon={caretDownCircle} toggleIconSlot="start"> */}
+
+      <p style={{  textAlign: 'center', padding: '8px' }} className={league_spartan.className}>Add items to your order from the categories below</p>
       <div  style={{ textAlign: 'center', marginBottom: '20px'}}> 
         {Object.keys(keywords).map((category) => (
           <div key={category} className="py-4 relative border-2 border-transparent text-gray-800 rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out" style={{ display: 'inline-block', textAlign: 'center', marginRight: '10px', padding: '10px' }} onClick={() => handleCategoryClick(category)}>
@@ -105,9 +140,9 @@ const BuildOrder = () => {
             <span style={{ display: 'block' }} className={league_spartan.className}>{category}</span>
           </div>
         ))}
-       </div>
+       </div> 
 
-       <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
        {order.map((item, index) => (
           <PreferenceCards
             key={index} // Add key prop here
@@ -121,27 +156,28 @@ const BuildOrder = () => {
         ))}
         </div>
 
-
-      {/* BUTTON TO DISPLAY THE RESULT COMBOS */}
         <div style={{ display: 'flex', justifyContent: 'center',  marginBottom: '20px'}}>
             <IonButton    style={{ '--box-shadow': 'none', 'paddingRight': '10px' }} shape='round' color="dark" size="medium"  onClick={() => { 
                   if (order.length === 0) {
                       setIsOpen(true);
                   } else {
-                      buildCombos(order, menuItems, setMatchingItems);
+                      buildCombos(order, menuItems, setMatchingItems, budget);
                   }
-              }}>Make My Order</IonButton>
-
-            <IonButton style={{ '--box-shadow': 'none' }} shape='round' color="light" size="medium">
-              <FontAwesomeIcon icon={faDollarSign} style={{ 'paddingLeft': '10px'}}/>
-              <IonInput style={{ 'maxWidth': '30px' }}></IonInput>
-            </IonButton>
+              }}>
+                <IonBadge >{orderCounts.dessert}</IonBadge>
+                Items | Make My Order
+              </IonButton>
         </div>
           <IonToast isOpen={isOpen} message="Add item preferences to make your order!" duration={5000}></IonToast>
 
-      {/* CARD COMPONENT THAT TAKES IN matchingItems TO DISPLAY THE COMBOS */}
+          {/* </IonAccordion>
+          </IonAccordionGroup> */}
+
+      {/* PREFERENCE TAB SECTION ENDS HERE */}
+
+
       {matchingItems? 
-      <SelectedItemsCard matchingItems={matchingItems}/>: ''}
+      <SelectedItemsCard combinations={matchingItems}/>: ''}
 
       </IonContent>
     </IonPage>
