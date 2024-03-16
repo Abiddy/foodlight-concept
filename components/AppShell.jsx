@@ -15,6 +15,8 @@ setupIonicReact({});
 // });
 
 const AppShell = () => {
+
+
   return (
     <IonApp>
       <IonReactRouter>

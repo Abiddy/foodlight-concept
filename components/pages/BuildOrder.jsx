@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Store from '../../store';
 import { IonPage, IonHeader, IonToolbar, IonContent, IonButton, IonIcon, IonToast, IonPopover, IonChip, IonRange, IonInput, IonSegment, IonSegmentButton, IonLabel, IonBadge, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonAccordion, IonAccordionGroup } from '@ionic/react';
-import { arrowDownCircle, arrowDownCircleOutline, arrowDownOutline, caretDownCircle, cart, cashOutline, chevronDown, happyOutline} from 'ionicons/icons';
+import { arrowBackOutline, arrowDownCircle, arrowDownCircleOutline, arrowDownOutline, arrowForwardOutline, caretBackOutline, caretDownCircle, caretDownOutline, caretForwardCircleOutline, caretForwardOutline, caretUpCircle, caretUpOutline, cart, cashOutline, chevronDown, happyOutline} from 'ionicons/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee, faUtensils, faGlassCheers, faIceCream, faDollarSign, faFaceSmile } from '@fortawesome/free-solid-svg-icons';
 import { League_Spartan } from 'next/font/google';
@@ -28,7 +28,17 @@ const BuildOrder = () => {
 
   console.log(order)
   console.log({matchingItems})
-  const [budget, setBudget] = useState('');
+  const [budget, setBudget] = useState('25');
+
+ const decreaseBudget = () => {
+    const newBudget = parseInt(budget) - 5;
+    setBudget(newBudget.toString());
+  };
+  
+  const increaseBudget = () => {
+    const newBudget = parseInt(budget) + 5;
+    setBudget(newBudget.toString());
+  };
 
   // Event handler to update the budget when the input changes
   const handleBudgetChange = (event) => {
@@ -109,11 +119,14 @@ const BuildOrder = () => {
           <h5 className={league_spartan.className} style={{ marginRight: '10px'}}>Find the best combos under budget</h5>
           <IonIcon style={{fontSize: '25px' }} icon={happyOutline} />
         </div>
+
         <div style={{ textAlign: 'center', padding: '8px' }}>
+        <IonIcon icon={caretBackOutline} style={{ fontSize: '30px', cursor: 'pointer', color: '#007bff',paddingRight: '7px' }} onClick={decreaseBudget} />
           <div style={{ border: '0.5px solid #007bff', color: '#007bff', borderRadius: '20px', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', padding: '20px', margin: '0 auto' }}>
             <IonIcon icon={cashOutline} style={{ fontSize: '30px', marginRight: '10px' }}/>
             <input type="number" value={budget} onChange={handleBudgetChange} className={league_spartan_bold.className} style={{ fontSize: '30px', backgroundColor: 'transparent', border: 'none', color: '#007bff', textAlign: 'center', width: '50px' }} />
           </div>
+          <IonIcon icon={caretForwardOutline} style={{ fontSize: '30px', cursor: 'pointer', color: '#007bff', paddingLeft: '7px' }} onClick={increaseBudget} />
         </div>
         <div style={{ textAlign: 'center', padding: '8px' }}>
             {/* WHEN I CLICK ON THIS ICON BELOW, I WANT TO CALL THE BUILDCOMBOS FUNCTION WITH THE BUDGET ENTERED IN THE INPUT ABOVE */}

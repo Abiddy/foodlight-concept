@@ -13,6 +13,7 @@ import {
   IonIcon,
   IonButton,
   IonMenuButton,
+  IonChip,
 } from '@ionic/react';
 import { League_Spartan } from 'next/font/google';
 import Cart from './Cart';
@@ -21,7 +22,8 @@ import { Button, Card, CardBody, CardHeader, Typography } from '@material-tailwi
 import { cart as cartIcon } from 'ionicons/icons';
 
 
-const league_spartan = League_Spartan({ weight: ['600'], subsets: ['latin'] });
+export const league_spartan = League_Spartan({ weight: ['600'], subsets: ['latin'] });
+export const league_spartan_light = League_Spartan({ weight: ['400'], subsets: ['latin'] });
 
 const Menu = () => {
   const [cart, setCart] = useState([]);
@@ -63,6 +65,14 @@ const Menu = () => {
     }
   };
 
+  const truncateText = (text, maxWords) => {
+    const words = text?.split(/\s+/);
+    if (words?.length > maxWords) {
+        return words.slice(0, maxWords).join(' ') + '...';
+    }
+    return text;
+};
+
 
   return (
     <IonPage>
@@ -88,6 +98,7 @@ const Menu = () => {
         </IonCardHeader>
         <Cart open={showCart} onDidDismiss={() => setShowCart(false)} cart={cart}/>
         <IonCardContent> 
+        <div className="w-full max-w-[23rem]">
           {items.map((item) => (
             <Card key={item.id} className="w-full max-w-[48rem] flex-row mb-4">
               <CardHeader shadow={false} floated={false} className="m-0 w-2/5 shrink-0 rounded-r-none">
@@ -97,28 +108,31 @@ const Menu = () => {
                   className="h-full w-full object-cover"
                 />
               </CardHeader>
-              <CardBody className='p-5'>
-                <Typography variant="h2" className="mb-2">
+              <CardBody className='p-2'>
+              <Typography style={{ fontWeight: 'bold', color: '#333' ,fontSize: '1rem'}} className={league_spartan.className}>
                   {item.item_name}
-                </Typography>
-                <Typography color="blue-gray" className="font-medium">
+              </Typography>
+              <Typography style={{ fontSize: '0.8rem' }} className={league_spartan.className}>
                   ${item.item_price}
+              </Typography>
+              <div className="relative flex items-center justify-between">
+                <Typography color="gray" variant="p" className={league_spartan_light.className}>
+                  {truncateText(item.item_description, 5)}
                 </Typography>
-                <Typography color="gray" className="mb-4 font-normal">   
-                  {item.item_description}
-                </Typography>
-                <a href="#" className="inline-block">
-                  <Button
-                    onClick={() => addToCart(item)}
-                    variant="text"
-                    className="flex items-center gap-2"
-                  >
-                    Add
-                  </Button>
-                </a>
+                <Button
+                  onClick={() => addToCart(item)}
+           
+                  className="flex items-center gap-2 "
+                  style={{ color: '#007bff', borderRadius: '9999px', padding: '8px', fontWeight: 'bold' }}
+                >
+                  Add
+                </Button>
+              </div>
+                
               </CardBody>
             </Card>
           ))}
+        </div>
         </IonCardContent>
       </IonCard>
     ))

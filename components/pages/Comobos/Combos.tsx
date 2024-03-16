@@ -3,20 +3,23 @@ import { League_Spartan } from 'next/font/google';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '../../../types/supabase';
 import ItemCard from './Item-Cards';
-import { IonButton, IonChip, IonInput, IonRange } from '@ionic/react';
+import { IonButton, IonChip, IonIcon, IonInput, IonRange } from '@ionic/react';
 import Store from '../../../store';
 import { setMenuItems } from '../../../store/actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
+import { caretBackOutline, caretForwardOutline, cashOutline } from 'ionicons/icons';
 
 
 export const league_spartan = League_Spartan({ weight: ['700'], subsets: ['latin'] });
+const league_spartan_light = League_Spartan({ weight: ['500'], subsets: ['latin'] });
 
 type MenuItems = Database['public']['Tables']['menu_items']['Row'] & { item_image_url?: string | null };
 const supabase = createClientComponentClient<Database>();
 
 const ComboCard = ({ userId, combination }) => {
   const [maxPrice, setMaxPrice] = useState(50); 
+  const [budget, setBudget] = useState('35');
 
   useEffect(() => {
     const fetchMenuItems = async (): Promise<MenuItems[]> => {
@@ -88,19 +91,31 @@ const ComboCard = ({ userId, combination }) => {
     const totalPrice = calculateTotalPrice(combo.item_ids); // Use menuItems retrieved from the store
     return totalPrice <= maxPrice;
   });
+
+  const decreaseBudget = () => {
+    const newBudget = parseInt(budget) - 5;
+    setBudget(newBudget.toString());
+  };
+  
+  const increaseBudget = () => {
+    const newBudget = parseInt(budget) + 5;
+    setBudget(newBudget.toString());
+  };
+
+   // Event handler to update the budget when the input changes
+   const handleBudgetChange = (event) => {
+    setBudget(event.target.value);
+  };
  
   return (
     <div style={{ maxWidth: '500px', marginTop: '30px' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'right', paddingBottom: '10px'}}  className={league_spartan.className}>
-        <IonButton style={{ '--box-shadow': 'none'}} shape='round' color="light">
-          {/* <p style={{ marginRight: '10px'}}>Under </p> */}
-          <FontAwesomeIcon icon={faDollarSign}/>
-          <IonInput 
-              style={{ maxWidth: '30px' }}
-              value={maxPrice} 
-              onIonChange={(e) => setMaxPrice(e.detail.value ? parseFloat(e.detail.value) : null)}
-          />
-        </IonButton>
+        <div style={{ textAlign: 'center', padding: '8px' }}>
+        <IonIcon icon={caretBackOutline} style={{ fontSize: '30px', cursor: 'pointer', color: '#007bff',paddingRight: '7px' }} onClick={decreaseBudget} />
+          <div style={{ border: '0.5px solid #007bff', color: '#007bff', borderRadius: '20px', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', padding: '20px', margin: '0 auto' }}>
+            <IonIcon icon={cashOutline} style={{ fontSize: '30px', marginRight: '10px' }}/>
+            <input type="number" value={budget} onChange={handleBudgetChange} className={league_spartan.className} style={{ fontSize: '30px', backgroundColor: 'transparent', border: 'none', color: '#007bff', textAlign: 'center', width: '50px' }} />
+          </div>
+          <IonIcon icon={caretForwardOutline} style={{ fontSize: '30px', cursor: 'pointer', color: '#007bff', paddingLeft: '7px' }} onClick={increaseBudget} />
         </div>
 
         {filteredCombinations.map((combo, index) => {

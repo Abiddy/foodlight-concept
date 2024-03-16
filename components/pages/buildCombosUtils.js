@@ -1,9 +1,23 @@
+const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+};
+
 const generateCombinations = (combos, budget) => {
     const combinations = [];
     let remainingBudget = budget;
 
-    // Sort the combos by item price
-    const sortedCombos = combos.map(combo => ({
+    // Shuffle items within each combo to introduce randomness
+    const shuffledCombos = combos.map(combo => ({
+        ...combo,
+        items: shuffleArray(combo.items)
+    }));
+
+    // Sort the shuffled combos by item price
+    const sortedCombos = shuffledCombos.map(combo => ({
         ...combo,
         items: combo.items.sort((a, b) => a.item_price - b.item_price)
     }));
@@ -57,6 +71,7 @@ const generateCombinations = (combos, budget) => {
 
     return combinations;
 };
+
 
 
 const buildCombos = (orders, menuItems, setMatchingItems, budget, setOrder) => {
