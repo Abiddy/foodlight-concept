@@ -63,8 +63,8 @@ const Feed = () => {
         <div className='p-2'>
           <Image
             src="/logo2.png"
-            width={70}
-            height={70}
+            width={80}
+            height={80}
             alt="Picture of the author"
           />
          </div>
@@ -82,9 +82,6 @@ const Feed = () => {
       </IonHeader>
       <IonContent className="ion-padding" fullscreen style={{ backgroundColor: 'rgb(228, 84, 30)' }}>
         <Notifications open={showNotifications} onDidDismiss={() => setShowNotifications(false)} />
-        <div style={{ textAlign: 'center', width: '100%' }} >
-        <IonChip className={league_spartan_light.className}  color="primary">Chef Reccomended Meals</IonChip>
-        </div>
       <ComboCardWrapper userId={'89338523-a2e1-4cf2-83a7-52e828eabc01'} combination={comboData} />
       </IonContent>
     </IonPage>

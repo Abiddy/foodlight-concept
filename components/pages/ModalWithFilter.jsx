@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { IonModal, IonList, IonItem, IonChip, IonButton } from '@ionic/react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { league_spartan_light } from './Menu';
+import { league_spartan } from './Comobos/Combos';
 
 
 
 const supabase = createClientComponentClient();
 
-const ModalWithFilter = ({ isOpen, setIsOpen, groupedMenuItems }) => {
+const ModalWithFilter = ({ isOpen, setIsOpen, groupedMenuItems, replaceItemInCombo }) => {
   const [filteredItems, setFilteredItems] = useState([]);
   const [menu_keywords, setKeywords] = useState([])
 
@@ -81,12 +83,15 @@ const ModalWithFilter = ({ isOpen, setIsOpen, groupedMenuItems }) => {
       isOpen={isOpen}
       onDidDismiss={closeAndResetFilter}
     >
-      <div className="wrapper" style={{ maxHeight: '80vh', overflowY: 'auto' , padding: '20px'}}>
+      <div className="wrapper" style={{ maxHeight: '80vh', overflowY: 'auto' , padding: '10px'}}>
+      <div className={`${league_spartan.className}`} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '5px' }}>
+          Select Item
+        </div>
         <IonList lines="none">
-          <IonChip>Select Keyword</IonChip>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px', padding: '10px' }}>
+
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px', padding: '10px', fontSize: '8px' , marginTop: '10px', marginBottom: '40px'}}>
             {keywords?.map((keyword, index) => (
-              <IonChip color='warning' key={index} onClick={() => filterItems(keyword)}>
+              <IonChip color='light' key={index} onClick={() => filterItems(keyword)}>
                 {keyword}
               </IonChip>
             ))}
@@ -97,8 +102,11 @@ const ModalWithFilter = ({ isOpen, setIsOpen, groupedMenuItems }) => {
                 key={index}
                 button={true}
                 detail={false}
-                onClick={() => setIsOpen(false)}
-                style={{ padding: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+                onClick={() => {
+                    setIsOpen(false); // Close the modal
+                    replaceItemInCombo(item); // Function to replace the item in the combo
+                  }}
+                style={{ }}
               >
                 <img
                   src={item.item_image_url || 'default-image-url'}

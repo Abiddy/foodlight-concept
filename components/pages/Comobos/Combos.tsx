@@ -106,7 +106,10 @@ const ComboCard = ({ userId, combination }) => {
   };
  
   return (
-    <div style={{ maxWidth: '500px', marginTop: '30px' }}>
+    <div style={{ maxWidth: '500px', marginTop: '10px' }}>
+              <div style={{ textAlign: 'center', width: '100%' }} >
+        <IonChip className={league_spartan_light.className}  color="primary">Chef Reccomended Meals</IonChip>
+        </div>
         <div style={{ textAlign: 'center', padding: '25px' }}>
         <IonIcon icon={caretBackOutline} style={{ fontSize: '30px', cursor: 'pointer', color: '#007bff',paddingRight: '7px' }} onClick={decreaseBudget} />
           <div style={{ border: '0.5px solid #007bff', color: '#007bff', borderRadius: '20px', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', padding: '20px', margin: '0 auto' }}>

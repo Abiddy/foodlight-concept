@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Store from '../../store';
-import { IonPage, IonHeader, IonToolbar, IonContent, IonButton, IonIcon, IonToast, IonChip,  IonBadge } from '@ionic/react';
+import { IonPage, IonHeader, IonToolbar, IonContent, IonButton, IonIcon, IonToast, IonChip,  IonBadge, IonButtons } from '@ionic/react';
 import {  caretBackOutline, caretForwardOutline, cart, cashOutline, chevronDown} from 'ionicons/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee, faUtensils, faGlassCheers, faIceCream} from '@fortawesome/free-solid-svg-icons';
@@ -104,11 +104,13 @@ const BuildOrder = () => {
       <IonHeader>
         <IonToolbar>
           <div className='p-2'>
-            <Image src="/logo2.png" width={70} height={70} alt="Logo" />
+            <Image src="/logo2.png" width={80} height={80} alt="Logo" />
           </div>
-          <IonButton slot="end" id="open-modal" expand="block">
-            <IonIcon icon={cart} />
-          </IonButton>
+          <IonButtons slot="end">
+            <IonButton onClick={() => set(true)}>
+              <IonIcon icon={cart} />
+            </IonButton>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding" fullscreen={true}> 
@@ -150,7 +152,7 @@ const BuildOrder = () => {
 
              {/* PREFERENCE TAB SECTION Starts HERE */}
 
-        {/* <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
        {order.map((item, index) => (
           <PreferenceCards
             key={index} // Add key prop here
@@ -176,7 +178,7 @@ const BuildOrder = () => {
                 Add Preferances
               </IonButton>
         </div>
-          <IonToast isOpen={isOpen} message="Add item preferences to make your order!" duration={5000}></IonToast> */}
+          <IonToast isOpen={isOpen} message="Add item preferences to make your order!" duration={5000}></IonToast>
 
       {/* PREFERENCE TAB SECTION ENDS HERE */}
 

@@ -20,6 +20,7 @@ import Cart from './Cart';
 import Store from '../../store';
 import { Button, Card, CardBody, CardHeader, Typography } from '@material-tailwind/react';
 import { cart as cartIcon } from 'ionicons/icons';
+import Image from 'next/image';
 
 
 export const league_spartan = League_Spartan({ weight: ['600'], subsets: ['latin'] });
@@ -77,14 +78,13 @@ const Menu = () => {
   return (
     <IonPage>
       <IonHeader>
-      <IonToolbar>
-          <IonTitle className={league_spartan.className}>Full Menu</IonTitle>
-          <IonButtons slot="start">
-            <IonMenuButton />
-          </IonButtons>
+        <IonToolbar>
+          <div className='p-2'>
+            <Image src="/logo2.png" width={80} height={80} alt="Logo" />
+          </div>
           <IonButtons slot="end">
-            <IonButton onClick={() => setShowCart(true)}>
-              <IonIcon icon={cartIcon} />
+            <IonButton onClick={() => set(true)}>
+              <IonIcon icon={cart} />
             </IonButton>
           </IonButtons>
         </IonToolbar>

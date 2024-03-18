@@ -7,8 +7,6 @@ import ModalWithFilter from './ModalWithFilter';
 
 const SelectedItemsCard = ({ combinations }) => {
 
-  let [groupedMenuItems, setGroupedMenuItems] = useState([])
-
   const truncateText = (text, maxWords) => {
     const words = text?.split(/\s+/);
     if (words?.length > maxWords) {
@@ -20,7 +18,7 @@ const SelectedItemsCard = ({ combinations }) => {
 const [isOpen, setIsOpen] = useState(false);
 const menuItems = Store.useState(s => s.menuItems);
 
-groupedMenuItems = menuItems.reduce((acc, item) => {
+ const groupedMenuItems = menuItems.reduce((acc, item) => {
   const { item_type } = item;
   if (!acc[item_type]) {
     acc[item_type] = [];
@@ -29,7 +27,15 @@ groupedMenuItems = menuItems.reduce((acc, item) => {
   return acc;
 }, {});
 
-console.log({groupedMenuItems})
+console.log({combinations})
+
+const [indexToChange, setindexToChange] = useState([])
+
+const replaceItemInCombo = (newItem) => {
+  const [combinationIndex, itemIndex] = indexToChange;
+  const updatedCombinations = [...combinations];  
+  updatedCombinations[combinationIndex][itemIndex] = newItem;
+}
 
   return (
     <IonCardContent style={{ padding: '0px'}}> 
@@ -39,8 +45,8 @@ console.log({groupedMenuItems})
         <div className="right-0 mb-2 flex-shrink-0 ml-auto flex items-center gap-2">
           <IonChip color="success" className={`${league_spartan.className} text-l mt-1`}>Total: ${combo.reduce((acc, item) => acc + item.item_price, 0).toFixed(2)}</IonChip>
           </div>
-          {combo.map((item) => (
-            <Card key={item.id} className="w-full max-w-[48rem] flex-row mb-4" style={{ boxShadow: 'none', border: '0.8px solid'}}>
+          {combo.map((item, index2) => (
+            <Card key={index2} className="w-full max-w-[48rem] flex-row mb-4" style={{ boxShadow: 'none', border: '0.8px solid'}}>
               <CardHeader shadow={false} floated={false} className="m-0 w-2/5 shrink-0 rounded-r-none">
                 <img
                   src={item.item_image_url || 'default-image-url'}
@@ -61,7 +67,10 @@ console.log({groupedMenuItems})
                 </Typography>
               </div>
               <IonButton
-                onClick={() => setIsOpen(true)}
+                onClick={() => {
+                  setIsOpen(true)
+                  setindexToChange([index, index2])
+                }}
                 shape='round'
                 size='small'
                 className="ion-margin-end"
@@ -88,7 +97,7 @@ console.log({groupedMenuItems})
         </Card>
       ))}
     </div>
-      <ModalWithFilter  isOpen={isOpen}  setIsOpen={setIsOpen} groupedMenuItems={groupedMenuItems} />
+      <ModalWithFilter  isOpen={isOpen}  setIsOpen={setIsOpen} groupedMenuItems={groupedMenuItems} replaceItemInCombo={replaceItemInCombo} />
     </IonCardContent> 
     
   );
