@@ -7,6 +7,7 @@ import {
   IonButton,
   IonIcon,
   IonContent,
+  IonChip,
 } from '@ionic/react';
 import Notifications from './Notifications';
 import { useCallback, useEffect, useState } from 'react';
@@ -15,6 +16,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import ComboCardWrapper from './ComboCardWrapper';
 import { League_Spartan } from 'next/font/google';
 import Image from 'next/image'
+import { league_spartan_light } from './Comobos/Combos';
 
 
 const league_spartan = League_Spartan({ weight: ['700'], subsets: ['latin'] });
@@ -58,14 +60,14 @@ const Feed = () => {
     <IonPage style={{ backgroundColor: 'rgb(228, 84, 30)',  "!important": true }}>
       <IonHeader>
         <IonToolbar>
-          <div className='p-2'>
-        <Image
-      src="/logo2.png"
-      width={70}
-      height={70}
-      alt="Picture of the author"
-    />
-    </div>
+        <div className='p-2'>
+          <Image
+            src="/logo2.png"
+            width={70}
+            height={70}
+            alt="Picture of the author"
+          />
+         </div>
           <IonButtons slot="end">
             <IonButton onClick={() => setShowNotifications(true)}>
               <IonIcon icon={notificationsOutline} />
@@ -80,8 +82,9 @@ const Feed = () => {
       </IonHeader>
       <IonContent className="ion-padding" fullscreen style={{ backgroundColor: 'rgb(228, 84, 30)' }}>
         <Notifications open={showNotifications} onDidDismiss={() => setShowNotifications(false)} />
-        <h1 className={league_spartan.className}>Chef Combos</h1>
-        <p>Find the best chef reccommended combinations based on your budget!</p>
+        <div style={{ textAlign: 'center', width: '100%' }} >
+        <IonChip className={league_spartan_light.className}  color="primary">Chef Reccomended Meals</IonChip>
+        </div>
       <ComboCardWrapper userId={'89338523-a2e1-4cf2-83a7-52e828eabc01'} combination={comboData} />
       </IonContent>
     </IonPage>

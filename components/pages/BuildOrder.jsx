@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Store from '../../store';
-import { IonPage, IonHeader, IonToolbar, IonContent, IonButton, IonIcon, IonToast, IonPopover, IonChip, IonRange, IonInput, IonSegment, IonSegmentButton, IonLabel, IonBadge, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonAccordion, IonAccordionGroup } from '@ionic/react';
-import { arrowBackOutline, arrowDownCircle, arrowDownCircleOutline, arrowDownOutline, arrowForwardOutline, caretBackOutline, caretDownCircle, caretDownOutline, caretForwardCircleOutline, caretForwardOutline, caretUpCircle, caretUpOutline, cart, cashOutline, chevronDown, happyOutline} from 'ionicons/icons';
+import { IonPage, IonHeader, IonToolbar, IonContent, IonButton, IonIcon, IonToast, IonChip,  IonBadge } from '@ionic/react';
+import {  caretBackOutline, caretForwardOutline, cart, cashOutline, chevronDown} from 'ionicons/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee, faUtensils, faGlassCheers, faIceCream, faDollarSign, faFaceSmile } from '@fortawesome/free-solid-svg-icons';
+import { faCoffee, faUtensils, faGlassCheers, faIceCream} from '@fortawesome/free-solid-svg-icons';
 import { League_Spartan } from 'next/font/google';
 import buildCombos from './buildCombosUtils';
 import SelectedItemsCard from './SelectedItemsCard';
@@ -116,8 +116,7 @@ const BuildOrder = () => {
       {/* Budget Section */}
  
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
-          <h5 className={league_spartan.className} style={{ marginRight: '10px'}}>Find the best combos under budget</h5>
-          <IonIcon style={{fontSize: '25px' }} icon={happyOutline} />
+          <IonChip className={league_spartan.className} style={{ margin: '20px'}} color='primary'>Find the perfect meal based on your budget!</IonChip>
         </div>
 
         <div style={{ textAlign: 'center', padding: '8px' }}>
@@ -129,14 +128,8 @@ const BuildOrder = () => {
           <IonIcon icon={caretForwardOutline} style={{ fontSize: '30px', cursor: 'pointer', color: '#007bff', paddingLeft: '7px' }} onClick={increaseBudget} />
         </div>
         <div style={{ textAlign: 'center', padding: '8px' }}>
-            {/* WHEN I CLICK ON THIS ICON BELOW, I WANT TO CALL THE BUILDCOMBOS FUNCTION WITH THE BUDGET ENTERED IN THE INPUT ABOVE */}
             <IonIcon icon={chevronDown} style={{ fontSize: '40px', marginTop: '20px' }} onClick={handleMakeOrder} />
         </div>
-
-
-      {/* THIS IS THE PREFERENCE TAB SECTION, PUT THIS SECTION INSIDE AN IONACCORDIAN */}
-      {/* <IonAccordionGroup>
-      <IonAccordion value="first" toggleIcon={caretDownCircle} toggleIconSlot="start"> */}
 
       <p style={{  textAlign: 'center', padding: '8px' }} className={league_spartan.className}>Add items to your order from the categories below</p>
       <div  style={{ textAlign: 'center', marginBottom: '20px'}}> 
@@ -155,7 +148,9 @@ const BuildOrder = () => {
         ))}
        </div> 
 
-        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+             {/* PREFERENCE TAB SECTION Starts HERE */}
+
+        {/* <div style={{ textAlign: 'center', marginBottom: '20px' }}>
        {order.map((item, index) => (
           <PreferenceCards
             key={index} // Add key prop here
@@ -170,7 +165,7 @@ const BuildOrder = () => {
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'center',  marginBottom: '20px'}}>
-            <IonButton    style={{ '--box-shadow': 'none', 'paddingRight': '10px' }} shape='round' color="dark" size="medium"  onClick={() => { 
+            <IonButton    style={{ '--box-shadow': 'none', 'paddingRight': '10px' }} shape='round' color="dark" size="small"  onClick={() => { 
                   if (order.length === 0) {
                       setIsOpen(true);
                   } else {
@@ -178,13 +173,10 @@ const BuildOrder = () => {
                   }
               }}>
                 <IonBadge >{orderCounts.dessert}</IonBadge>
-                Items | Make My Order
+                Add Preferances
               </IonButton>
         </div>
-          <IonToast isOpen={isOpen} message="Add item preferences to make your order!" duration={5000}></IonToast>
-
-          {/* </IonAccordion>
-          </IonAccordionGroup> */}
+          <IonToast isOpen={isOpen} message="Add item preferences to make your order!" duration={5000}></IonToast> */}
 
       {/* PREFERENCE TAB SECTION ENDS HERE */}
 

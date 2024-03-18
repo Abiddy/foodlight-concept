@@ -12,14 +12,13 @@ import { caretBackOutline, caretForwardOutline, cashOutline } from 'ionicons/ico
 
 
 export const league_spartan = League_Spartan({ weight: ['700'], subsets: ['latin'] });
-const league_spartan_light = League_Spartan({ weight: ['500'], subsets: ['latin'] });
+export const league_spartan_light = League_Spartan({ weight: ['500'], subsets: ['latin'] });
 
 type MenuItems = Database['public']['Tables']['menu_items']['Row'] & { item_image_url?: string | null };
 const supabase = createClientComponentClient<Database>();
 
 const ComboCard = ({ userId, combination }) => {
-  const [maxPrice, setMaxPrice] = useState(50); 
-  const [budget, setBudget] = useState('35');
+  const [budget, setBudget] = useState(35);
 
   useEffect(() => {
     const fetchMenuItems = async (): Promise<MenuItems[]> => {
@@ -88,28 +87,27 @@ const ComboCard = ({ userId, combination }) => {
 
 
   const filteredCombinations = combination.filter((combo) => {
-    const totalPrice = calculateTotalPrice(combo.item_ids); // Use menuItems retrieved from the store
-    return totalPrice <= maxPrice;
+    const totalPrice = calculateTotalPrice(combo.item_ids); 
+    return totalPrice <= budget;
   });
 
   const decreaseBudget = () => {
-    const newBudget = parseInt(budget) - 5;
-    setBudget(newBudget.toString());
+    const newBudget = budget - 5;
+    setBudget(newBudget);
   };
   
   const increaseBudget = () => {
-    const newBudget = parseInt(budget) + 5;
-    setBudget(newBudget.toString());
+    const newBudget = budget + 5;
+    setBudget(newBudget);
   };
 
-   // Event handler to update the budget when the input changes
    const handleBudgetChange = (event) => {
     setBudget(event.target.value);
   };
  
   return (
     <div style={{ maxWidth: '500px', marginTop: '30px' }}>
-        <div style={{ textAlign: 'center', padding: '8px' }}>
+        <div style={{ textAlign: 'center', padding: '25px' }}>
         <IonIcon icon={caretBackOutline} style={{ fontSize: '30px', cursor: 'pointer', color: '#007bff',paddingRight: '7px' }} onClick={decreaseBudget} />
           <div style={{ border: '0.5px solid #007bff', color: '#007bff', borderRadius: '20px', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', padding: '20px', margin: '0 auto' }}>
             <IonIcon icon={cashOutline} style={{ fontSize: '30px', marginRight: '10px' }}/>
