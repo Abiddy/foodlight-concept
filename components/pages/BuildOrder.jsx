@@ -184,7 +184,7 @@ const BuildOrder = () => {
 
 
       {matchingItems? 
-      <SelectedItemsCard combinations={matchingItems}/>: ''}
+      <SelectedItemsCard combinations={matchingItems} budget={budget} />: ''}
 
       </IonContent>
     </IonPage>
