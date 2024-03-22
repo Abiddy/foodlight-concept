@@ -1,10 +1,11 @@
-import { IonButton, IonCardContent, IonChip, IonContent, IonIcon, IonItem, IonLabel, IonList, IonModal} from '@ionic/react';
+import { IonBadge, IonButton, IonCardContent, IonChip, IonContent, IonIcon, IonItem, IonLabel, IonList, IonModal} from '@ionic/react';
 import React, { useRef, useState } from 'react';
 import {  Button, Card, CardBody, CardHeader, Typography } from '@material-tailwind/react';
 import { league_spartan, league_spartan_light } from './Menu';
 import Store from '../../store';
 import ModalWithFilter from './ModalWithFilter';
 import { useSwipeable } from 'react-swipeable';
+import { refreshCircle, refreshCircleOutline } from 'ionicons/icons';
 
 
 const SelectedItemsCard = ({ combinations, budget }) => {
@@ -89,7 +90,7 @@ const handlers = useSwipeable({
     <IonCardContent style={{ padding: '0px'}} {...handlers}> 
     <div className="w-full max-w-[23rem]">
       {combinations.map((combo, index) => (
-      <Card key={index}  className="mt-15 mb-5 rounded-xl relative p-5" style={{ boxShadow: 'none', border: '0.8px solid', color: '#007bff'}}>
+      <Card key={index}  className="mt-15 mb-5 rounded-xl relative p-5" style={{ boxShadow: 'none', border: '0.8px solid'}}>
         <div className="right-0 mb-2 flex-shrink-0 ml-auto flex items-center gap-2">
           <IonChip color="primary" className={`${league_spartan.className} text-l mt-1`}>Total: ${combo.reduce((acc, item) => acc + item.item_price, 0).toFixed(2)}</IonChip>
           </div>
@@ -101,6 +102,29 @@ const handlers = useSwipeable({
                   alt="card-image"
                   className="h-full w-full object-cover"
                 />
+                    <div className="absolute top-1 left-1">
+                    <IonIcon
+  icon={refreshCircle}
+  onClick={() => {
+    setIsOpen(true);
+    setindexToChange([index, index2]);
+    setComboPrice([combo, item.item_price]);
+  }}
+  shape='round'
+  className="ion-margin-end"
+  style={{
+    color: 'white',
+    fontSize: '1.5rem',
+    '--box-shadow': '0px 2px 4px rgba(0, 0, 0, 0.1)', // Adjust the shadow as needed
+    padding: '8px', // Add padding for space around the icon
+    borderRadius: '50%', // Make it round
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }}
+/>
+
+    </div>
               </CardHeader>
               <CardBody className='p-2'>
               <Typography style={{ fontWeight: 'bold' ,color: '#333',fontSize: '1rem'}} className={league_spartan.className}>
@@ -114,25 +138,6 @@ const handlers = useSwipeable({
                   {truncateText(item.item_description, 5)}
                 </Typography>
               </div>
-              <IonButton
-                  onClick={() => {
-                    setIsOpen(true);
-                    setindexToChange([index, index2]);
-                    setComboPrice([combo, item.item_price]);
-                  }}
-                  shape='round'
-                  size='small'
-                  className="ion-margin-end"
-                  style={{
-                    display: 'flex', justifyContent: 'space-between', alignItems: 'right',
-                    fontSize: '10px',
-                    color: '#007bff',
-                    '--background': 'transparent',
-                    '--box-shadow': 'none',
-                  }}
-                >
-                  Change
-                </IonButton>
               </CardBody>
           </Card>
           ))}

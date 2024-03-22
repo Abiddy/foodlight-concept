@@ -83,7 +83,7 @@ const Menu = () => {
             <Image src="/logo2.png" width={80} height={80} alt="Logo" />
           </div>
           <IonButtons slot="end">
-            <IonButton onClick={() => set(true)}>
+            <IonButton onClick={() => setShowCart(true)}>
               <IonIcon icon={cart} />
             </IonButton>
           </IonButtons>

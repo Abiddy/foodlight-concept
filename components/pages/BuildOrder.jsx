@@ -117,23 +117,37 @@ const BuildOrder = () => {
 
       {/* Budget Section */}
  
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
-          <IonChip className={league_spartan.className} style={{ margin: '20px'}} color='primary'>Find the perfect meal based on your budget!</IonChip>
-        </div>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+  <IonBadge
+    className={league_spartan.className}
+    style={{
+      margin: '20px',
+      padding: '10px',
+      backgroundColor: 'white',
+      color: 'black',
+      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+    }}
+    color='primary'
+  >
+    Find the best budget-based meals
+  </IonBadge>
+</div>
 
-        <div style={{ textAlign: 'center', padding: '8px' }}>
-        <IonIcon icon={caretBackOutline} style={{ fontSize: '30px', cursor: 'pointer', color: '#007bff',paddingRight: '7px' }} onClick={decreaseBudget} />
-          <div style={{ border: '0.5px solid #007bff', color: '#007bff', borderRadius: '20px', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', padding: '20px', margin: '0 auto' }}>
-            <IonIcon icon={cashOutline} style={{ fontSize: '30px', marginRight: '10px' }}/>
-            <input type="number" value={budget} onChange={handleBudgetChange} className={league_spartan_bold.className} style={{ fontSize: '30px', backgroundColor: 'transparent', border: 'none', color: '#007bff', textAlign: 'center', width: '50px' }} />
-          </div>
-          <IonIcon icon={caretForwardOutline} style={{ fontSize: '30px', cursor: 'pointer', color: '#007bff', paddingLeft: '7px' }} onClick={increaseBudget} />
-        </div>
+
+<div style={{ textAlign: 'center', padding: '8px' }}>
+  <IonIcon icon={caretBackOutline} style={{ fontSize: '30px', cursor: 'pointer', color: 'black', paddingRight: '7px' }} onClick={decreaseBudget} />
+  <div style={{       boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', color: 'black', borderRadius: '20px', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', padding: '20px', margin: '0 auto' }}>
+    <IonIcon icon={cashOutline} style={{ fontSize: '30px', marginRight: '10px', color: 'black' }} />
+    <input type="number" value={budget} onChange={handleBudgetChange} className={league_spartan_bold.className} style={{ fontSize: '30px', backgroundColor: 'transparent', border: 'none', color: 'black', textAlign: 'center', width: '50px' }} />
+  </div>
+  <IonIcon icon={caretForwardOutline} style={{ fontSize: '30px', cursor: 'pointer', color: 'black', paddingLeft: '7px' }} onClick={increaseBudget} />
+</div>
+
         <div style={{ textAlign: 'center', padding: '8px' }}>
             <IonIcon icon={chevronDown} style={{ fontSize: '40px', marginTop: '20px' }} onClick={handleMakeOrder} />
         </div>
 
-      <p style={{  textAlign: 'center', padding: '8px' }} className={league_spartan.className}>Add items to your order from the categories below</p>
+      {/* <p style={{  textAlign: 'center', padding: '8px' }} className={league_spartan.className}>Add items to your order from the categories below</p> */}
       <div  style={{ textAlign: 'center', marginBottom: '20px'}}> 
         {Object.keys(keywords).map((category) => (
           <div key={category} className="py-4 relative border-2 border-transparent text-gray-800 rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out" style={{ display: 'inline-block', textAlign: 'center', marginRight: '10px', padding: '10px' }} onClick={() => handleCategoryClick(category)}>
@@ -152,7 +166,7 @@ const BuildOrder = () => {
 
              {/* PREFERENCE TAB SECTION Starts HERE */}
 
-        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+        {/* <div style={{ textAlign: 'center', marginBottom: '20px' }}>
        {order.map((item, index) => (
           <PreferenceCards
             key={index} // Add key prop here
@@ -178,7 +192,7 @@ const BuildOrder = () => {
                 Add Preferances
               </IonButton>
         </div>
-          <IonToast isOpen={isOpen} message="Add item preferences to make your order!" duration={5000}></IonToast>
+          <IonToast isOpen={isOpen} message="Add item preferences to make your order!" duration={5000}></IonToast> */}
 
       {/* PREFERENCE TAB SECTION ENDS HERE */}
 
