@@ -29,7 +29,7 @@ const BuildOrder = () => {
   console.log({matchingItems})
   const [budget, setBudget] = useState('25');
 
- const decreaseBudget = () => {
+  const decreaseBudget = () => {
     const newBudget = parseInt(budget) - 5;
     setBudget(newBudget.toString());
   };
@@ -115,38 +115,32 @@ const BuildOrder = () => {
       <IonContent className="ion-padding" fullscreen={true}> 
 
       {/* Budget Section */}
- 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-  <IonBadge
-    className={league_spartan.className}
-    style={{
-      margin: '20px',
-      padding: '10px',
-      backgroundColor: 'white',
-      color: 'black',
-      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-    }}
-    color='primary'
-  >
-    Find the best budget-based meals
-  </IonBadge>
-</div>
-
-
-<div style={{ textAlign: 'center', padding: '8px' }}>
-  <IonIcon icon={caretBackOutline} style={{ fontSize: '30px', cursor: 'pointer', color: '#333646', paddingRight: '7px' }} onClick={decreaseBudget} />
-  <div style={{       boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', color: '#2D3142', borderRadius: '20px', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', padding: '20px', margin: '0 auto' }}>
-    <IonIcon icon={cashOutline} style={{ fontSize: '30px', marginRight: '10px', color: '#333646' }} />
-    <input type="number" value={budget} onChange={handleBudgetChange} className={league_spartan_bold.className} style={{ fontSize: '30px', backgroundColor: 'transparent', border: 'none', color: '#333646', textAlign: 'center', width: '50px' }} />
-  </div>
-  <IonIcon icon={caretForwardOutline} style={{ fontSize: '30px', cursor: 'pointer', color: '#333646', paddingLeft: '7px' }} onClick={increaseBudget} />
-</div>
-
-        <div style={{ textAlign: 'center', padding: '8px' }}>
-            <IonIcon icon={chevronDown} style={{ fontSize: '40px', marginTop: '20px' }} onClick={handleMakeOrder} />
-        </div>
-
-      {/* <p style={{  textAlign: 'center', padding: '8px' }} className={league_spartan.className}>Add items to your order from the categories below</p> */}
+        <IonBadge
+          className={league_spartan.className}
+          style={{
+            margin: '20px',
+            padding: '10px',
+            backgroundColor: 'white',
+            color: 'black',
+            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+          }}
+          color='primary'
+        >
+          Find the best budget-based meals
+        </IonBadge>
+      </div>
+    <div style={{ textAlign: 'center', padding: '8px' }}>
+      <IonIcon icon={caretBackOutline} style={{ fontSize: '30px', cursor: 'pointer', color: '#333646', paddingRight: '7px' }} onClick={decreaseBudget} />
+      <div style={{ boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', color: '#2D3142', borderRadius: '20px', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', padding: '20px', margin: '0 auto' }}>
+        <IonIcon icon={cashOutline} style={{ fontSize: '30px', marginRight: '10px', color: '#333646' }} />
+        <input type="number" value={budget} onChange={handleBudgetChange} className={league_spartan_bold.className} style={{ fontSize: '30px', backgroundColor: 'transparent', border: 'none', color: '#333646', textAlign: 'center', width: '50px' }} />
+      </div>
+      <IonIcon icon={caretForwardOutline} style={{ fontSize: '30px', cursor: 'pointer', color: '#333646', paddingLeft: '7px' }} onClick={increaseBudget} />
+    </div>
+    <div style={{ textAlign: 'center', padding: '8px' }}>
+        <IonIcon icon={chevronDown} style={{ fontSize: '40px', marginTop: '20px' }} onClick={handleMakeOrder} />
+    </div>
       <div  style={{ textAlign: 'center', marginBottom: '20px' , boxShadow: '1px 4px 6px rgba(0.1, 0.1, 0.1, 0.1)', borderRadius: '20px'}}> 
         {Object.keys(keywords).map((category) => (
           <div key={category} className="py-4 relative border-2 border-transparent text-gray-800 rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out" style={{ display: 'inline-block', textAlign: 'center', marginRight: '10px', padding: '10px' }} onClick={() => handleCategoryClick(category)}>
@@ -195,10 +189,8 @@ const BuildOrder = () => {
 
       {/* PREFERENCE TAB SECTION ENDS HERE */}
 
-
       {matchingItems? 
       <SelectedItemsCard combinations={matchingItems} budget={budget} />: ''}
-
       </IonContent>
     </IonPage>
   );

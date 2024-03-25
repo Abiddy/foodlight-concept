@@ -3,24 +3,22 @@ import {
   IonPage,
   IonHeader,
   IonToolbar,
-  IonTitle,
   IonContent,
   IonCard,
   IonCardHeader,
-  IonCardTitle,
   IonCardContent,
   IonButtons,
   IonIcon,
   IonButton,
-  IonMenuButton,
-  IonChip,
+  IonModal,
+  IonTitle,
 } from '@ionic/react';
 import { League_Spartan } from 'next/font/google';
 import Cart from './Cart';
 import Store from '../../store';
 import { Button, Card, CardBody, CardHeader, Typography } from '@material-tailwind/react';
-import { cart as cartIcon } from 'ionicons/icons';
 import Image from 'next/image';
+import ItemPreferencesModal from './ItemPreferencesModal';
 
 
 export const league_spartan = League_Spartan({ weight: ['600'], subsets: ['latin'] });
@@ -29,8 +27,27 @@ export const league_spartan_light = League_Spartan({ weight: ['400'], subsets: [
 const Menu = () => {
   const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [itemPreferences, setItemPreferences] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  console.log({itemPreferences})
+
+  const showPreferencesModal = (item) => {
+    // Assuming item_preferences is an array of preferences for the item
+    setItemPreferences(item.item_preferences); // Set item preferences in state
+    setIsOpen(true);
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+
   const menuItems = Store.useState(s => s.menuItems);
 
+  console.log({menuItems})
 
   const groupedMenuItems = menuItems.reduce((acc, item) => {
     const { item_type } = item;
@@ -93,11 +110,11 @@ const Menu = () => {
   {menuItems? (
     Object.entries(groupedMenuItems).map(([itemType, items]) => (
       <IonCard key={itemType} style={{ boxShadow: 'none', border: 'none' }}>
-        <IonCardHeader>
-          <h3 className={league_spartan.className}>{itemType.charAt(0).toUpperCase() + itemType.slice(1)}</h3>
+        <IonCardHeader style={{ paddingBottom: '0px', paddingTop: '0px'}}>
+          <h4 className={league_spartan.className}>{itemType.charAt(0).toUpperCase() + itemType.slice(1)}</h4>
         </IonCardHeader>
         <Cart open={showCart} onDidDismiss={() => setShowCart(false)} cart={cart}/>
-        <IonCardContent> 
+        <IonCardContent style={{ paddingTop: '0px', paddingBottom: '0px'}}> 
         <div className="w-full max-w-[23rem]">
           {items.map((item) => (
             <Card key={item.id} className="w-full max-w-[48rem] flex-row mb-4">
@@ -120,15 +137,21 @@ const Menu = () => {
                   {truncateText(item.item_description, 5)}
                 </Typography>
                 <Button
-                  onClick={() => addToCart(item)}
-           
-                  className="flex items-center gap-2 "
-                  style={{ color: '#007bff', borderRadius: '9999px', padding: '8px', fontWeight: 'bold' }}
-                >
-                  Add
+                    onClick={() => showPreferencesModal(item)}
+                    className="flex items-center justify-between"
+                    style={{
+                    color: 'white',
+                    background: '#2D3142',
+                    borderRadius: '9999px',
+                    padding: '7px 12px', 
+                    fontSize: '10.5px', 
+                    fontWeight: 'bold',
+                    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.4)', 
+                    }}
+                 >
+                   Add
                 </Button>
-              </div>
-                
+              </div>                
               </CardBody>
             </Card>
           ))}
@@ -140,6 +163,39 @@ const Menu = () => {
     <div>Loading...</div>
   )}
 </IonContent>
+
+{/* <IonModal onClose={closeModal} isOpen={isOpen}>
+      <h2>Item Preferences</h2>
+      {itemPreferences && itemPreferences.map(preference => (
+        <div key={preference.id}>
+          <h3>{preference.optionHeader}</h3>
+          <p>Required: {preference.required ? 'Yes' : 'No'}</p>
+          <p>Type: {preference.optionType}</p>
+          <p>Options: {preference.optionList}</p>
+        </div>
+      ))}
+    </IonModal> */}
+           <IonModal isOpen={isOpen}>
+          <IonHeader>
+            <IonToolbar>
+              <IonTitle>Modal</IonTitle>
+              <IonButtons slot="end">
+                <IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
+              </IonButtons>
+            </IonToolbar>
+          </IonHeader>
+          <IonContent className="ion-padding">
+          <h2>Item Preferences</h2>
+      {itemPreferences && itemPreferences.map(preference => (
+        <div key={preference.id}>
+          <h3>{preference.optionHeader}</h3>
+          <p>Required: {preference.required ? 'Yes' : 'No'}</p>
+          <p>Type: {preference.optionType}</p>
+          <p>Options: {preference.optionList}</p>
+        </div>
+      ))}
+          </IonContent>
+        </IonModal>
 
     </IonPage>
   );
