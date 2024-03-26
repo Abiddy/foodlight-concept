@@ -124,7 +124,7 @@ console.log({filteredChefCombos})
   <IonIcon icon={caretForwardOutline} style={{ fontSize: '30px', cursor: 'pointer', color: '#333646', paddingLeft: '7px' }} onClick={increaseBudget} />
 </div>
     <IonCardContent style={{ padding: '0px'}}> 
-    <div className="w-full max-w-[23rem]">
+    <div className="w-full flex-column max-w-[23rem]">
       {filteredChefCombos.map((combo, index) => (
       <Card key={index}  className="mt-15 mb-5 rounded-xl relative p-5" style={{ boxShadow: 'none', border: '0.8px solid'}}>
       <div className="rounded-t-xl text-black py-2 px-4 absolute top-0 left-0 right-0 mb-10 flex items-center justify-between" style={{ backgroundColor: '#f4f5f8' }}>
