@@ -134,7 +134,7 @@ console.log({filteredChefCombos})
           </div>
           <div style={{ marginBottom: '70px'}}></div>
           {combo.combo_items.comboItems.map((item, index2) => (
-            <Card key={index2} className="w-full max-w-[48rem] mb-4" >
+            <Card key={index2} className="w-full max-w-[48rem] flex-column mb-4" >
               <CardHeader shadow={false} floated={false} className="m-0 w-2/5 shrink-0 rounded-r-none">
                 <img
                   src={item.item_image_url || 'default-image-url'}
