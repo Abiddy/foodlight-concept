@@ -183,7 +183,7 @@ console.log({filteredChefCombos})
       height={30}
     />
   </div>
-      {combo.combo_items.comboOwner} - "{combo.combo_items.chefComment}"
+      {combo.combo_items.comboOwner} - {combo.combo_items.chefComment}
                 </div>
         </Card>
       ))}

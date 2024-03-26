@@ -1,31 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonModal, IonTitle, IonToolbar } from '@ionic/react';
 import { addCircle, closeOutline, removeCircle } from 'ionicons/icons';
 
 const ItemPreferencesModal = ({ item, isOpen, setIsOpen }) => {
 
     const renderOptions = () => {
-        const [options, setOptions] = useState([]);
-
-        const handleDecrease = (optionArray) => {
-            if (optionArray[1] > 0) {
-                const updatedOptions = [...options];
-                const index = updatedOptions.findIndex(opt => opt[0] === optionArray[0]);
-                if (index !== -1) {
-                    updatedOptions[index][1] -= 1;
-                    setOptions(updatedOptions);
-                }
-            }
-        };
-    
-        const handleIncrease = (optionArray) => {
-            const updatedOptions = [...options];
-            const index = updatedOptions.findIndex(opt => opt[0] === optionArray[0]);
-            if (index !== -1) {
-                updatedOptions[index][1] += 1;
-                setOptions(updatedOptions);
-            }
-        };
         if (!item || !item.item_preferences) return null;
     
         return item.item_preferences.map((preference) => (
@@ -50,26 +29,38 @@ const ItemPreferencesModal = ({ item, isOpen, setIsOpen }) => {
                 ))}
               </ul>
             )}
-{preference.optionType === 'increase-decrease-option' && (
-    <ul>
-        {preference.optionList.split(',').map((option, index) => { // Add index parameter to map function
-            const optionArray = [option, 0]; // Initialize quantity to 0 for each option
-            return (
-                <li key={optionArray[0]}>
-                    <div>
-                        <span>{optionArray[0]}</span>
-                        <IonIcon size='s' icon={removeCircle} onClick={() => handleDecrease(optionArray, index)}/> {/* Pass index to handleDecrease */}
-                        <span>{optionArray[1]}</span>
-                        <IonIcon size='s' icon={addCircle} onClick={() => handleIncrease(optionArray, index)}/> {/* Pass index to handleIncrease */}
-                    </div>
-                </li>
-            );
-        })}
-    </ul>
-)}
+            {preference.optionType === 'increase-decrease-option' && (
+                <ul>
+                    {preference.optionList.split(',').map((option) => {
+                        const optionArray = [option, 0]; // Initialize quantity to 0 for each option
+                        return (
+                            <li key={optionArray[0]}>
+                                <div>
+                                    <span>{optionArray[0]}</span>
+                                    <IonIcon size='s' icon={removeCircle} onClick={() => handleDecrease(optionArray)}/>
+                                    <span>{optionArray[1]}</span>
+                                    <IonIcon size='s' icon={addCircle} onClick={() => handleIncrease(optionArray)}/>
+                                </div>
+                            </li>
+                        );
+                    })}
+                </ul>
+            )}
           </div>
         ));
       };
+    
+      const handleDecrease = (optionArray) => {
+        if (optionArray[1] && optionArray[1] > 0) {
+            optionArray[1] -= 1; // Decrease quantity by 1
+            // Update logic to handle quantity decrease
+        }
+    };
+    
+    const handleIncrease = (optionArray) => {
+        optionArray[1] += 1; // Increase quantity by 1
+        // Update logic to handle quantity increase
+    };
 
       
 
