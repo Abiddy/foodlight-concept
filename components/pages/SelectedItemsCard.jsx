@@ -52,7 +52,7 @@ const setComboPrice = (data) => {
 }
 
   return (
-    <IonCardContent style={{ padding: '0px'}}> 
+    <IonCardContent style={{ padding: '0px', marginTop: '30px'}}> 
     <div className="w-full max-w-[23rem]">
       {combinations.map((combo, index) => (
       <Card key={index}  className="mt-15 mb-5 rounded-xl relative p-5" style={{ boxShadow: 'none', border: '0.8px solid'}}>

@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { League_Spartan } from 'next/font/google';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Database } from '../../../types/supabase';
-import Store from '../../../store';
 import { setMenuItems } from '../../../store/actions';
 import {  Button, Card, CardBody, CardHeader, Typography } from '@material-tailwind/react';
 import { IonBadge,  IonCardContent, IonIcon} from '@ionic/react';
 import { arrowForward, caretBackOutline, caretForwardOutline, cashOutline } from 'ionicons/icons';
+import Image from 'next/image';
 
 
 export const league_spartan = League_Spartan({ weight: ['500'], subsets: ['latin'] });
@@ -18,7 +17,7 @@ const supabase = createClientComponentClient();
 const ComboCard = ({ userId, combination }) => {
   const [budget, setBudget] = useState(35);
 
-  // console.log({combination})
+  console.log({combination})
 
   useEffect(() => {
     const fetchMenuItems = async () => {
@@ -68,22 +67,7 @@ const ComboCard = ({ userId, combination }) => {
     fetchAndSetMenuItems();
   }, [userId]);
 
-  const menuItems = Store.useState(s => s.menuItems); 
-
-  function extractComboItems(combinations) {
-    const comboItemsArray = [];
-    
-    combinations.forEach(combo => {
-        const comboItems = combo.combo_items.comboItems;
-        if (Array.isArray(comboItems)) {
-            comboItemsArray.push(comboItems);
-        } else {
-            comboItemsArray.push([comboItems]);
-        }
-    });
-
-    return comboItemsArray;
-}
+  // const menuItems = Store.useState(s => s.menuItems); 
 
 const truncateText = (text, maxWords) => {
   const words = text?.split(/\s+/);
@@ -108,7 +92,11 @@ const handleBudgetChange = (event) => {
   setBudget(event.target.value);
 };
 
-const chefCombos = extractComboItems(combination)
+const filteredChefCombos = combination.filter(combo =>
+  combo.combo_items.comboItems.reduce((acc, item) => acc + item.item_price, 0) <= budget
+);
+
+console.log({filteredChefCombos})
  
   return (
     <div>
@@ -137,12 +125,15 @@ const chefCombos = extractComboItems(combination)
 </div>
     <IonCardContent style={{ padding: '0px'}}> 
     <div className="w-full max-w-[23rem]">
-      {chefCombos.map((combo, index) => (
+      {filteredChefCombos.map((combo, index) => (
       <Card key={index}  className="mt-15 mb-5 rounded-xl relative p-5" style={{ boxShadow: 'none', border: '0.8px solid'}}>
-        <div className="right-0 mb-2 flex-shrink-0 ml-auto flex items-center gap-2">
-          <IonBadge color="warning" className={`${league_spartan.className} text-l mt-1`} style={{ padding: '10px'}}>Total: ${combo.reduce((acc, item) => acc + item.item_price, 0).toFixed(2)}</IonBadge>
+      <div className="rounded-t-xl text-black py-2 px-4 absolute top-0 left-0 right-0 mb-10 flex items-center justify-between" style={{ backgroundColor: '#f4f5f8' }}>
+        {/* {combo.combo_items.comboName} */}
+          <div className={`${league_spartan.className} text-l mt-1`} style={{}}>  {combo.combo_items.comboName}</div>
+          <div className={`${league_spartan.className} text-l mt-1`} style={{}}>Total: ${combo.combo_items.comboItems.reduce((acc, item) => acc + item.item_price, 0).toFixed(2)}</div>
           </div>
-          {combo.map((item, index2) => (
+          <div style={{ marginBottom: '70px'}}></div>
+          {combo.combo_items.comboItems.map((item, index2) => (
             <Card key={index2} className="w-full max-w-[48rem] flex-row mb-4" >
               <CardHeader shadow={false} floated={false} className="m-0 w-2/5 shrink-0 rounded-r-none">
                 <img
@@ -177,11 +168,23 @@ const chefCombos = extractComboItems(combination)
                 fontSize: '13.5px', 
                 fontWeight: 'bold',
                 boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.4)', 
+                marginBottom: '50px',
               }}
             >
               Add Combo
               <IonIcon icon={arrowForward}/>
             </Button>
+            <div className={`${league_spartan.className} rounded-b-xl text-black py-2 px-4 absolute bottom-0 left-0 right-0 mt-20 flex items-center gap-3`} style={{ backgroundColor: '#f4f5f8' }}>
+            <div className="rounded-full overflow-hidden">
+    <Image
+      src="/chef.jpeg"
+      alt="Chef Image"
+      width={30}
+      height={30}
+    />
+  </div>
+      {combo.combo_items.comboOwner} - "{combo.combo_items.chefComment}"
+                </div>
         </Card>
       ))}
     </div>

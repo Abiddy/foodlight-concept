@@ -8,6 +8,7 @@ import { faCoffee, faUtensils, faGlassCheers, faIceCream} from '@fortawesome/fre
 import { League_Spartan } from 'next/font/google';
 import buildCombos from './buildCombosUtils';
 import SelectedItemsCard from './SelectedItemsCard';
+import { Button } from '@material-tailwind/react';
 
 export const league_spartan = League_Spartan({ weight: ['500'], subsets: ['latin'] });
 export const league_spartan_bold = League_Spartan({ weight: ['700'], subsets: ['latin'] });
@@ -138,9 +139,9 @@ const BuildOrder = () => {
       </div>
       <IonIcon icon={caretForwardOutline} style={{ fontSize: '30px', cursor: 'pointer', color: '#333646', paddingLeft: '7px' }} onClick={increaseBudget} />
     </div>
-    <div style={{ textAlign: 'center', padding: '8px' }}>
+    {/* <div style={{ textAlign: 'center', padding: '8px' }}>
         <IonIcon icon={chevronDown} style={{ fontSize: '40px', marginTop: '20px' }} onClick={handleMakeOrder} />
-    </div>
+    </div> */}
       <div  style={{ textAlign: 'center', marginBottom: '20px' , boxShadow: '1px 4px 6px rgba(0.1, 0.1, 0.1, 0.1)', borderRadius: '20px'}}> 
         {Object.keys(keywords).map((category) => (
           <div key={category} className="py-4 relative border-2 border-transparent text-gray-800 rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out" style={{ display: 'inline-block', textAlign: 'center', marginRight: '10px', padding: '10px' }} onClick={() => handleCategoryClick(category)}>
@@ -156,6 +157,23 @@ const BuildOrder = () => {
           </div>
         ))}
        </div> 
+       <Button
+              onClick={handleMakeOrder} 
+              className="flex items-center justify-between text-center"
+              style={{
+                color: 'white',
+                background: '#2D3142',
+                borderRadius: '9999px',
+                padding: '10px 12px', 
+                fontSize: '13.5px', 
+                fontWeight: 'bold',
+                boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.4)', 
+                margin: '0 auto',
+              }}
+            >
+             Explore
+          </Button>
+           
 
              {/* PREFERENCE TAB SECTION Starts HERE */}
 

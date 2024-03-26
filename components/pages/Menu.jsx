@@ -28,18 +28,16 @@ const Menu = () => {
   const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [itemPreferences, setItemPreferences] = useState(null);
+  const [item, setItem] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  console.log({itemPreferences})
+  // console.log({itemPreferences})
 
   const showPreferencesModal = (item) => {
-    // Assuming item_preferences is an array of preferences for the item
-    setItemPreferences(item.item_preferences); // Set item preferences in state
+    setItem(item); 
     setIsOpen(true);
   };
 
-  // Function to close the modal
   const closeModal = () => {
     setShowModal(false);
   };
@@ -163,40 +161,8 @@ const Menu = () => {
     <div>Loading...</div>
   )}
 </IonContent>
-
-{/* <IonModal onClose={closeModal} isOpen={isOpen}>
-      <h2>Item Preferences</h2>
-      {itemPreferences && itemPreferences.map(preference => (
-        <div key={preference.id}>
-          <h3>{preference.optionHeader}</h3>
-          <p>Required: {preference.required ? 'Yes' : 'No'}</p>
-          <p>Type: {preference.optionType}</p>
-          <p>Options: {preference.optionList}</p>
-        </div>
-      ))}
-    </IonModal> */}
-           <IonModal isOpen={isOpen}>
-          <IonHeader>
-            <IonToolbar>
-              <IonTitle>Modal</IonTitle>
-              <IonButtons slot="end">
-                <IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
-              </IonButtons>
-            </IonToolbar>
-          </IonHeader>
-          <IonContent className="ion-padding">
-          <h2>Item Preferences</h2>
-      {itemPreferences && itemPreferences.map(preference => (
-        <div key={preference.id}>
-          <h3>{preference.optionHeader}</h3>
-          <p>Required: {preference.required ? 'Yes' : 'No'}</p>
-          <p>Type: {preference.optionType}</p>
-          <p>Options: {preference.optionList}</p>
-        </div>
-      ))}
-          </IonContent>
-        </IonModal>
-
+      {isOpen && 
+      <ItemPreferencesModal item={item} isOpen={isOpen} setIsOpen={setIsOpen}/>}
     </IonPage>
   );
 };
