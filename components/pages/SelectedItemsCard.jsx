@@ -55,8 +55,8 @@ const setComboPrice = (data) => {
     <IonCardContent style={{ padding: '0px', marginTop: '30px'}}> 
     <div className="w-full max-w-[23rem]">
       {combinations.map((combo, index) => (
-      <Card key={index}  className="mt-15 mb-5 rounded-xl relative p-5" style={{ boxShadow: 'none', border: '0.8px solid'}}>
-        <div className="right-0 mb-2 flex-shrink-0 ml-auto flex items-center gap-2">
+      <div key={index}  className="mt-15 mb-5 rounded-xl relative p-5" style={{ boxShadow: 'none', border: '0.8px solid'}}>
+        <div className="right-0 mb-2 flex-shrink-0 ml-auto flex items-center gap-2" style={{ marginLeft: 'auto' }}>
           <IonBadge color="warning" className={`${league_spartan.className} text-l mt-1`} style={{ padding: '10px'}}>Total: ${combo.reduce((acc, item) => acc + item.item_price, 0).toFixed(2)}</IonBadge>
           </div>
           {combo.map((item, index2) => (
@@ -116,12 +116,13 @@ const setComboPrice = (data) => {
                 fontSize: '13.5px', 
                 fontWeight: 'bold',
                 boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.4)', 
+                width: '100%'
               }}
             >
               Add Combo
               <IonIcon icon={arrowForward}/>
             </Button>
-        </Card>
+        </div>
       ))}
     </div>
       <ModalWithFilter  isOpen={isOpen}  setIsOpen={setIsOpen} groupedMenuItems={groupedMenuItems} replaceItemInCombo={replaceItemInCombo} remainingBudget={remainingBudget}/>

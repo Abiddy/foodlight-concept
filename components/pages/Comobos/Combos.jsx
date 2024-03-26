@@ -126,7 +126,7 @@ console.log({filteredChefCombos})
     <IonCardContent style={{ padding: '0px'}}> 
     <div className="w-full flex-column max-w-[23rem]">
       {filteredChefCombos.map((combo, index) => (
-      <Card key={index}  className="mt-15 mb-5 rounded-xl relative p-5" style={{ boxShadow: 'none', border: '0.8px solid'}}>
+      <div key={index}  className="mt-15 mb-5 rounded-xl relative p-5" style={{ boxShadow: 'none', border: '0.8px solid'}}>
       <div className="rounded-t-xl text-black py-2 px-4 absolute top-0 left-0 right-0 mb-10 flex items-center justify-between" style={{ backgroundColor: '#f4f5f8' }}>
         {/* {combo.combo_items.comboName} */}
           <div className={`${league_spartan.className} text-l mt-1`} style={{}}>  {combo.combo_items.comboName}</div>
@@ -158,6 +158,7 @@ console.log({filteredChefCombos})
           </Card>
           ))}
             <Button
+            
               onClick={() => addToCart(combo)}
               className="flex items-center justify-between"
               style={{
@@ -169,6 +170,7 @@ console.log({filteredChefCombos})
                 fontWeight: 'bold',
                 boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.4)', 
                 marginBottom: '50px',
+                width: '100%',
               }}
             >
               Add Combo
@@ -185,7 +187,7 @@ console.log({filteredChefCombos})
   </div>
       {combo.combo_items.comboOwner} - {combo.combo_items.chefComment}
                 </div>
-        </Card>
+        </div>
       ))}
     </div>
     </IonCardContent> 
