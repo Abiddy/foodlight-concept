@@ -8,6 +8,7 @@ import {
   IonIcon,
   IonContent,
   IonChip,
+  IonTabBar,
 } from '@ionic/react';
 import Notifications from './Notifications';
 import { useCallback, useEffect, useState } from 'react';
@@ -57,25 +58,21 @@ const Feed = () => {
   }, [fetchComboData]);
 
   return (
-    <IonPage style={{ backgroundColor: 'rgb(228, 84, 30)',  "!important": true }}>
+    <IonPage >
       <IonHeader>
-        <IonToolbar>
-        <div className='p-2'>
+        <IonToolbar style={{ '--background': '#00BF63', color: 'white', height: '70px', boxShadow: '0px -2px 4px rgba(0, 0, 0, 0.2)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 10px'  }}>
           <Image
-            src="/logo2.png"
+            src="/foodLight.png"
             width={80}
             height={80}
             alt="Picture of the author"
-          />
-         </div>
+          />     
           <IonButtons slot="end">
             <IonButton onClick={() => setShowNotifications(true)}>
-              <IonIcon icon={notificationsOutline} />
+              <IonIcon icon={notificationsOutline} style={{ '--background': 'transparent', color: 'white' }} />
             </IonButton>
-          </IonButtons>
-          <IonButtons slot="end">
             <IonButton onClick={() => set(true)}>
-              <IonIcon icon={cart} />
+              <IonIcon icon={cart} style={{ '--background': 'transparent', color: 'white' }} />
             </IonButton>
           </IonButtons>
         </IonToolbar>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Store from '../../store';
 import { IonPage, IonHeader, IonToolbar, IonContent, IonButton, IonIcon, IonToast, IonChip,  IonBadge, IonButtons } from '@ionic/react';
-import {  caretBackOutline, caretForwardOutline, cart, cashOutline, chevronDown} from 'ionicons/icons';
+import {  caretBackOutline, caretForwardOutline, cart, cashOutline, chevronDown, notificationsOutline} from 'ionicons/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee, faUtensils, faGlassCheers, faIceCream} from '@fortawesome/free-solid-svg-icons';
 import { League_Spartan } from 'next/font/google';
@@ -101,14 +101,20 @@ const BuildOrder = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <div className='p-2'>
-            <Image src="/logo2.png" width={80} height={80} alt="Logo" />
-          </div>
+      <IonHeader> 
+        <IonToolbar style={{ '--background': '#00BF63', color: 'white', height: '70px', boxShadow: '0px -2px 4px rgba(0, 0, 0, 0.2)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 10px'  }}>
+          <Image
+            src="/foodLight.png"
+            width={80}
+            height={80}
+            alt="Picture of the author"
+          />     
           <IonButtons slot="end">
+            <IonButton onClick={() => setShowNotifications(true)}>
+              <IonIcon icon={notificationsOutline} style={{ '--background': 'transparent', color: 'white' }} />
+            </IonButton>
             <IonButton onClick={() => set(true)}>
-              <IonIcon icon={cart} />
+              <IonIcon icon={cart} style={{ '--background': 'transparent', color: 'white' }} />
             </IonButton>
           </IonButtons>
         </IonToolbar>

@@ -19,6 +19,7 @@ import Store from '../../store';
 import { Button, Card, CardBody, CardHeader, Typography } from '@material-tailwind/react';
 import Image from 'next/image';
 import ItemPreferencesModal from './ItemPreferencesModal';
+import { cartOutline, notifications } from 'ionicons/icons';
 
 
 export const league_spartan = League_Spartan({ weight: ['600'], subsets: ['latin'] });
@@ -93,13 +94,19 @@ const Menu = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
-          <div className='p-2'>
-            <Image src="/logo2.png" width={80} height={80} alt="Logo" />
-          </div>
+      <IonToolbar style={{ '--background': '#00BF63', color: 'white', height: '70px', boxShadow: '0px -2px 4px rgba(0, 0, 0, 0.2)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 10px'  }}>
+          <Image
+            src="/foodLight.png"
+            width={80}
+            height={80}
+            alt="Picture of the author"
+          />     
           <IonButtons slot="end">
-            <IonButton onClick={() => setShowCart(true)}>
-              <IonIcon icon={cart} />
+            <IonButton onClick={() => setShowNotifications(true)}>
+              <IonIcon icon={notifications} style={{ '--background': 'transparent', color: 'white' }} />
+            </IonButton>
+            <IonButton onClick={() => set(true)}>
+              <IonIcon icon={cartOutline} style={{ '--background': 'transparent', color: 'white' }} />
             </IonButton>
           </IonButtons>
         </IonToolbar>
