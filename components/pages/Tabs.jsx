@@ -43,20 +43,27 @@ const Tabs = () => {
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      <IonTabBar slot='bottom' style={{ '--background': '#00BF63', color: 'white', height: '70px', boxShadow: '0px -2px 4px rgba(0, 0, 0, 0.2)' }}>
-      <IonTabButton tab="tab1" href="/tabs/feed" style={{ color: 'white' }}>
+      <IonTabBar 
+        slot='bottom' 
+        style={{ 
+        '--background': 'white', 
+        color: 'white', 
+        height: '70px', 
+        // boxShadow: '0px -2px 4px rgba(0, 0, 0, 0.2)' 
+      }}>
+      <IonTabButton tab="tab1" href="/tabs/feed" style={{ color: '#00BF63' }}>
           <IonIcon icon={home} />
           <IonLabel>Home</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="tab2" href="/tabs/feed" style={{ color: 'white' }}>
+        <IonTabButton tab="tab2" href="/tabs/feed" style={{ color: '#00BF63' }}>
           <IonIcon icon={heart} />
           <IonLabel>Chef Combos</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="tab3" href="/tabs/build-order" style={{ color: 'white' }}>
+        <IonTabButton tab="tab3" href="/tabs/build-order" style={{ color: '#00BF63' }}>
           <IonIcon icon={fastFood} />
           <IonLabel>Build Your Own</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="tab4" href="/tabs/menu" style={{ color: 'white' }}>
+        <IonTabButton tab="tab4" href="/tabs/menu" style={{ color: '#00BF63' }}>
           <IonIcon icon={book} />
           <IonLabel>Full Menu</IonLabel>
         </IonTabButton>

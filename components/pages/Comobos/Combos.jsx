@@ -126,13 +126,13 @@ console.log({filteredChefCombos})
     <IonCardContent style={{ padding: '0px'}}> 
     <div className="w-full flex-column max-w-[23rem]">
       {filteredChefCombos.map((combo, index) => (
-      <div key={index}  className="mt-15 mb-5 rounded-xl relative p-5" style={{ boxShadow: 'none', border: '0.8px solid'}}>
-      <div className="rounded-t-xl text-black py-2 px-4 absolute top-0 left-0 right-0 mb-10 flex items-center justify-between" style={{ backgroundColor: '#f4f5f8' }}>
+      <div key={index}  className="mt-15 mb-5 rounded-xl relative p-5" style={{ boxShadow: 'none', border: '0.4px solid grey'}}>
+      <div className="rounded-t-xl text-black py-2 px-4 absolute top-0 left-0 right-0 mb-10 flex items-center justify-between" style={{ backgroundColor: '#00BF63', color: 'white' }}>
         {/* {combo.combo_items.comboName} */}
           <div className={`${league_spartan.className} text-l mt-1`} style={{}}>  {combo.combo_items.comboName}</div>
           <div className={`${league_spartan.className} text-l mt-1`} style={{}}>Total: ${combo.combo_items.comboItems.reduce((acc, item) => acc + item.item_price, 0).toFixed(2)}</div>
           </div>
-          <div style={{ marginBottom: '70px'}}></div>
+          <div style={{ marginBottom: '50px'}}></div>
           {combo.combo_items.comboItems.map((item, index2) => (
             <Card key={index2} className="w-full max-w-[48rem] flex-column mb-4" >
               <CardHeader shadow={false} floated={false} className="m-0 w-2/5 shrink-0 rounded-r-none">
@@ -146,7 +146,7 @@ console.log({filteredChefCombos})
               <Typography style={{ fontWeight: 'bold' ,color: '#333',fontSize: '1rem'}} className={league_spartan.className}>
                   {item.item_name}
               </Typography>
-              <Typography style={{ fontSize: '0.8rem' }} className={league_spartan.className}>
+              <Typography style={{ fontSize: '0.8rem', color: '#00BF63' }} className={league_spartan.className}>
                   ${item.item_price}
               </Typography>
               <div className="relative flex items-center justify-between">
@@ -160,15 +160,15 @@ console.log({filteredChefCombos})
             <Button
             
               onClick={() => addToCart(combo)}
-              className="flex items-center justify-between"
+              className={`${league_spartan.className} flex items-center justify-between`}
               style={{
-                color: 'white',
-                background: '#2D3142',
+                color: '#00BF63',
+                background: 'white',
                 borderRadius: '9999px',
                 padding: '10px 12px', 
                 fontSize: '13.5px', 
                 fontWeight: 'bold',
-                boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.4)', 
+                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
                 marginBottom: '50px',
                 width: '100%',
               }}
@@ -176,7 +176,7 @@ console.log({filteredChefCombos})
               Add Combo
               <IonIcon icon={arrowForward}/>
             </Button>
-            <div className={`${league_spartan.className} rounded-b-xl text-black py-2 px-4 absolute bottom-0 left-0 right-0 mt-20 flex items-center gap-3`} style={{ backgroundColor: '#f4f5f8' }}>
+            <div className={`${league_spartan.className} rounded-b-xl text-black py-2 px-4 absolute bottom-0 left-0 right-0 mt-20 flex items-center gap-3`} style={{ backgroundColor: '#E3F8EE' }}>
             <div className="rounded-full overflow-hidden">
     <Image
       src="/chef.jpeg"
