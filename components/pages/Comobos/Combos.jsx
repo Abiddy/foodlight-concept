@@ -149,11 +149,11 @@ console.log({filteredChefCombos})
               <Typography style={{ fontSize: '0.8rem', color: '#00BF63' }} className={league_spartan.className}>
                   ${item.item_price}
               </Typography>
-              <div className="relative flex items-center justify-between">
+              {/* <div className="relative flex items-center justify-between">
                 <Typography color="gray" variant="p" className={league_spartan_light.className} style={{ color: '#333'}}>
                   {truncateText(item.item_description, 5)}
                 </Typography>
-              </div>
+              </div> */}
               </CardBody>
           </Card>
           ))}

@@ -19,7 +19,7 @@ import Store from '../../store';
 import { Button, Card, CardBody, CardHeader, Typography } from '@material-tailwind/react';
 import Image from 'next/image';
 import ItemPreferencesModal from './ItemPreferencesModal';
-import { cartOutline, notifications } from 'ionicons/icons';
+import { cartOutline, chevronDown, notifications } from 'ionicons/icons';
 
 
 export const league_spartan = League_Spartan({ weight: ['600'], subsets: ['latin'] });
@@ -94,19 +94,23 @@ const Menu = () => {
   return (
     <IonPage>
       <IonHeader>
-      <IonToolbar style={{ '--background': '#00BF63', color: 'white', height: '70px', boxShadow: '0px -2px 4px rgba(0, 0, 0, 0.2)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 10px'  }}>
+      <IonToolbar style={{ '--background': 'white', color: 'black', height: '70px', boxShadow: '0px -2px 4px rgba(0, 0, 0, 0.2)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 10px'  }}>
           <Image
-            src="/foodLight.png"
-            width={80}
-            height={80}
+            src="/foodLight4.png"
+            width={50}
+            height={50}
             alt="Picture of the author"
-          />     
+          />  
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+      <span style={{ marginRight: '5px', color: 'black' }}>Random Street Location</span>
+      <IonIcon icon={chevronDown} style={{ fontSize: '1.5em', color: 'black' }} />
+    </div>
           <IonButtons slot="end">
             <IonButton onClick={() => setShowNotifications(true)}>
-              <IonIcon icon={notifications} style={{ '--background': 'transparent', color: 'white' }} />
+              <IonIcon icon={notifications} style={{ '--background': 'transparent', color: 'black' }} />
             </IonButton>
             <IonButton onClick={() => set(true)}>
-              <IonIcon icon={cartOutline} style={{ '--background': 'transparent', color: 'white' }} />
+              <IonIcon icon={cartOutline} style={{ '--background': 'transparent', color: 'black' }} />
             </IonButton>
           </IonButtons>
         </IonToolbar>
@@ -114,7 +118,7 @@ const Menu = () => {
       <IonContent>
   {menuItems? (
     Object.entries(groupedMenuItems).map(([itemType, items]) => (
-      <IonCard key={itemType} style={{ boxShadow: 'none', border: 'none' }}>
+      <IonCard key={itemType} style={{ boxShadow: 'none', border: 'none', margin: '0px' }}>
         <IonCardHeader style={{ paddingBottom: '0px', paddingTop: '0px'}}>
           <h4 className={league_spartan.className}>{itemType.charAt(0).toUpperCase() + itemType.slice(1)}</h4>
         </IonCardHeader>

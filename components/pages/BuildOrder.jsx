@@ -102,19 +102,19 @@ const BuildOrder = () => {
   return (
     <IonPage>
       <IonHeader> 
-        <IonToolbar style={{ '--background': '#00BF63', color: 'white', height: '70px', boxShadow: '0px -2px 4px rgba(0, 0, 0, 0.2)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 10px'  }}>
+        <IonToolbar style={{ '--background': 'white', color: 'white', height: '70px', boxShadow: '0px -2px 4px rgba(0, 0, 0, 0.2)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 10px'  }}>
           <Image
-            src="/foodLight.png"
-            width={80}
-            height={80}
+            src="/foodLight4.png"
+            width={50}
+            height={50}
             alt="Picture of the author"
           />     
           <IonButtons slot="end">
             <IonButton onClick={() => setShowNotifications(true)}>
-              <IonIcon icon={notificationsOutline} style={{ '--background': 'transparent', color: 'white' }} />
+              <IonIcon icon={notificationsOutline} style={{ '--background': 'transparent', color: 'black' }} />
             </IonButton>
             <IonButton onClick={() => set(true)}>
-              <IonIcon icon={cart} style={{ '--background': 'transparent', color: 'white' }} />
+              <IonIcon icon={cart} style={{ '--background': 'transparent', color: 'black' }} />
             </IonButton>
           </IonButtons>
         </IonToolbar>

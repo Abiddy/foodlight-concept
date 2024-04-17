@@ -1,13 +1,12 @@
 import { Redirect, Route } from 'react-router-dom';
 import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonHeader, IonButtons, IonButton, IonToolbar } from '@ionic/react';
-import { book, cart, cog, fastFood, flash, heart, home, list, notificationsOutline } from 'ionicons/icons';
+import { book, cart, fastFood, heart, home, notificationsOutline } from 'ionicons/icons';
 
-import Home from './Feed';
+import Feed from './Feed';
 import Menu from './Menu';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import BuildOrder from './BuildOrder';
 import Image from 'next/image';
-// import ErrorBoundary from './ErrorBoundary';
 
 const Tabs = () => {
 
@@ -15,14 +14,10 @@ const Tabs = () => {
   return (
     <IonTabs>
       <IonRouterOutlet>
-        <Route path="/tabs/feed" render={() => <Home />} exact={true} />
+      <Route path="/" render={() => <Feed />} exact={true} />
+        <Route path="/tabs/feed" render={() => <Feed />} exact={true} />
         <Route path="/tabs/build-order" render={() => <BuildOrder />} exact={true} />
-        {/* <Route path="/tabs/lists/:listId" render={() => <ListDetail />} exact={true} /> */}
-        <Route path="/tabs/menu" render={() => 
-          <ErrorBoundary fallback={<p>Something went wrong</p>}>
-            <Menu  />
-          </ErrorBoundary>
-        } exact={true} />
+        <Route path="/tabs/menu" render={() => <Menu  />} exact={true} />
         <Route path="/tabs" render={() => <Redirect to="/tabs/feed" />} exact={true} />
       </IonRouterOutlet>
       <IonHeader>
@@ -49,9 +44,8 @@ const Tabs = () => {
         '--background': 'white', 
         color: 'white', 
         height: '70px', 
-        // boxShadow: '0px -2px 4px rgba(0, 0, 0, 0.2)' 
       }}>
-      <IonTabButton tab="tab1" href="/tabs/feed" style={{ color: '#00BF63' }}>
+      <IonTabButton tab="tab1" href="/" style={{ color: '#00BF63' }}>
           <IonIcon icon={home} />
           <IonLabel>Home</IonLabel>
         </IonTabButton>

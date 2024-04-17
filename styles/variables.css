@@ -260,3 +260,8 @@ ion-modal#example-modal .wrapper {
 /* ion-modal {
   --ion-background-color: rgb(228, 84, 30);
 } */
+
+ion-thumbnail {
+  --size: 60px;
+  --border-radius: 14px;
+}

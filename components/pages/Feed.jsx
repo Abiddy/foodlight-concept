@@ -18,6 +18,7 @@ import ComboCardWrapper from './ComboCardWrapper';
 import { League_Spartan } from 'next/font/google';
 import Image from 'next/image'
 import { league_spartan_light } from './Comobos/Combos';
+import { useParams } from 'react-router';
 
 
 const league_spartan = League_Spartan({ weight: ['700'], subsets: ['latin'] });
@@ -25,7 +26,33 @@ const league_spartan = League_Spartan({ weight: ['700'], subsets: ['latin'] });
 const supabase = createClientComponentClient();
 
 const Feed = () => {
+  const { username } = useParams();
+  const [id, setId] = useState('');
   const [showNotifications, setShowNotifications] = useState(false);
+
+  console.log(id, username)
+
+  useEffect(() => {
+    const fetchProfileId = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('id')
+          .eq('username', username)
+          .single(); // Assuming username is unique
+
+        if (error) {
+          throw error;
+        }
+
+        setId(data.id || '');
+      } catch (error) {
+        console.error('Error fetching profile ID:', error.message);
+      }
+    };
+
+    fetchProfileId();
+  }, [username]); // Fetch profile ID when username changes
 
   const fetchComboData = useCallback(async () => {
     try {
@@ -33,7 +60,7 @@ const Feed = () => {
       const { data, error } = await supabase
         .from('combo_cards')
         .select('*')
-        .eq('uid', '89338523-a2e1-4cf2-83a7-52e828eabc01');
+        .eq('uid', id);
 
       if (error) {
         throw error;
@@ -60,19 +87,19 @@ const Feed = () => {
   return (
     <IonPage >
       <IonHeader>
-        <IonToolbar style={{ '--background': '#00BF63', color: 'white', height: '70px', boxShadow: '0px -2px 4px rgba(0, 0, 0, 0.2)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 10px'  }}>
+        <IonToolbar style={{ '--background': 'white', color: 'black', height: '70px', boxShadow: '0px -2px 4px rgba(0, 0, 0, 0.2)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 10px' , border: '0px' }}>
           <Image
-            src="/foodLight.png"
-            width={80}
-            height={80}
+            src="/foodLight4.png"
+            width={50}
+            height={50}
             alt="Picture of the author"
           />     
           <IonButtons slot="end">
             <IonButton onClick={() => setShowNotifications(true)}>
-              <IonIcon icon={notificationsOutline} style={{ '--background': 'transparent', color: 'white' }} />
+              <IonIcon icon={notificationsOutline} style={{  color: 'black' }} />
             </IonButton>
             <IonButton onClick={() => set(true)}>
-              <IonIcon icon={cart} style={{ '--background': 'transparent', color: 'white' }} />
+              <IonIcon icon={cart} style={{ '--background': 'transparent', color: 'black' }} />
             </IonButton>
           </IonButtons>
         </IonToolbar>
