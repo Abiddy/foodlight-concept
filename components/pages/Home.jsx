@@ -12,7 +12,7 @@ import {
   IonItem, IonLabel, IonList, IonThumbnail, IonChip, IonGrid, IonCardContent, IonCard, IonCardTitle, IonCardHeader, IonCardSubtitle, IonBadge 
 } from '@ionic/react';
 import Image from 'next/image';
-import { cartOutline, chevronDown, chevronForward, chevronUp, mapOutline, notifications } from 'ionicons/icons';
+import { cartOutline, chevronDown, chevronForward, chevronUp, mapOutline, megaphoneOutline, navigateCircleOutline, notifications } from 'ionicons/icons';
 import { league_spartan } from './Menu';
 import { useHistory } from 'react-router';
 import AppShell from '../AppShell';
@@ -82,7 +82,7 @@ const data2 = [
 const topData = [
   { username: "UrthCafe" , count: 35, img: "item3.png", shopImg: "logo2.png", shop: "Urth Cafe", item: "Breakfast Burrito" },
   { username: "Borjstar", count: 27, img: "item4.png", shopImg: "logo3.png", shop: "Borjstar Shawarma Shop", item: "Beef shawarma plate" },
-  { username: "UrthCafe", count: 27, img: "item1.png", shopImg: "logo1.png", shop: "McDonalds", item: "Deluxe Breakfast with Muffin" },
+  { username: "McDonalds", count: 27, img: "item1.png", shopImg: "logo1.png", shop: "McDonalds", item: "Deluxe Breakfast with Muffin" },
   { username: "UrthCafe", count: 20, img: "item2.png", shopImg: "logo2.png", shop: "Urth Cafe", item: "Panini Chicken El Diablo" },
   { username: "Borjstar", count: 18, img: "item5.png", shopImg: "logo3.png", shop: "Borjstar Shawarma Shop", item: "Shawarma chicken Wrap" }
 ];
@@ -130,6 +130,30 @@ const Home = () => {
       </div>
 
 
+      <IonCard style={{ display: 'flex', flexDirection: 'row', borderRadius: '10px', marginLeft: '0px', marginRight: '0px' }}>
+  {/* Left half with solid color */}
+  <div style={{ flex: 2, backgroundColor: '#00695c', borderTopLeftRadius: '10px', borderBottomLeftRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div>
+      <IonCardHeader>
+        <IonCardTitle className={league_spartan.className} style={{ margin: '0', color: 'white', fontSize: '16px' }}>FoodLight Features Sausilito Cafe!</IonCardTitle>
+      </IonCardHeader>
+      <IonCardContent style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <IonIcon size="large" icon={navigateCircleOutline} style={{ marginRight: '5px', color: 'white' }} /> 
+          <h2 className={league_spartan.className} style={{ color: 'white', fontSize: '14px' }}>Alondro Park, Gardena | 1st May, 10:30AM</h2>
+        </div>
+        <IonChip className={league_spartan.className} shape="round" style={{ marginTop: '10px', backgroundColor: 'white', color: '#00695c', fontSize: '13px' , paddingRight: '0px'}}>Register for 20% off on all items</IonChip>
+      </IonCardContent>
+    </div>
+  </div>
+
+  {/* Right half with image */}
+  <div style={{ flex: 1, backgroundImage: 'url("noodles.png")', backgroundSize: 'cover', borderTopRightRadius: '10px', borderBottomRightRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    {/* Content for the right half if needed */}
+  </div>
+</IonCard>
+
+
 
       {/* IONLIST START */}
     
@@ -164,60 +188,58 @@ const Home = () => {
 
     <h1 className={league_spartan.className} style={{ marginBottom: '0px'}}>FoodLight Combos</h1>
 
-    <div style={{ display: 'flex', margin: '0px',overflow: 'scroll', width: '600vw' }}>
-      {data.map((combo, index) => (
-       <IonCard key={index} style={{ borderRadius: '10px', backgroundColor: 'light', width: '300px', marginRight: '10px' }}>
-          <IonCardContent>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-              
-            <IonChip style={{ color: 'black', padding: '0px', margin: '0px', background: 'rgba(0, 0, 0, 0)' }}>
-        <img src={combo.shopImg} alt="Chip Image" style={{ borderRadius: '50%', marginRight: '5px', width: '20px', height: '20px' }} />
-        <p  style={{ fontSize: '0.7rem'}}>{combo.shop}</p>
-        </IonChip>
-          
-              <p style={{ fontSize: '0.8rem', fontWeight: 'bold' }}>{combo.price}</p>
-            </div>
-            <IonList lines="none">
-              {combo.items.map((item, itemIndex) => (
-                <IonItem key={itemIndex}>
-                  <img src={item.img} alt={item.name} style={{ width: '30px', height: '30px', borderRadius: '50%' }} />
-                  <IonLabel className={league_spartan.className} style={{ marginLeft: '10px' }}>{item.name}</IonLabel>
-                </IonItem>
-              ))}
-            </IonList>
-            <IonIcon icon={chevronForward} style={{ fontSize: '1.5em', position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }} />
-          </IonCardContent>
-        </IonCard>
-      ))}
-      </div>
+    <IonCardContent style={{ display: 'flex', margin: '0px', overflowX: 'auto', width: '100%' }}>
+  {data.map((combo, index) => (
+    <IonCard key={index} style={{ borderRadius: '10px', backgroundColor: 'light', minWidth: '300px', flex: '0 0 auto', marginRight: '10px' }}>
+      <IonCardContent scroll-y="false">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+          <IonChip style={{ color: 'black', padding: '0px', margin: '0px', background: 'rgba(0, 0, 0, 0)' }}>
+            <img src={combo.shopImg} alt="Chip Image" style={{ borderRadius: '50%', marginRight: '5px', width: '20px', height: '20px' }} />
+            <p style={{ fontSize: '0.7rem' }}>{combo.shop}</p>
+          </IonChip>
+          <p style={{ fontSize: '0.8rem', fontWeight: 'bold' }}>{combo.price}</p>
+        </div>
+        <IonList lines="none">
+          {combo.items.map((item, itemIndex) => (
+            <IonItem key={itemIndex}>
+              <img src={item.img} alt={item.name} style={{ width: '30px', height: '30px', borderRadius: '50%' }} />
+              <IonLabel className={league_spartan.className} style={{ marginLeft: '10px' }}>{item.name}</IonLabel>
+            </IonItem>
+          ))}
+        </IonList>
+        <IonIcon icon={chevronForward} style={{ fontSize: '1.5em', position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)' }} />
+      </IonCardContent>
+    </IonCard>
+  ))}
+</IonCardContent>
+
 
 
 
     {/* BUDGET MEALS START */}
     <h1 className={league_spartan.className} style={{ marginBottom: '0px'}}>Budget Meals</h1>
 
-<IonList lines="none" style={{ display: 'flex', overflowX: 'scroll', width: '600vw'  }}>
-<div style={{ display: 'flex', paddingRight: '10px' }}>
+<IonList lines="none" style={{ display: 'flex', overflowX: 'scroll', width: '100vw', maxWidth: '100%' }}>
   {data2.map((combo, index) => (
-    <IonCard key={index} style={{ width: '250px', height: '300px'}}>
-    <img alt="Silhouette of mountains" src="item5.png" style={{ height: '150px', width: '250px'}} />
-    <IonBadge color="light" style={{ position: 'absolute', top: '10px', right: '10px', zIndex: '1' , fontSize: '20px'}}>
-          {combo.price}
-        </IonBadge>
-    <IonCardHeader>
-      <IonCardTitle style={{ fontSize: '20px'}}>{combo.name}</IonCardTitle>
-      <IonCardSubtitle>         
-        <IonChip style={{ color: 'black', padding: '0px', margin: '0px', background: 'rgba(0, 0, 0, 0)' }}>
-        <img src={combo.shopImg} alt="Chip Image" style={{ borderRadius: '50%', marginRight: '5px', width: '20px', height: '20px' }} />
-        <p  style={{ fontSize: '0.7rem'}}>{combo.shop}</p>
-        </IonChip></IonCardSubtitle>
-    </IonCardHeader>
-
-    <IonCardContent>Heres a small text description for the card content. Nothing more, nothing less.</IonCardContent>
-  </IonCard>
+    <IonCard key={index} style={{ flex: '0 0 auto', width: '250px', height: '300px', marginRight: '10px' }}>
+      <img alt="Silhouette of mountains" src="item5.png" style={{ height: '150px', width: '250px' }} />
+      <IonBadge color="light" style={{ position: 'absolute', top: '10px', right: '10px', zIndex: '1', fontSize: '20px' }}>
+        {combo.price}
+      </IonBadge>
+      <IonCardHeader>
+        <IonCardTitle style={{ fontSize: '20px' }}>{combo.name}</IonCardTitle>
+        <IonCardSubtitle>
+          <IonChip style={{ color: 'black', padding: '0px', margin: '0px', background: 'rgba(0, 0, 0, 0)' }}>
+            <img src={combo.shopImg} alt="Chip Image" style={{ borderRadius: '50%', marginRight: '5px', width: '20px', height: '20px' }} />
+            <p style={{ fontSize: '0.7rem' }}>{combo.shop}</p>
+          </IonChip>
+        </IonCardSubtitle>
+      </IonCardHeader>
+      <IonCardContent>Heres a small text description for the card content. Nothing more, nothing less.</IonCardContent>
+    </IonCard>
   ))}
-  </div>
 </IonList>
+
 
    
     </IonContent>

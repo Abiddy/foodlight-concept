@@ -37,7 +37,7 @@ const Feed = () => {
       try {
         const { data, error } = await supabase
           .from('profiles')
-          .select('id')
+          .select('*')
           .eq('username', username)
           .single(); // Assuming username is unique
 
@@ -71,7 +71,7 @@ const Feed = () => {
       alert('Error fetching combination data!');
       return [];
     } 
-  }, []);
+  }, [id]);
 
   const [comboData, setComboData] = useState([]);
 
@@ -106,7 +106,7 @@ const Feed = () => {
       </IonHeader>
       <IonContent className="ion-padding" fullscreen style={{ backgroundColor: 'rgb(228, 84, 30)' }}>
         <Notifications open={showNotifications} onDidDismiss={() => setShowNotifications(false)} />
-      <ComboCardWrapper userId={'89338523-a2e1-4cf2-83a7-52e828eabc01'} combination={comboData} />
+      <ComboCardWrapper userId={id} combination={comboData} />
       </IonContent>
     </IonPage>
   );
