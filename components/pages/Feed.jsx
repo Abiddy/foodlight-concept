@@ -52,7 +52,7 @@ const Feed = () => {
     };
 
     fetchProfileId();
-  }, [username]); // Fetch profile ID when username changes
+  }, [username]); 
 
   const fetchComboData = useCallback(async () => {
     try {

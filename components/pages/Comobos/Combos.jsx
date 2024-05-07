@@ -79,26 +79,6 @@ const truncateText = (text, maxWords) => {
   return text;
 };
 
-// const decreaseBudget = () => {
-//   const newBudget = parseInt(budget) - 5;
-//   setBudget(newBudget.toString());
-// };
-
-// const increaseBudget = () => {
-//   const newBudget = parseInt(budget) + 5;
-//   setBudget(newBudget.toString());
-// };
-
-// Event handler to update the budget when the input changes
-// const handleBudgetChange = (event) => {
-//   setBudget(event.target.value);
-// };
-
-// const filteredChefCombos = combination.filter(combo =>
-//   combo.combo_items.comboItems.reduce((acc, item) => acc + item.item_price, 0) <= budget
-// );
-
-// const menuItems = Store.useState(s => s.menuItems);
 
 const groupedMenuItems = menuItems.reduce((acc, item) => {
   const { item_type } = item;

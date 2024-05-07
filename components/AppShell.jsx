@@ -14,7 +14,7 @@ import { faHouse } from '@fortawesome/free-solid-svg-icons';
 
 setupIonicReact({});
 
-const AppShell = (store) => {
+const AppShell = () => {
 
 
   return (

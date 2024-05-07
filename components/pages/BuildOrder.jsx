@@ -2,20 +2,21 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Store from '../../store';
 import { IonPage, IonHeader, IonToolbar, IonContent, IonButton, IonIcon, IonToast, IonChip,  IonBadge, IonButtons } from '@ionic/react';
-import {  caretBackOutline, caretForwardOutline, cart, cashOutline, chevronDown, notificationsOutline} from 'ionicons/icons';
+import {  arrowDownCircle, arrowDownCircleOutline, caretBackOutline, caretForwardOutline, cart, cashOutline, chevronBackOutline, chevronDown, chevronForwardOutline, notificationsOutline} from 'ionicons/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee, faUtensils, faGlassCheers, faIceCream} from '@fortawesome/free-solid-svg-icons';
 import { League_Spartan } from 'next/font/google';
 import buildCombos from './buildCombosUtils';
 import SelectedItemsCard from './SelectedItemsCard';
 import { Button } from '@material-tailwind/react';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 export const league_spartan = League_Spartan({ weight: ['500'], subsets: ['latin'] });
-export const league_spartan_bold = League_Spartan({ weight: ['700'], subsets: ['latin'] });
+export const league_spartan_light = League_Spartan({ weight: ['400'], subsets: ['latin'] });
+export const league_spartan_bold = League_Spartan({ weight: ['600'], subsets: ['latin'] });
 
 
 const BuildOrder = () => {
-  const menuItems = Store.useState((s) => s.menuItems);
   const [order, setOrder] = useState([]); 
   const [orderCounts, setOrderCounts] = useState({
     drinks: 0,
@@ -26,9 +27,61 @@ const BuildOrder = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [matchingItems, setMatchingItems] = useState([])
 
-  console.log(order)
-  console.log({matchingItems})
   const [budget, setBudget] = useState('25');
+
+  const [menuItems, setMenuItems] =  useState([]);
+
+  console.log({menuItems})
+  const supabase = createClientComponentClient();
+
+  useEffect(() => {
+    const fetchMenuItems = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('menu_items')
+          .select('*' )
+          // .eq('uid', userId); 
+  
+        if (error) {
+          console.error('Error fetching menu items:', error);
+          return [];
+        }
+  
+        const itemsWithUrls = await Promise.all(
+          data.map(async (item) => {
+            const { data: publicUrl, error: urlError } = await supabase.storage.from('menu-images').getPublicUrl(item.item_image || '');
+            if (urlError) {
+              console.error('Error fetching public URL:', urlError);
+              throw urlError;
+            }
+    
+            return {
+              ...item,
+              item_image_url: publicUrl?.publicUrl || null,
+            };
+          })
+        );
+    
+        return itemsWithUrls;
+      } catch (error) {
+        console.error('Error fetching menu items with image URLs:', error);
+        return [];
+      }
+    };
+  
+    const fetchAndSetMenuItems = async () => {
+      try {
+        const itemsData = await fetchMenuItems();
+        setMenuItems(itemsData);
+        // settingMenuItems(itemsData) // Update the store with fetched menu items
+      } catch (error) {
+        console.error('Error fetching menu items:', error);
+        // Handle the error as needed
+      }
+    };
+  
+    fetchAndSetMenuItems();
+  }, []);
 
   const decreaseBudget = () => {
     const newBudget = parseInt(budget) - 5;
@@ -118,37 +171,47 @@ const BuildOrder = () => {
             </IonButton>
           </IonButtons>
         </IonToolbar>
+
       </IonHeader>
       <IonContent className="ion-padding" fullscreen={true}> 
+      <div style={{ backgroundColor: 'white', width: '100%', marginTop: '10px', textAlign: 'center' }}
+               className={league_spartan.className}>
+    <h1 style={{ fontSize: '2rem', fontWeight: 'bold' }}>Explore the best combos based on your preference!</h1>
+  </div>
 
       {/* Budget Section */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+
+    <div style={{ textAlign: 'center', padding: '8px', paddingTop: '0px' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '10px'
+       }}>
         <IonBadge
-          className={league_spartan.className}
+          className={league_spartan_light.className}
           style={{
-            margin: '20px',
-            padding: '10px',
             backgroundColor: 'white',
-            color: 'black',
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+            color: 'black',         
+            fontSize: '16px'
           }}
           color='primary'
         >
-          Find the best budget-based meals
+          Max Price
         </IonBadge>
       </div>
-    <div style={{ textAlign: 'center', padding: '8px' }}>
-      <IonIcon icon={caretBackOutline} style={{ fontSize: '30px', cursor: 'pointer', color: '#333646', paddingRight: '7px' }} onClick={decreaseBudget} />
-      <div style={{ boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', color: '#2D3142', borderRadius: '20px', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', padding: '20px', margin: '0 auto' }}>
-        <IonIcon icon={cashOutline} style={{ fontSize: '30px', marginRight: '10px', color: '#333646' }} />
-        <input type="number" value={budget} onChange={handleBudgetChange} className={league_spartan_bold.className} style={{ fontSize: '30px', backgroundColor: 'transparent', border: 'none', color: '#333646', textAlign: 'center', width: '50px' }} />
+      <IonIcon icon={chevronBackOutline} style={{ fontSize: '30px', cursor: 'pointer', color: '#333646', paddingRight: '7px' }} onClick={decreaseBudget} />
+      <div style={{ 
+        // boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', 
+        color: '#2D3142', borderRadius: '20px', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', padding: '20px', paddingTop: '0px', margin: '0 auto' }}
+        >
+        <input 
+        type="number" value={budget} 
+        onChange={handleBudgetChange} 
+        className={league_spartan_bold.className} 
+        style={{ fontSize: '40px', backgroundColor: 'transparent', border: 'none', color: '#333646', textAlign: 'center', width: '50px' }} />
       </div>
-      <IonIcon icon={caretForwardOutline} style={{ fontSize: '30px', cursor: 'pointer', color: '#333646', paddingLeft: '7px' }} onClick={increaseBudget} />
+      <IonIcon icon={chevronForwardOutline} style={{ fontSize: '30px', cursor: 'pointer', color: '#333646', paddingLeft: '7px' }} onClick={increaseBudget} />
     </div>
-    {/* <div style={{ textAlign: 'center', padding: '8px' }}>
-        <IonIcon icon={chevronDown} style={{ fontSize: '40px', marginTop: '20px' }} onClick={handleMakeOrder} />
-    </div> */}
-      <div  style={{ textAlign: 'center', marginBottom: '20px' , boxShadow: '1px 4px 6px rgba(0.1, 0.1, 0.1, 0.1)', borderRadius: '20px'}}> 
+      <div  style={{ textAlign: 'center', marginBottom: '20px' ,
+      //  boxShadow: '1px 4px 6px rgba(0.1, 0.1, 0.1, 0.1)', 
+       borderRadius: '20px'}}> 
         {Object.keys(keywords).map((category) => (
           <div key={category} className="py-4 relative border-2 border-transparent text-gray-800 rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out" style={{ display: 'inline-block', textAlign: 'center', marginRight: '10px', padding: '10px' }} onClick={() => handleCategoryClick(category)}>
             <FontAwesomeIcon icon={categoryIcons[category]} size="2x" style={{ color: 'rgb(61, 61, 61)' }}/>
@@ -163,22 +226,26 @@ const BuildOrder = () => {
           </div>
         ))}
        </div> 
-       <Button
+       <div style={{ display: 'flex', justifyContent: 'center', padding: '3px' }}>
+       <div
               onClick={handleMakeOrder} 
-              className="flex items-center justify-between text-center"
+              className={league_spartan.className} 
               style={{
-                color: 'white',
-                background: '#2D3142',
+               
+                color: 'black',
                 borderRadius: '9999px',
                 padding: '10px 12px', 
-                fontSize: '13.5px', 
+                fontSize: '18px', 
                 fontWeight: 'bold',
-                boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.4)', 
+                boxShadow: 'none', 
                 margin: '0 auto',
+                background: 'white',
+                border: 'solid 0.7px black'
               }}
             >
              Explore
-          </Button>
+          </div>
+          </div>
            
 
              {/* PREFERENCE TAB SECTION Starts HERE */}
