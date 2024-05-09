@@ -174,15 +174,27 @@ const BuildOrder = () => {
 
       </IonHeader>
       <IonContent className="ion-padding" fullscreen={true}> 
-      <div style={{ backgroundColor: 'white', width: '100%', marginTop: '10px', textAlign: 'center' }}
+      <img src='header1.png'></img>
+      {/* <div style={{
+                  // backgroundColor: '#525252', // Light background color
+                  // border: 'grey 0.8px solid',
+                  position: 'absolute',
+            
+                  color: 'black',
+                  width: '100%',
+                  padding: '15px',
+                  marginTop: '10px',
+                  textAlign: 'center',
+                  borderRadius: '10px', // Rounded edges
+                }}
                className={league_spartan.className}>
-    <h1 style={{ fontSize: '2rem', fontWeight: 'bold' }}>Explore the best combos based on your preference!</h1>
-  </div>
+    <h1 style={{ fontSize: '1.4rem', fontWeight: 'bold' }}>Explore the best combos based on your preference!</h1>
+  </div> */}
 
       {/* Budget Section */}
 
-    <div style={{ textAlign: 'center', padding: '8px', paddingTop: '0px' }}>
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '10px'
+    <div style={{ textAlign: 'center', padding: '8px', paddingTop: '4px' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'
        }}>
         <IonBadge
           className={league_spartan_light.className}
@@ -199,7 +211,7 @@ const BuildOrder = () => {
       <IonIcon icon={chevronBackOutline} style={{ fontSize: '30px', cursor: 'pointer', color: '#333646', paddingRight: '7px' }} onClick={decreaseBudget} />
       <div style={{ 
         // boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', 
-        color: '#2D3142', borderRadius: '20px', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', padding: '20px', paddingTop: '0px', margin: '0 auto' }}
+        color: '#2D3142', borderRadius: '20px', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', padding: '20px', margin: '0 auto' }}
         >
         <input 
         type="number" value={budget} 
@@ -240,7 +252,7 @@ const BuildOrder = () => {
                 boxShadow: 'none', 
                 margin: '0 auto',
                 background: 'white',
-                border: 'solid 0.7px black'
+                border: 'solid 1.6px black'
               }}
             >
              Explore
